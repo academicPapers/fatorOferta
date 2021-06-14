@@ -23,6 +23,7 @@ knitr::opts_chunk$set(cache=FALSE, echo = FALSE, warning = FALSE,
                       fig.align = "center", fig.height = 4.5,
                       fig.path = "images/", dev = "svg")
 options(htmltools.dir.version = FALSE)
+library(sjPlot)
 library(ggplot2)
 library(cowplot)
 theme_set(theme_cowplot())
@@ -154,14 +155,12 @@ qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
 # Opção: aplicação prévia do fator oferta
 
 .pull-left[
-```{r dadosHomogeneizados, fig.cap="Dados homogeneizados."}
-dados <- within(dados, VUhom <- ifelse(Fonte == "Venda", VU, .85*VU))
-ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
-  geom_point() + stat_smooth(method = "lm", se = FALSE)
-```
-]
 
-.pull-right[
+```{r, echo = TRUE}
+dados <- within(dados, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, .85*VU))
+```
 
 * Coeficiente de variação dos dados crus:
 
@@ -173,6 +172,15 @@ sd(dados$VU)/mean(dados$VU)
 
 ```{r, echo = TRUE}
 sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+]
+
+.pull-right[
+
+```{r dadosHomogeneizados, fig.cap="Dados homogeneizados."}
+ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
 ```
 
 ]
@@ -191,7 +199,7 @@ summary(fithom)
 ---
 # Resumo
 
-```{r, results='asis'}
+```{r, results='asis', include = FALSE}
 stargazer(fit, fit1, fithom,
           header = FALSE, type = "html", table.placement = "H",
           title="Comparação dos modelos",
@@ -205,26 +213,30 @@ stargazer(fit, fit1, fithom,
           )
 ```
 
+```{r}
+tab_model(fit, fit1, fithom)
+```
+
+
 ---
 # Previsão de valores
 
 .pull-left[
 
 ```{r, echo = TRUE}
-predict(fit, 
-        newdata = data.frame(Area=250,Fonte="Venda"),
+new250 <- 
+  data.frame(Area = 250, Fonte = "Venda")
+predict(fit, newdata = new250,
         interval = "confidence", level = .80)
 ```
 
 ```{r, echo = TRUE}
-predict(fit1, 
-        newdata = data.frame(Area=250,Fonte="Venda"),
+predict(fit1, newdata = new250,
         interval = "confidence", level = .80)
 ```
 
 ```{r, echo = TRUE}
-predict(fithom, 
-        newdata = data.frame(Area=250),
+predict(fithom, newdata = new250,
         interval = "confidence", level = .80)
 ```
 ]
@@ -232,27 +244,26 @@ predict(fithom,
 .pull-right[
 
 ```{r, echo = TRUE}
-predict(fit, 
-        newdata = data.frame(Area=10000,Fonte="Venda"),
+new10000 <- 
+  data.frame(Area = 10000, Fonte = "Venda")
+predict(fit, newdata = new10000,
         interval = "confidence", level = .80)
 ```
 
 ```{r, echo = TRUE}
-predict(fit1, 
-        newdata = data.frame(Area=10000,Fonte="Venda"),
+predict(fit1, newdata = new10000,
         interval = "confidence", level = .80)
 ```
 
 ```{r, echo = TRUE}
-predict(fithom, 
-        newdata = data.frame(Area=10000),
+predict(fithom, newdata = new10000,
         interval = "confidence", level = .80)
 ```
 
 ]
 
 ---
-# Modelo de regressão na forma logarítmica
+# Dados lognormais
 
 $$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$
 
@@ -266,13 +277,13 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
+# Dados lognormais: análise exploratória
 
 ```{r, fig.width=9}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
   geom_point() + stat_smooth(se = FALSE)
 p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
   geom_point() + stat_smooth(method = "lm", se = FALSE)
-
 prow <- plot_grid(
   p1 + theme(legend.position="none"),
   p2 + theme(legend.position="none"),
@@ -304,10 +315,321 @@ plot(predictorEffects(fit2, residuals=TRUE),
 ```
 
 ---
+# Modelo bem especificado
+
+```{r fit2Diagnostics, fig.cap="Modelo correto. Fator oferta. Dados lognormais.",, fig.show = "hold", out.width="38%"}
+plot(fit2)
+```
+
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
+.pull-left[
+```{r, echo = TRUE}
+dados <- within(dados, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, .85*VU))
+fithom2 <- lm(log(VUhom) ~ log(Area), dados)
+summary(fithom2)
+```
+]
+
+.pull-right[
+
+```{r, echo = TRUE}
+sd(dados$VU)/mean(dados$VU)
+```
+
+```{r, echo = TRUE}
+sd(dados$VUhom)/mean(dados$VUhom)
+```
+]
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
+```{r, fig.width=9}
+p1 <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() +
+  stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VUhom), color = Fonte)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+# Diagnóstico modelo com dados homogeneizados
+
+```{r fit2homDiagnostics, fig.cap="Modelo com dados homogeneizados. Dados lognormais.",, fig.show = "hold", out.width="38%"}
+plot(fithom2)
+```
+
+---
+# Resumo dos modelos
+
+```{r}
+tab_model(fit2, fithom2)
+```
+
+---
+# Previsão de valores
+
+.pull-left[
+
+```{r, echo = TRUE}
+new250 <- 
+  data.frame(Area = 250, Fonte = "Venda")
+exp(predict(fit2, newdata = new250,
+        interval = "confidence", level = .80))
+```
+
+
+```{r, echo = TRUE}
+exp(predict(fithom2, newdata = new250,
+        interval = "confidence", level = .80))
+```
+]
+
+.pull-right[
+
+```{r, echo = TRUE}
+new5000 <- 
+  data.frame(Area = 5000, Fonte = "Venda")
+exp(predict(fit2, newdata = new5000,
+        interval = "confidence", level = .80))
+```
+
+```{r, echo = TRUE}
+exp(predict(fithom2, newdata = new5000,
+        interval = "confidence", level = .80))
+```
+
+]
+
+---
 # Outras transformações
+
+$$VU = (1-0,15\cdot Fonte)(50 - 0,01\cdot Area + \varepsilon)^2$$
+
+```{r, echo = TRUE}
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+sqrtvu <- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
+vu <- (1-.15*venda)*sqrtvu^2
+dados <- data.frame(VU = vu, Area = area, 
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+---
+# Outras transformações: análise exploratória
+
+```{r, fig.width = 9}
+p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = Area, y = sqrt(VU), color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+# Modelo mau especificado
+
+```{r, echo = TRUE}
+fit3 <- lm(sqrt(VU) ~ Area + Fonte, data = dados)
+summary(fit3)
+```
+
+---
+# Modelo mau especificado
+
+```{r fit3Diagnostics, fig.cap="Modelo mau especificado. Fator oferta.", fig.show="hold", out.width="38%"}
+plot(fit3)
+```
+
+---
+# Modelo correto
+
+```{r, echo = TRUE}
+fit4 <- lm(sqrt(VU) ~ Area*Fonte, data = dados)
+summary(fit4)
+```
+
+---
+# Modelo correto
+
+```{r rightModel3, fig.cap="Fator oferta com transformação raiz quadrada. Modelo especificado corretamente.", fig.show = 'hold', out.width="50%"}
+plot(predictorEffect("Area", fit4),
+     lines=list(multiline=TRUE))
+plot(predictorEffect("Area", fit4), 
+     lines=list(multiline=TRUE),
+     axes=list(y=list(transform=appraiseR::sqr, lab="VU")))
+```
+
+---
+# Modelo correto
+
+```{r fit4Diagnostics, fig.cap="Modelo mau especificado. Fator oferta.", fig.show="hold", out.width="38%"}
+plot(fit4)
+```
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+
+```{r, echo = TRUE}
+dados <- within(dados, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, .85*VU))
+fithom3 <- lm(sqrt(VUhom) ~ Area, dados)
+summary(fithom3)
+```
+
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+```{r, echo = TRUE}
+sd(dados$VU)/mean(dados$VU)
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+```{r, echo = TRUE}
+sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+```{r dadosHomogeneizados3, fig.cap="Dados homogeneizados."}
+ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+```
+
+---
+# Resumo
+
+```{r, results='asis', include = FALSE}
+stargazer(fit3, fit4, fithom3,
+          header = FALSE, type = "html", table.placement = "H",
+          title="Comparação dos modelos",
+          #dep.var.labels=c("$log(Valor_{oferta})$","$log(Valor_{Hom})$"),
+          ci = TRUE, ci.level = .80, report = "vcst*", single.row = T,
+          intercept.bottom = FALSE, intercept.top = TRUE,
+          decimal.mark = ",", digit.separator = ".",
+          digits = 2, star.cutoffs = c(0.30, 0.20, 0.10),
+          notes.label = "Notas:",
+          font.size = "footnotesize"
+          )
+```
+
+```{r}
+tab_model(fit3, fit4, fithom3, digits = 3)
+```
+
+---
+# Previsão de valores
+
+.pull-left[
+
+```{r, echo = TRUE}
+new250 <- 
+  data.frame(Area = 250, Fonte = "Venda")
+predict(fit3, newdata = new250,
+        interval = "confidence", level = .80)^2
+```
+
+```{r, echo = TRUE}
+predict(fit4, newdata = new250,
+        interval = "confidence", level = .80)^2
+```
+
+```{r, echo = TRUE}
+predict(fithom3, newdata = new250,
+        interval = "confidence", level = .80)^2
+```
+]
+
+.pull-right[
+
+```{r, echo = TRUE}
+new5000 <- 
+  data.frame(Area = 5000, Fonte = "Venda")
+predict(fit3, newdata = new5000,
+        interval = "confidence", level = .80)^2
+```
+
+```{r, echo = TRUE}
+predict(fit4, newdata = new5000,
+        interval = "confidence", level = .80)^2
+```
+
+```{r, echo = TRUE}
+predict(fithom3, newdata = new5000,
+        interval = "confidence", level = .80)^2
+```
+
+]
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+
 
 ---
 class: inverse, center, middle
 
 # Conclusão
 
+---
+# Conclusão
+
+* A modelagem e aplicação do Fator Oferta deve ser feita com cuidado. Deve-se
+ter em mente que assumir que $V_{venda} = \lambda V_{oferta}$ é apenas uma 
+hipótese que deve ser verificada
+
+* A análise exploratória é fundamental para a percepção da realidade do mercado
+antes da modelagem
+
+* A modelagem deve levar em conta a hipótese feita para o fator oferta
+
+* A má especificação do fator oferta pode levar a modelos tendenciosos, que 
+podem produzir más previsões de valores, especialmente nos extremos dos dados
+
+* O fator oferta também influencia no cômputo dos intervalos de confiança e
+predição. É um erro comparar valores de mercado com intervalos obtidos com 
+dados de oferta antes de um tratamento destes intervalos.

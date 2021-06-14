@@ -201,13 +201,13 @@ R 4.0.2&gt; summary(fit1)
 # Opção: aplicação prévia do fator oferta
 
 .pull-left[
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/dadosHomogeneizados-1.svg" alt="Dados homogeneizados."  /&gt;
-&lt;p class="caption"&gt;Dados homogeneizados.&lt;/p&gt;
-&lt;/div&gt;
-]
 
-.pull-right[
+
+```r
+R 4.0.2&gt; dados &lt;- within(dados, 
+                 VUhom &lt;- ifelse(Fonte == "Venda", 
+                                 VU, .85*VU))
+```
 
 * Coeficiente de variação dos dados crus:
 
@@ -230,6 +230,15 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 ## [1] 0.4263126
 ```
+
+]
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dadosHomogeneizados-1.svg" alt="Dados homogeneizados."  /&gt;
+&lt;p class="caption"&gt;Dados homogeneizados.&lt;/p&gt;
+&lt;/div&gt;
 
 ]
 
@@ -270,26 +279,89 @@ R 4.0.2&gt; summary(fithom)
 # Resumo
 
 
-&lt;table style="text-align:center"&gt;&lt;caption&gt;&lt;strong&gt;Comparação dos modelos&lt;/strong&gt;&lt;/caption&gt;
-&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="3"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;VU&lt;/td&gt;&lt;td&gt;VUhom&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;td&gt;(3)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;2.914,83 (2.871,91, 2.957,75)&lt;/td&gt;&lt;td&gt;3.011,07 (2.962,81, 3.059,33)&lt;/td&gt;&lt;td&gt;2.554,92 (2.522,42, 2.587,41)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = 87,04&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = 79,96&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = 100,76&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;Area&lt;/td&gt;&lt;td&gt;-0,23 (-0,24, -0,23)&lt;/td&gt;&lt;td&gt;-0,25 (-0,26, -0,24)&lt;/td&gt;&lt;td&gt;-0,21 (-0,22, -0,21)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = -44,72&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -39,20&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -48,79&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;FonteVenda&lt;/td&gt;&lt;td&gt;-247,95 (-286,85, -209,04)&lt;/td&gt;&lt;td&gt;-462,07 (-533,77, -390,38)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = -8,17&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -8,26&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;Area:FonteVenda&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;0,04 (0,03, 0,05)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;t = 4,41&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;Adjusted R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0,95&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;Residual Std. Error&lt;/td&gt;&lt;td&gt;151,29 (df = 97)&lt;/td&gt;&lt;td&gt;138,67 (df = 96)&lt;/td&gt;&lt;td&gt;126,27 (df = 98)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td style="text-align:left"&gt;F Statistic&lt;/td&gt;&lt;td&gt;1.031,74&lt;sup&gt;***&lt;/sup&gt; (df = 2; 97)&lt;/td&gt;&lt;td&gt;825,26&lt;sup&gt;***&lt;/sup&gt; (df = 3; 96)&lt;/td&gt;&lt;td&gt;2.380,72&lt;sup&gt;***&lt;/sup&gt; (df = 1; 98)&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Notas:&lt;/td&gt;&lt;td colspan="3" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0,3; &lt;sup&gt;**&lt;/sup&gt;p&lt;0,2; &lt;sup&gt;***&lt;/sup&gt;p&lt;0,1&lt;/td&gt;&lt;/tr&gt;
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;VU&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;VU&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;VUhom&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8"&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9"&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  0"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2914.83&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2848.36&amp;nbsp;&amp;ndash;&amp;nbsp;2981.29&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;3011.07&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2936.32&amp;nbsp;&amp;ndash;&amp;nbsp;3085.82&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;2554.92&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;2504.60&amp;nbsp;&amp;ndash;&amp;nbsp;2605.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.24&amp;nbsp;&amp;ndash;&amp;nbsp;-0.22&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&amp;#45;0.21&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&amp;#45;0.22&amp;nbsp;&amp;ndash;&amp;nbsp;-0.20&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;247.95&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;308.20&amp;nbsp;&amp;ndash;&amp;nbsp;-187.70&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;462.07&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;573.12&amp;nbsp;&amp;ndash;&amp;nbsp;-351.03&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area * Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.04&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.02&amp;nbsp;&amp;ndash;&amp;nbsp;0.06&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.955 / 0.954&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.963 / 0.962&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.960 / 0.960&lt;/td&gt;
+&lt;/tr&gt;
+
 &lt;/table&gt;
+
 
 ---
 # Previsão de valores
@@ -298,8 +370,9 @@ R 4.0.2&gt; summary(fithom)
 
 
 ```r
-R 4.0.2&gt; predict(fit, 
-         newdata = data.frame(Area=250,Fonte="Venda"),
+R 4.0.2&gt; new250 &lt;- 
+   data.frame(Area = 250, Fonte = "Venda")
+R 4.0.2&gt; predict(fit, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -310,8 +383,7 @@ R 4.0.2&gt; predict(fit,
 
 
 ```r
-R 4.0.2&gt; predict(fit1, 
-         newdata = data.frame(Area=250,Fonte="Venda"),
+R 4.0.2&gt; predict(fit1, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -322,8 +394,7 @@ R 4.0.2&gt; predict(fit1,
 
 
 ```r
-R 4.0.2&gt; predict(fithom, 
-         newdata = data.frame(Area=250),
+R 4.0.2&gt; predict(fithom, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -337,8 +408,9 @@ R 4.0.2&gt; predict(fithom,
 
 
 ```r
-R 4.0.2&gt; predict(fit, 
-         newdata = data.frame(Area=10000,Fonte="Venda"),
+R 4.0.2&gt; new10000 &lt;- 
+   data.frame(Area = 10000, Fonte = "Venda")
+R 4.0.2&gt; predict(fit, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -349,8 +421,7 @@ R 4.0.2&gt; predict(fit,
 
 
 ```r
-R 4.0.2&gt; predict(fit1, 
-         newdata = data.frame(Area=10000,Fonte="Venda"),
+R 4.0.2&gt; predict(fit1, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -361,8 +432,7 @@ R 4.0.2&gt; predict(fit1,
 
 
 ```r
-R 4.0.2&gt; predict(fithom, 
-         newdata = data.frame(Area=10000),
+R 4.0.2&gt; predict(fithom, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -374,7 +444,7 @@ R 4.0.2&gt; predict(fithom,
 ]
 
 ---
-# Modelo de regressão na forma logarítmica
+# Dados lognormais
 
 `$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$`
 
@@ -389,8 +459,9 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
+# Dados lognormais: análise exploratória
 
-&lt;img src="images/unnamed-chunk-17-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -401,15 +472,577 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, data = dados)
 ```
 
-&lt;img src="images/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-21-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Modelo bem especificado
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fit2Diagnostics-1.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-2.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-3.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-4.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo correto. Fator oferta. Dados lognormais.&lt;/p&gt;
+&lt;/div&gt;
+
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
+.pull-left[
+
+```r
+R 4.0.2&gt; dados &lt;- within(dados, 
+                 VUhom &lt;- ifelse(Fonte == "Venda", 
+                                 VU, .85*VU))
+R 4.0.2&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
+R 4.0.2&gt; summary(fithom2)
+```
+
+```
+## 
+## Call:
+## lm(formula = log(VUhom) ~ log(Area), data = dados)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.099541 -0.040705  0.002982  0.037372  0.108366 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.351000   0.054459   135.0   &lt;2e-16 ***
+## log(Area)   -0.250823   0.007085   -35.4   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.05023 on 98 degrees of freedom
+## Multiple R-squared:  0.9275,	Adjusted R-squared:  0.9267 
+## F-statistic:  1253 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+```
+
+```
+## [1] 0.2179645
+```
+
+
+```r
+R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+```
+## [1] 0.2005692
+```
+]
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
+&lt;img src="images/unnamed-chunk-25-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Diagnóstico modelo com dados homogeneizados
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fit2homDiagnostics-1.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-2.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-3.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-4.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo com dados homogeneizados. Dados lognormais.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Resumo dos modelos
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VU)&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUhom)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.51&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.40&amp;nbsp;&amp;ndash;&amp;nbsp;7.61&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.35&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.24&amp;nbsp;&amp;ndash;&amp;nbsp;7.46&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area [log]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.15&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&amp;nbsp;&amp;ndash;&amp;nbsp;-0.13&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.940 / 0.938&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.927 / 0.927&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+---
+# Previsão de valores
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; new250 &lt;- 
+   data.frame(Area = 250, Fonte = "Venda")
+R 4.0.2&gt; exp(predict(fit2, newdata = new250,
+         interval = "confidence", level = .80))
+```
+
+```
+##        fit     lwr     upr
+## 1 393.8706 385.454 402.471
+```
+
+
+
+```r
+R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
+         interval = "confidence", level = .80))
+```
+
+```
+##        fit      lwr      upr
+## 1 389.9781 382.0481 398.0727
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; new5000 &lt;- 
+   data.frame(Area = 5000, Fonte = "Venda")
+R 4.0.2&gt; exp(predict(fit2, newdata = new5000,
+         interval = "confidence", level = .80))
+```
+
+```
+##        fit      lwr      upr
+## 1 185.6678 183.4194 187.9437
+```
+
+
+```r
+R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
+         interval = "confidence", level = .80))
+```
+
+```
+##        fit      lwr      upr
+## 1 183.9551 182.0866 185.8428
+```
+
+]
 
 ---
 # Outras transformações
+
+`$$VU = (1-0,15\cdot Fonte)(50 - 0,01\cdot Area + \varepsilon)^2$$`
+
+
+```r
+R 4.0.2&gt; set.seed(2)
+R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 5000)
+R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
+R 4.0.2&gt; sqrtvu &lt;- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
+R 4.0.2&gt; vu &lt;- (1-.15*venda)*sqrtvu^2
+R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
+                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+---
+# Outras transformações: análise exploratória
+
+&lt;img src="images/unnamed-chunk-32-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Modelo mau especificado
+
+
+```r
+R 4.0.2&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
+R 4.0.2&gt; summary(fit3)
+```
+
+```
+## 
+## Call:
+## lm(formula = sqrt(VU) ~ Area + Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.0834 -1.8384  0.0321  1.4690  4.5725 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 69.086281   0.461259 149.777  &lt; 2e-16 ***
+## Area        -0.009660   0.000143 -67.544  &lt; 2e-16 ***
+## FonteVenda  -3.260870   0.404871  -8.054 2.06e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.018 on 97 degrees of freedom
+## Multiple R-squared:  0.9794,	Adjusted R-squared:  0.979 
+## F-statistic:  2311 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Modelo mau especificado
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fit3Diagnostics-1.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit3Diagnostics-2.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit3Diagnostics-3.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit3Diagnostics-4.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo mau especificado. Fator oferta.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Modelo correto
+
+
+```r
+R 4.0.2&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
+R 4.0.2&gt; summary(fit4)
+```
+
+```
+## 
+## Call:
+## lm(formula = sqrt(VU) ~ Area * Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.0144 -1.5075  0.2621  1.3703  4.3139 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     70.1570222  0.5412342 129.624  &lt; 2e-16 ***
+## Area            -0.0100733  0.0001830 -55.054  &lt; 2e-16 ***
+## FonteVenda      -5.6434584  0.8042935  -7.017 3.21e-10 ***
+## Area:FonteVenda  0.0009221  0.0002733   3.373  0.00107 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.918 on 96 degrees of freedom
+## Multiple R-squared:  0.9816,	Adjusted R-squared:  0.981 
+## F-statistic:  1709 on 3 and 96 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Modelo correto
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/rightModel3-1.svg" alt="Fator oferta com transformação raiz quadrada. Modelo especificado corretamente." width="50%" /&gt;&lt;img src="images/rightModel3-2.svg" alt="Fator oferta com transformação raiz quadrada. Modelo especificado corretamente." width="50%" /&gt;
+&lt;p class="caption"&gt;Fator oferta com transformação raiz quadrada. Modelo especificado corretamente.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Modelo correto
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fit4Diagnostics-1.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit4Diagnostics-2.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit4Diagnostics-3.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fit4Diagnostics-4.svg" alt="Modelo mau especificado. Fator oferta." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo mau especificado. Fator oferta.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; dados &lt;- within(dados, 
+                 VUhom &lt;- ifelse(Fonte == "Venda", 
+                                 VU, .85*VU))
+R 4.0.2&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
+R 4.0.2&gt; summary(fithom3)
+```
+
+```
+## 
+## Call:
+## lm(formula = sqrt(VUhom) ~ Area, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.9257 -1.5261  0.1699  1.3447  3.8428 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 64.6088206  0.3811754  169.50   &lt;2e-16 ***
+## Area        -0.0092266  0.0001294  -71.29   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.826 on 98 degrees of freedom
+## Multiple R-squared:  0.9811,	Adjusted R-squared:  0.9809 
+## F-statistic:  5082 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+```
+
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+
+```r
+R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+```
+
+```
+## [1] 0.5861128
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+
+```r
+R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+```
+## [1] 0.5777287
+```
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dadosHomogeneizados3-1.svg" alt="Dados homogeneizados."  /&gt;
+&lt;p class="caption"&gt;Dados homogeneizados.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Resumo
+
+
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;sqrt(VU)&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;sqrt(VU)&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;sqrt(VUhom)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8"&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9"&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  0"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;69.086&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;68.171&amp;nbsp;&amp;ndash;&amp;nbsp;70.002&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;70.157&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;69.083&amp;nbsp;&amp;ndash;&amp;nbsp;71.231&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;64.609&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;63.852&amp;nbsp;&amp;ndash;&amp;nbsp;65.365&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&amp;nbsp;&amp;ndash;&amp;nbsp;-0.009&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&amp;nbsp;&amp;ndash;&amp;nbsp;-0.010&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&amp;#45;0.009&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&amp;#45;0.009&amp;nbsp;&amp;ndash;&amp;nbsp;-0.009&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;3.261&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;4.064&amp;nbsp;&amp;ndash;&amp;nbsp;-2.457&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;5.643&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;7.240&amp;nbsp;&amp;ndash;&amp;nbsp;-4.047&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area * Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.000&amp;nbsp;&amp;ndash;&amp;nbsp;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.979 / 0.979&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.982 / 0.981&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.981 / 0.981&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+---
+# Previsão de valores
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; new250 &lt;- 
+   data.frame(Area = 250, Fonte = "Venda")
+R 4.0.2&gt; predict(fit3, newdata = new250,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##        fit      lwr      upr
+## 1 4020.876 3948.145 4094.271
+```
+
+
+```r
+R 4.0.2&gt; predict(fit4, newdata = new250,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##        fit      lwr      upr
+## 1 3872.045 3784.093 3961.007
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom3, newdata = new250,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##        fit      lwr     upr
+## 1 3881.562 3824.999 3938.54
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; new5000 &lt;- 
+   data.frame(Area = 5000, Fonte = "Venda")
+R 4.0.2&gt; predict(fit3, newdata = new5000,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##        fit      lwr     upr
+## 1 307.1146 286.8096 328.114
+```
+
+
+```r
+R 4.0.2&gt; predict(fit4, newdata = new5000,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##        fit      lwr      upr
+## 1 351.8401 324.9102 379.8422
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom3, newdata = new5000,
+         interval = "confidence", level = .80)^2
+```
+
+```
+##       fit      lwr      upr
+## 1 341.363 324.3225 358.8399
+```
+
+]
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+
 
 ---
 class: inverse, center, middle
 
 # Conclusão
+
+---
+# Conclusão
+
+* A modelagem e aplicação do Fator Oferta deve ser feita com cuidado. Deve-se
+ter em mente que assumir que `\(V_{venda} = \lambda V_{oferta}\)` é apenas uma 
+hipótese que deve ser verificada
+
+* A análise exploratória é fundamental para a percepção da realidade do mercado
+antes da modelagem
+
+* A modelagem deve levar em conta a hipótese feita para o fator oferta
+
+* A má especificação do fator oferta pode levar a modelos tendenciosos, que 
+podem produzir más previsões de valores, especialmente nos extremos dos dados
+
+* O fator oferta também influencia no cômputo dos intervalos de confiança e
+predição. É um erro comparar valores de mercado com intervalos obtidos com 
+dados de oferta antes de um tratamento destes intervalos.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>
