@@ -279,7 +279,7 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ---
 # Dados lognormais: análise exploratória
 
-```{r, fig.width=9}
+```{r lognormalExploratoria, fig.width=9, fig.cap="Análise exploratória. Dados lognormais."}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
   geom_point() + stat_smooth(se = FALSE)
 p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +

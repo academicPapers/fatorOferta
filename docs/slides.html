@@ -461,7 +461,10 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 ---
 # Dados lognormais: análise exploratória
 
-&lt;img src="images/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/lognormalExploratoria-1.svg" alt="Análise exploratória. Dados lognormais."  /&gt;
+&lt;p class="caption"&gt;Análise exploratória. Dados lognormais.&lt;/p&gt;
+&lt;/div&gt;
 
 
 ---
@@ -472,7 +475,7 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, data = dados)
 ```
 
-&lt;img src="images/unnamed-chunk-21-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-20-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo bem especificado
@@ -542,7 +545,7 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ---
 # Opção: Aplicação prévia do Fator Oferta
 
-&lt;img src="images/unnamed-chunk-25-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-24-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Diagnóstico modelo com dados homogeneizados
@@ -688,7 +691,7 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 ---
 # Outras transformações: análise exploratória
 
-&lt;img src="images/unnamed-chunk-32-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-31-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo mau especificado
