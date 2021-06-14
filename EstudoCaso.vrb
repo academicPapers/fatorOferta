@@ -1,0 +1,40 @@
+\frametitle{Previsões com os modelos}
+\protect\hypertarget{previsuxf5es-com-os-modelos}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new <-}\StringTok{ }\NormalTok{dados[}\DecValTok{52}\NormalTok{, ]}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit, }\DataTypeTok{newdata =}\NormalTok{ new, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{.80}\NormalTok{)}
+\NormalTok{(P <-}\StringTok{ }\FloatTok{.9}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(p))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         fit      lwr      upr
+## 52 865494.6 832291.3 900022.4
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta pré-ajustados
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit1, }\DataTypeTok{newdata =}\NormalTok{ new, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{.80}\NormalTok{)}
+\NormalTok{(P1 <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(p1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         fit      lwr      upr
+## 52 865494.6 832291.3 900022.4
+\end{verbatim}
+

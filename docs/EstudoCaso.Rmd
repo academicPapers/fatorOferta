@@ -1,0 +1,101 @@
+---
+title: Implicações da aplicação do fator oferta
+subtitle: Em modelos estatísticos
+author: 
+  - Luiz Fernando Palin Droubi^[lfpdroubi@gmail.com]  \newline
+  - Carlos Augusto Zilli^[carlos.zilli@ifsc.edu.br]  \newline
+  - Willian Zonato^[will.zonato@gmail.com]  \newline
+  - Norberto Hochheim^[norberto.hochheim@ufsc.br]
+date: \today
+institute: GEAP - UFSC
+output:
+  binb::metropolis:
+    citation_package: biblatex
+    keep_tex: yes
+    toc: yes
+classoption: "aspectratio=169"
+fontsize: 9pt
+bibliography: references.bib
+biblio-style: abnt
+header-includes:
+  - \usepackage[brazil]{babel}
+  - \usepackage{csquotes}
+---
+
+```{r,setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE)
+library(appraiseR)
+library(stargazer)
+```
+
+# Estudo de Caso
+
+## Dados
+
+```{r, results='asis', echo = FALSE}
+dados <- centro_2015@data
+dados <- within(dados, padrao <- as.numeric(padrao))
+dados <- as.data.frame(dados)
+stargazer(dados, summary = TRUE, flip = TRUE, header = FALSE, type = "latex")
+```
+
+## Variável resposta
+
+- Valores de oferta
+
+```{r}
+var(dados$valor, na.rm = TRUE)
+```
+
+- Valores de oferta ajustados
+
+```{r}
+var(.9*dados$valor, na.rm = TRUE)
+```
+
+- Ajuste da variância
+
+```{r}
+.9*.9*var(dados$valor, na.rm = TRUE)
+```
+
+
+## Ajuste de modelos
+
+- Com dados de oferta
+
+```{r}
+fit <- lm(log(valor)~area_total + quartos + suites + garagens + 
+            log(dist_b_mar) + I(padrao^-1), data = dados, subset = -c(31, 39))
+```
+
+- Com dados de oferta pré-ajustados
+
+```{r}
+dados <- within(dados, valor1 <- .9*valor)
+fit1 <- lm(log(valor1)~area_total + quartos + suites + garagens + 
+            log(dist_b_mar) + I(padrao^-1), data = dados, subset = -c(31, 39))
+```
+
+## Previsões com os modelos
+
+- Com dados de oferta
+
+```{r}
+new <- dados[52, ]
+p <- predict(fit, newdata = new, interval = "confidence", level = .80)
+(P <- .9*exp(p))
+```
+
+- Com dados de oferta pré-ajustados
+
+```{r}
+p1 <- predict(fit1, newdata = new, interval = "confidence", level = .80)
+(P1 <- exp(p1))
+```
+
+# Conclusão
+
+- Quando da utilização de dados de oferta para elaboração de modelos, além do
+valor da estimativa central, também os limites do intervalo de confiança devem
+ser ajustados pelo fator oferta.

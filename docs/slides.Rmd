@@ -1,0 +1,313 @@
+---
+title: "Fator Oferta"
+subtitle: "Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações"
+author: "Luiz Fernando Palin Droubi"
+institute: "Diretor Técnico da SOBREA"
+date: "`r format(Sys.Date(), '%d de %B de %Y')`"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    css: [default, metropolis, metropolis-fonts]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, echo = FALSE, warning = FALSE, 
+                      message = FALSE, prompt = T,
+                      fig.align = "center", fig.height = 4.5,
+                      fig.path = "images/", dev = "svg")
+options(htmltools.dir.version = FALSE)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+library(ggvis)
+library(stargazer)
+library(effects)
+library(lmtest)
+```
+
+
+class: inverse, center, middle
+
+# Contextualização
+
+---
+
+# Contextualização
+
+* Dados de oferta vs. Dados de Transação
+
+--
+
+* Estimação de um fator oferta
+
+--
+
+* Formas de estimação
+
+--
+
+* Aplicação
+
+
+---
+class: inverse, center, middle
+
+# Conceitos e Paradigmas
+
+---
+class: inverse, center, middle
+
+# Estado da arte
+
+---
+class: inverse, center, middle
+
+# Aplicações
+
+---
+# Modelo de regressão na forma direta 
+
+
+$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
+
+```{r, echo = TRUE}
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+venda <- rbinom(100, 1, .5)
+vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+dados <- data.frame(VU = vu, Area = area, 
+                 Fonte = factor(venda, 
+                                labels = c("Oferta", "Venda")))
+```
+
+---
+# Análise Exploratória
+
+```{r dados1, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
+ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE)
+```
+
+---
+# Modelo mau especificado
+
+.pull-left[
+
+```{r, echo = TRUE}
+fit <- lm(VU ~ Area + Fonte, data = dados)
+summary(fit)
+```
+
+]
+
+.pull-right[
+
+```{r}
+bptest(fit)
+qqnorm(residuals(fit)); qqline(residuals(fit), col = 2)
+```
+
+]
+
+
+---
+# Modelo mau especificado
+
+```{r dados1a, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
+ggplot(dados, aes(x = Area, y = VU)) +
+  geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], 
+              color = "red") +
+  geom_abline(intercept = coef(fit)[1] + coef(fit)[3], slope = coef(fit)[2], 
+              color = "blue") +
+  geom_point(aes(color = Fonte))
+```
+
+---
+# Modelo bem especificado
+
+.pull-left[
+
+```{r, echo = TRUE}
+fit1 <- lm(VU ~ Area*Fonte, data = dados)
+summary(fit1)
+```
+]
+
+.pull-right[
+
+```{r}
+bptest(fit1)
+qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
+```
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+```{r dadosHomogeneizados, fig.cap="Dados homogeneizados."}
+dados <- within(dados, VUhom <- ifelse(Fonte == "Venda", VU, .85*VU))
+ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+```
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+```{r, echo = TRUE}
+sd(dados$VU)/mean(dados$VU)
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+```{r, echo = TRUE}
+sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+* Modelo:
+
+```{r, echo = TRUE}
+fithom <- lm(VUhom ~ Area, dados)
+summary(fithom)
+```
+
+
+---
+# Resumo
+
+```{r, results='asis'}
+stargazer(fit, fit1, fithom,
+          header = FALSE, type = "html", table.placement = "H",
+          title="Comparação dos modelos",
+          #dep.var.labels=c("$log(Valor_{oferta})$","$log(Valor_{Hom})$"),
+          ci = TRUE, ci.level = .80, report = "vcst*", single.row = T,
+          intercept.bottom = FALSE, intercept.top = TRUE,
+          decimal.mark = ",", digit.separator = ".",
+          digits = 2, star.cutoffs = c(0.30, 0.20, 0.10),
+          notes.label = "Notas:",
+          font.size = "footnotesize"
+          )
+```
+
+---
+# Previsão de valores
+
+.pull-left[
+
+```{r, echo = TRUE}
+predict(fit, 
+        newdata = data.frame(Area=250,Fonte="Venda"),
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE}
+predict(fit1, 
+        newdata = data.frame(Area=250,Fonte="Venda"),
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE}
+predict(fithom, 
+        newdata = data.frame(Area=250),
+        interval = "confidence", level = .80)
+```
+]
+
+.pull-right[
+
+```{r, echo = TRUE}
+predict(fit, 
+        newdata = data.frame(Area=10000,Fonte="Venda"),
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE}
+predict(fit1, 
+        newdata = data.frame(Area=10000,Fonte="Venda"),
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE}
+predict(fithom, 
+        newdata = data.frame(Area=10000),
+        interval = "confidence", level = .80)
+```
+
+]
+
+---
+# Modelo de regressão na forma logarítmica
+
+$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$
+
+```{r, echo = TRUE}
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+lvu <- 7.5 - .25*log(area) - .15*venda + rnorm(100, mean = 0, sd = .05)
+dados <- data.frame(VU = exp(lvu), Area = area, 
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+---
+
+```{r, fig.width=9}
+p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+
+---
+# Modelo bem especificado
+
+```{r, echo = TRUE}
+fit2 <- lm(log(VU) ~ log(Area) + Fonte, data = dados)
+```
+
+```{r}
+plot(predictorEffects(fit2, residuals=TRUE),
+     partial.residuals=list(smooth=TRUE, span=0.5,  lty="dashed"),
+     axes=list(grid=FALSE,x=list(rotate=30)))
+```
+
+---
+# Outras transformações
+
+---
+class: inverse, center, middle
+
+# Conclusão
+

@@ -1,0 +1,357 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[9pt,ignorenonframetext,aspectratio=169]{beamer}
+\IfFileExists{pgfpages.sty}{\usepackage{pgfpages}}{}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+
+
+
+
+
+
+\fi
+
+  \usetheme[]{metropolis}
+
+
+
+
+
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+  \usepackage{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+
+\newif\ifbibliography
+  \usepackage[style=abnt,]{biblatex}
+      \addbibresource{references.bib}
+  
+
+\hypersetup{
+      pdftitle={Implicações da aplicação do fator oferta},
+        pdfauthor={Luiz Fernando Palin Droubi ; Carlos Augusto Zilli ; Willian Zonato ; Norberto Hochheim},
+          pdfborder={0 0 0},
+    breaklinks=true}
+%\urlstyle{same}  % Use monospace font for urls
+
+
+
+
+  \usepackage{color}
+  \usepackage{fancyvrb}
+  \newcommand{\VerbBar}{|}
+  \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+  % Add ',fontsize=\small' for more characters per line
+  \usepackage{framed}
+  \definecolor{shadecolor}{RGB}{248,248,248}
+  \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+  \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+  \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+  \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\BuiltInTok}[1]{#1}
+  \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+  \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+  \newcommand{\ExtensionTok}[1]{#1}
+  \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ImportTok}[1]{#1}
+  \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\NormalTok}[1]{#1}
+  \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+  \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+  \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\RegionMarkerTok}[1]{#1}
+  \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+  \AtBeginPart{
+    \let\insertpartnumber\relax
+    \let\partname\relax
+    \frame{\partpage}
+  }
+  \AtBeginSection{
+    \ifbibliography
+    \else
+      \let\insertsectionnumber\relax
+      \let\sectionname\relax
+      \frame{\sectionpage}
+    \fi
+  }
+  \AtBeginSubsection{
+    \let\insertsubsectionnumber\relax
+    \let\subsectionname\relax
+    \frame{\subsectionpage}
+  }
+
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+  \setcounter{secnumdepth}{0}
+
+
+  \usepackage[brazil]{babel}
+  \usepackage{csquotes}
+
+  \title[]{Implicações da aplicação do fator oferta}
+
+  \subtitle{Em modelos estatísticos}
+
+  \author[
+        Luiz Fernando Palin Droubi\footnote<.->{\href{mailto:lfpdroubi@gmail.com}{\nolinkurl{lfpdroubi@gmail.com}}}
+\newline \and Carlos Augusto Zilli\footnote<.->{\href{mailto:carlos.zilli@ifsc.edu.br}{\nolinkurl{carlos.zilli@ifsc.edu.br}}}
+\newline \and Willian Zonato\footnote<.->{\href{mailto:will.zonato@gmail.com}{\nolinkurl{will.zonato@gmail.com}}}
+\newline \and Norberto Hochheim\footnote<.->{\href{mailto:norberto.hochheim@ufsc.br}{\nolinkurl{norberto.hochheim@ufsc.br}}}
+    ]{Luiz Fernando Palin Droubi\footnote<.->{\href{mailto:lfpdroubi@gmail.com}{\nolinkurl{lfpdroubi@gmail.com}}}
+\newline \and Carlos Augusto Zilli\footnote<.->{\href{mailto:carlos.zilli@ifsc.edu.br}{\nolinkurl{carlos.zilli@ifsc.edu.br}}}
+\newline \and Willian Zonato\footnote<.->{\href{mailto:will.zonato@gmail.com}{\nolinkurl{will.zonato@gmail.com}}}
+\newline \and Norberto Hochheim\footnote<.->{\href{mailto:norberto.hochheim@ufsc.br}{\nolinkurl{norberto.hochheim@ufsc.br}}}}
+
+  \institute[
+    ]{
+    GEAP - UFSC
+    }
+
+\date[
+      \today
+  ]{
+      \today
+        }
+
+
+\begin{document}
+
+% Hide progress bar and footline on titlepage
+  \begin{frame}[plain]
+  \titlepage
+  \end{frame}
+
+
+  \begin{frame}
+  \tableofcontents[hideallsubsections]
+  \end{frame}
+
+\hypertarget{estudo-de-caso}{%
+\section{Estudo de Caso}\label{estudo-de-caso}}
+
+\begin{frame}{Dados}
+\protect\hypertarget{dados}{}
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & valor & area\_total & quartos & suites & garagens & dist\_b\_mar & padrao \\ 
+\hline \\[-1.8ex] 
+N & 50 & 53 & 53 & 53 & 53 & 53 & 53 \\ 
+Mean & 953,800.000 & 188.122 & 2.679 & 1.189 & 1.698 & 528.792 & 2.321 \\ 
+St. Dev. & 627,318.800 & 116.215 & 0.754 & 0.900 & 0.972 & 308.098 & 0.754 \\ 
+Min & 195,000.000 & 48 & 1 & 0 & 0 & 60 & 1 \\ 
+Pctl(25) & 547,750.000 & 109 & 2 & 1 & 1 & 260 & 2 \\ 
+Pctl(75) & 1,254,000.000 & 220 & 3 & 1 & 2 & 730 & 3 \\ 
+Max & 3,000,000.000 & 578 & 4 & 3 & 4 & 1,430 & 3 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+\end{frame}
+
+\begin{frame}[fragile]{Variável resposta}
+\protect\hypertarget{variuxe1vel-resposta}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Valores de oferta
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{(dados}\OperatorTok{$}\NormalTok{valor, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 393528897959
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Valores de oferta ajustados
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{(.}\DecValTok{9}\OperatorTok{*}\NormalTok{dados}\OperatorTok{$}\NormalTok{valor, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 318758407347
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Ajuste da variância
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{.9}\OperatorTok{*}\NormalTok{.}\DecValTok{9}\OperatorTok{*}\KeywordTok{var}\NormalTok{(dados}\OperatorTok{$}\NormalTok{valor, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 318758407347
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ajuste de modelos}
+\protect\hypertarget{ajuste-de-modelos}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(valor)}\OperatorTok{~}\NormalTok{area_total }\OperatorTok{+}\StringTok{ }\NormalTok{quartos }\OperatorTok{+}\StringTok{ }\NormalTok{suites }\OperatorTok{+}\StringTok{ }\NormalTok{garagens }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\KeywordTok{log}\NormalTok{(dist_b_mar) }\OperatorTok{+}\StringTok{ }\KeywordTok{I}\NormalTok{(padrao}\OperatorTok{^-}\DecValTok{1}\NormalTok{), }\DataTypeTok{data =}\NormalTok{ dados, }\DataTypeTok{subset =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{31}\NormalTok{, }\DecValTok{39}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta pré-ajustados
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dados <-}\StringTok{ }\KeywordTok{within}\NormalTok{(dados, valor1 <-}\StringTok{ }\FloatTok{.9}\OperatorTok{*}\NormalTok{valor)}
+\NormalTok{fit1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(valor1)}\OperatorTok{~}\NormalTok{area_total }\OperatorTok{+}\StringTok{ }\NormalTok{quartos }\OperatorTok{+}\StringTok{ }\NormalTok{suites }\OperatorTok{+}\StringTok{ }\NormalTok{garagens }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\KeywordTok{log}\NormalTok{(dist_b_mar) }\OperatorTok{+}\StringTok{ }\KeywordTok{I}\NormalTok{(padrao}\OperatorTok{^-}\DecValTok{1}\NormalTok{), }\DataTypeTok{data =}\NormalTok{ dados, }\DataTypeTok{subset =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{31}\NormalTok{, }\DecValTok{39}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Previsões com os modelos}
+\protect\hypertarget{previsuxf5es-com-os-modelos}{}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new <-}\StringTok{ }\NormalTok{dados[}\DecValTok{52}\NormalTok{, ]}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit, }\DataTypeTok{newdata =}\NormalTok{ new, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{.80}\NormalTok{)}
+\NormalTok{(P <-}\StringTok{ }\FloatTok{.9}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(p))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         fit      lwr      upr
+## 52 865494.6 832291.3 900022.4
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Com dados de oferta pré-ajustados
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit1, }\DataTypeTok{newdata =}\NormalTok{ new, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{.80}\NormalTok{)}
+\NormalTok{(P1 <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(p1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         fit      lwr      upr
+## 52 865494.6 832291.3 900022.4
+\end{verbatim}
+
+\end{frame}
+
+\hypertarget{conclusuxe3o}{%
+\section{Conclusão}\label{conclusuxe3o}}
+
+\begin{frame}{Conclusão}
+
+\begin{itemize}
+\tightlist
+\item
+  Quando da utilização de dados de oferta para elaboração de modelos,
+  além do valor da estimativa central, também os limites do intervalo de
+  confiança devem ser ajustados pelo fator oferta.
+\end{itemize}
+
+\end{frame}
+
+
+  \begin{frame}[allowframebreaks]{}
+  \bibliographytrue
+  \printbibliography[heading=none]
+  \end{frame}
+
+
+\end{document}

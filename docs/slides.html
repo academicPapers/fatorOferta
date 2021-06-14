@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fator Oferta</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Luiz Fernando Palin Droubi" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Fator Oferta
+## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
+### Luiz Fernando Palin Droubi
+### Diretor Técnico da SOBREA
+### 14 de junho de 2021
+
+---
+
+
+
+
+
+
+class: inverse, center, middle
+
+# Contextualização
+
+---
+
+# Contextualização
+
+* Dados de oferta vs. Dados de Transação
+
+--
+
+* Estimação de um fator oferta
+
+--
+
+* Formas de estimação
+
+--
+
+* Aplicação
+
+
+---
+class: inverse, center, middle
+
+# Conceitos e Paradigmas
+
+---
+class: inverse, center, middle
+
+# Estado da arte
+
+---
+class: inverse, center, middle
+
+# Aplicações
+
+---
+# Modelo de regressão na forma direta 
+
+
+`$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$`
+
+
+```r
+R 4.0.2&gt; set.seed(2)
+R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
+R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
+R 4.0.2&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
+                  Fonte = factor(venda, 
+                                 labels = c("Oferta", "Venda")))
+```
+
+---
+# Análise Exploratória
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dados1-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
+&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Modelo mau especificado
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
+R 4.0.2&gt; summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = VU ~ Area + Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -284.11 -133.96   -5.26  107.93  344.03 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.915e+03  3.349e+01  87.037  &lt; 2e-16 ***
+## Area        -2.336e-01  5.224e-03 -44.724  &lt; 2e-16 ***
+## FonteVenda  -2.479e+02  3.036e+01  -8.168 1.18e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 151.3 on 97 degrees of freedom
+## Multiple R-squared:  0.9551,	Adjusted R-squared:  0.9542 
+## F-statistic:  1032 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+```
+
+]
+
+.pull-right[
+
+
+```
+## 
+## 	studentized Breusch-Pagan test
+## 
+## data:  fit
+## BP = 6.4355, df = 2, p-value = 0.04005
+```
+
+&lt;img src="images/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+# Modelo mau especificado
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dados1a-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
+&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Modelo bem especificado
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
+R 4.0.2&gt; summary(fit1)
+```
+
+```
+## 
+## Call:
+## lm(formula = VU ~ Area * Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -277.58 -111.34   19.66   97.02  323.54 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      3.011e+03  3.766e+01  79.961  &lt; 2e-16 ***
+## Area            -2.527e-01  6.445e-03 -39.204  &lt; 2e-16 ***
+## FonteVenda      -4.621e+02  5.594e+01  -8.260 7.99e-13 ***
+## Area:FonteVenda  4.248e-02  9.628e-03   4.412 2.68e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 138.7 on 96 degrees of freedom
+## Multiple R-squared:  0.9627,	Adjusted R-squared:  0.9615 
+## F-statistic: 825.3 on 3 and 96 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+
+```
+## 
+## 	studentized Breusch-Pagan test
+## 
+## data:  fit1
+## BP = 3.9476, df = 3, p-value = 0.2672
+```
+
+&lt;img src="images/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dadosHomogeneizados-1.svg" alt="Dados homogeneizados."  /&gt;
+&lt;p class="caption"&gt;Dados homogeneizados.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+
+```r
+R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+```
+
+```
+## [1] 0.4356105
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+
+```r
+R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+```
+
+```
+## [1] 0.4263126
+```
+
+]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+* Modelo:
+
+
+```r
+R 4.0.2&gt; fithom &lt;- lm(VUhom ~ Area, dados)
+R 4.0.2&gt; summary(fithom)
+```
+
+```
+## 
+## Call:
+## lm(formula = VUhom ~ Area, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -271.45 -105.53   11.75   92.98  265.71 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2554.91700   25.35580  100.76   &lt;2e-16 ***
+## Area          -0.21274    0.00436  -48.79   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 126.3 on 98 degrees of freedom
+## Multiple R-squared:  0.9605,	Adjusted R-squared:  0.9601 
+## F-statistic:  2381 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+# Resumo
+
+
+&lt;table style="text-align:center"&gt;&lt;caption&gt;&lt;strong&gt;Comparação dos modelos&lt;/strong&gt;&lt;/caption&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="3"&gt;&lt;em&gt;Dependent variable:&lt;/em&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan="3" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td colspan="2"&gt;VU&lt;/td&gt;&lt;td&gt;VUhom&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;(1)&lt;/td&gt;&lt;td&gt;(2)&lt;/td&gt;&lt;td&gt;(3)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Constant&lt;/td&gt;&lt;td&gt;2.914,83 (2.871,91, 2.957,75)&lt;/td&gt;&lt;td&gt;3.011,07 (2.962,81, 3.059,33)&lt;/td&gt;&lt;td&gt;2.554,92 (2.522,42, 2.587,41)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = 87,04&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = 79,96&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = 100,76&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Area&lt;/td&gt;&lt;td&gt;-0,23 (-0,24, -0,23)&lt;/td&gt;&lt;td&gt;-0,25 (-0,26, -0,24)&lt;/td&gt;&lt;td&gt;-0,21 (-0,22, -0,21)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = -44,72&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -39,20&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -48,79&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;FonteVenda&lt;/td&gt;&lt;td&gt;-247,95 (-286,85, -209,04)&lt;/td&gt;&lt;td&gt;-462,07 (-533,77, -390,38)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;t = -8,17&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;t = -8,26&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Area:FonteVenda&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;0,04 (0,03, 0,05)&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;t = 4,41&lt;sup&gt;***&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Observations&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Adjusted R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;&lt;td&gt;0,95&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;td&gt;0,96&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;Residual Std. Error&lt;/td&gt;&lt;td&gt;151,29 (df = 97)&lt;/td&gt;&lt;td&gt;138,67 (df = 96)&lt;/td&gt;&lt;td&gt;126,27 (df = 98)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;F Statistic&lt;/td&gt;&lt;td&gt;1.031,74&lt;sup&gt;***&lt;/sup&gt; (df = 2; 97)&lt;/td&gt;&lt;td&gt;825,26&lt;sup&gt;***&lt;/sup&gt; (df = 3; 96)&lt;/td&gt;&lt;td&gt;2.380,72&lt;sup&gt;***&lt;/sup&gt; (df = 1; 98)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="4" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Notas:&lt;/td&gt;&lt;td colspan="3" style="text-align:right"&gt;&lt;sup&gt;*&lt;/sup&gt;p&lt;0,3; &lt;sup&gt;**&lt;/sup&gt;p&lt;0,2; &lt;sup&gt;***&lt;/sup&gt;p&lt;0,1&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+---
+# Previsão de valores
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; predict(fit, 
+         newdata = data.frame(Area=250,Fonte="Venda"),
+         interval = "confidence", level = .80)
+```
+
+```
+##       fit      lwr      upr
+## 1 2608.47 2565.275 2651.666
+```
+
+
+```r
+R 4.0.2&gt; predict(fit1, 
+         newdata = data.frame(Area=250,Fonte="Venda"),
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+## 1 2496.448 2445.056 2547.841
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom, 
+         newdata = data.frame(Area=250),
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+## 1 2501.733 2470.229 2533.236
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; predict(fit, 
+         newdata = data.frame(Area=10000,Fonte="Venda"),
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit     lwr      upr
+## 1 330.4401 286.261 374.6192
+```
+
+
+```r
+R 4.0.2&gt; predict(fit1, 
+         newdata = data.frame(Area=10000,Fonte="Venda"),
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+## 1 447.0103 394.0733 499.9473
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom, 
+         newdata = data.frame(Area=10000),
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+## 1 427.5531 395.2578 459.8485
+```
+
+]
+
+---
+# Modelo de regressão na forma logarítmica
+
+`$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$`
+
+
+```r
+R 4.0.2&gt; set.seed(2)
+R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 5000)
+R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
+R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) - .15*venda + rnorm(100, mean = 0, sd = .05)
+R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
+                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+---
+
+&lt;img src="images/unnamed-chunk-17-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Modelo bem especificado
+
+
+```r
+R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, data = dados)
+```
+
+&lt;img src="images/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Outras transformações
+
+---
+class: inverse, center, middle
+
+# Conclusão
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

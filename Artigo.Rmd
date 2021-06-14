@@ -1,0 +1,678 @@
+---
+title: Avaliação de imóveis a partir de dados de oferta
+authors:
+  - name: Luiz Fernando Palin Droubi
+    department: SPU/SC
+    affiliation: Secretaria de Coordenação e Governança do Patrimônio da União
+    location: Florianópolis, SC
+    email: lfpdroubi@gmail.com
+abstract: |
+  Um dos grandes problemas práticos da Engenharia de Avaliações no Brasil é a falta de dados de mercado envolvendo transações de imóveis para elaboração de avaliações com o Método Comparativo de Dados de Mercado. É usual, portanto, a utilização de dados de oferta para a confecção de modelos estatísticos, visando utilizá-la como parâmetro para a aferição do valor de venda. Este trabalho pretende demonstrar diversas formas para o tratamento destes dados de oferta, buscando um conjunto de procedimentos que propriciem a obtenção de resultados consistentes, qualquer quer seja o método aplicado. 
+keywords:
+  - Fator Oferta
+  - Campo de Arbítrio
+  - Intervalos admissíveis
+bibliography: references.bib
+output: 
+  rticles::arxiv_article:
+    keep_tex: true
+link-citations: yes
+header-includes:
+  - \usepackage{amsmath}
+  - \usepackage{float}
+  - \usepackage[brazil]{babel}
+---
+
+```{r,setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, echo=FALSE, fig.pos="H", fig.path="./images/",
+                      dev = "png", dpi = 600)
+library(appraiseR)
+library(stargazer)
+library(sf)
+library(effects)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot())
+library(lmtest)
+```
+
+
+# Introdução
+
+# Revisão Bibliográfica
+
+Segundo Matloff [-@matloff2009, p. 54), a variância ($\mathbb V$) do produto de
+uma variável aleatória ($U$) por uma constante ($cU$) é igual à variância desta 
+mesma variável aleatória $U$, multiplicada pela constante ao quadrado ($c^2$), 
+*i.e.*:
+
+\begin{equation}
+\label{eq:varprop}
+\mathbb{V}(cU) = c^2\mathbb{V}(U)
+\end{equation}
+
+Isto tem implicações na Engenharia de Avaliações, já que, apesar desta estar 
+interessada na estimação da variável Valor de Venda ($V_{venda}$), nem sempre 
+esta variável aleatória pode ser diretamente observada, sendo usual a utilização
+de dados de oferta, mais facilmente encontrados, ou seja, trabalha-se com o 
+observação da variável $V_{oferta}$ e presume-se que:
+
+\begin{equation}
+\label{eq:varVenda}
+V_{venda} \approx cV_{oferta}
+\end{equation}
+
+Onde, nos casos práticos, $c \leq 1,0$.
+
+Ocorre que na Engenharia de Avaliações existem ao menos duas abordagens 
+práticas: 
+
+1. A aplicação de um fator de redução aos valores de oferta (homogeneização) 
+antes do ajuste de um modelo estatístico com a variável.
+
+2. A utilização da variável $V_{oferta}$ para o ajuste de modelos estatísticos
+e, com o modelo ajustado, a aplicação de um fator de redução (campo de arbítrio) 
+para a transformação do valor previsto pelo modelo estatístico em um valor de 
+venda, que se deseja prever.
+
+Para a obtenção da estimativa de valor central para os valores de venda a partir
+da segunda abordagem, basta a multiplicação do valor estimado com o modelo de
+ofertas, haja vista que [@matloff2009, p. 47):
+
+\begin{equation}
+\label{eq:Eprop}
+\mathbb{E}[cU] = c\mathbb{E}[U]
+\end{equation}
+
+Em outros termos, a estimativa de valor central para o valor de venda 
+($\hat V_{venda}$) pode ser calculado de acordo com a equação 
+\ref{eq:valorVenda}:
+
+
+\begin{align}
+\hat V_{venda} &= \mathbb{E}[V_{venda}] \nonumber \\ 
+&= \mathbb{E}[cV_{oferta}] \nonumber \\
+&= c\mathbb{E}[V_{oferta}] \nonumber \\
+\hat V_{venda} &= c \hat V_{oferta} \label{eq:valorVenda}
+\end{align}
+
+
+Ocorre que, se estima-se a variável $V_{venda}$ através da $V_{oferta}$ como na 
+equação \ref{eq:valorVenda}, pela propriedade expressa na equação 
+\ref{eq:varprop}, tem-se que:
+
+\begin{align}
+\label{eq:varianciaVenda}
+\hat{\mathbb{V}}(\hat V_{venda}) &= \hat{\mathbb{V}}(c \hat V_{oferta}) \\ 
+&= c^2 \hat{\mathbb{V}}(\hat V_{oferta})
+\end{align}
+
+Deve-se lembrar, portanto, que os intervalos de confiança fazem uso da 
+variância estimada ($\hat{\mathbb{V}}$) para o cálculo dos intervalos de 
+confiança e predição dos coeficientes e dos valores previstos pelo modelo. O
+intervalo de confiança para a previsão de valores médios à partir de um modelo 
+de regressão linear ajustado para uma variável dependente $y$ pode ser calculado 
+através da equação \ref{eq:IC} [@faraway2004linear, p. 41-42]:
+
+\begin{equation}
+\label{eq:IC}
+IC = \hat y \pm t_{(1-\alpha/2; n-k-1)} s.e.(\hat y)
+\end{equation}
+
+Onde $s.e.(\hat y) = \sqrt{\hat{\mathbb{V}} (\hat y)}$ [@matloff2009, p. 272].
+
+Isto não ocorreria caso o modelo estatístico fosse elaborado com a variável 
+homogeneizada ($V_{venda}$), pois os intervalos de confiança construídos por tal
+modelo já estariam utilizando a variância adequada para o seu cômputo:
+
+\begin{equation}
+\label{eq:ICVenda}
+[\hat V_{venda} - t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{venda}) ;
+ \hat V_{venda} + t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{venda}) ]
+\end{equation}
+
+Onde $s.e.(\hat V_{venda}) = \sqrt{\hat{\mathbb{V}} (\hat V_{venda})}$ é o 
+erro-padrão do estimador obtido com o modelo ajustado com a variável 
+homogeneizada.
+
+Porém, quando se ajusta o modelo com a variável não homogeneizada ($V_{oferta}$)
+e se obtem o valor de venda a partir da aplicação da equação \ref{eq:valorVenda}, 
+fazendo uso do Campo de Arbítrio do avaliador, deve-se ter em conta que o 
+intervalo de confiança para a variável $V_{venda}$ deve ser calculado com a 
+variância da variável $\hat V_{venda}$ e não com a variável $\hat V_{oferta}$ 
+obtida com os valores ajustados do modelo.
+
+Pois quando ajusta-se o modelo com os dados de oferta, obtem-se um intervalo de
+confiança ajustado para valores de oferta, e não para valores de venda, que é o
+que se deseja estimar:
+
+\begin{equation}
+\label{eq:ICOferta}
+IC_{oferta} = [\hat V_{oferta} - t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{oferta});
+   \hat V_{oferta} + t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{oferta})]
+\end{equation}
+
+Para a obtenção do intervalo de confiança para a variável $V_{venda}$ deve-se
+aplicar as transformações apropriadas, *i.e.* $\hat V_{venda} = c \hat V_{oferta}$ 
+e $s.e.(\hat V_{venda}) = c \cdot s.e.(\hat V_{oferta})$, já que o erro padrão 
+do estimador $\hat V_{venda}$ deve ser assim derivado:
+
+\begin{align*}
+s.e.(\hat V_{venda}) &= \sqrt{\hat{\mathbb{V}}(\hat V_{venda})}\\
+&= \sqrt{\hat{\mathbb{V}}(c \hat V_{oferta})} \\
+&= \sqrt{c^2 \hat{\mathbb{V}}(\hat V_{oferta})}\\
+&= c \sqrt{\hat{\mathbb{V}}(\hat V_{oferta})}
+\end{align*}
+
+\begin{equation}
+\label{eq:SEVenda}
+s.e.(\hat V_{venda}) = c \cdot s.e.(\hat V_{oferta})
+\end{equation}
+
+De maneira que pode-se escrever o intervalo de confiança para a estimação do 
+Valor de venda em termos do Valor de oferta como segue:
+
+$$IC_{venda} = [c \hat V_{oferta} - t_{(1-\alpha/2; n-k-1)} c \cdot s.e.(\hat V_{oferta}); 
+   c \hat V_{oferta} + t_{(1-\alpha/2; n-k-1)} c \cdot s.e.(\hat V_{oferta})]$$
+
+Colocando-se $c$ em evidência, obtem-se:
+
+$$IC_{venda} = [c(\hat V_{oferta} - t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{oferta})); 
+   c(\hat V_{oferta} + t_{(1-\alpha/2; n-k-1)} s.e.(\hat V_{oferta}))]$$
+   
+Em suma:
+
+\begin{equation}
+\label{eq:ICVendaOferta}
+IC_{venda} = c \cdot IC_{oferta}
+\end{equation}
+
+# Estudos de Casos
+
+## EC1
+
+### Dados
+
+```{r, results='asis', echo = FALSE}
+dados <- st_drop_geometry(centro_2015)
+dados <- within(dados, padrao <- as.numeric(padrao))
+dados <- as.data.frame(dados)
+stargazer(dados, summary = TRUE, flip = TRUE, header = FALSE, type = "latex")
+```
+
+### Variância da Variável resposta
+
+- Valores de oferta
+
+```{r, echo = TRUE}
+var(dados$valor, na.rm = TRUE)
+```
+
+- Valores de oferta homogeneizados pelo fator oferta (c = 0,9)
+
+```{r, echo = TRUE}
+var(.9*dados$valor, na.rm = TRUE)
+```
+
+- Ajuste da variância ($c^2 \hat{\mathbb{V}}(V_{Oferta})$)
+
+```{r, echo = TRUE}
+.9^2*var(dados$valor, na.rm = TRUE)
+```
+
+
+### Ajuste de modelos
+
+- Com dados de oferta
+
+```{r, echo = TRUE}
+fit <- lm(log(valor)~area_total + quartos + suites + garagens + 
+            log(dist_b_mar) + I(padrao^-1), data = dados, subset = -c(31, 39))
+```
+
+- Com dados de oferta pré-ajustados
+
+```{r, echo = TRUE}
+dados <- within(dados, valor1 <- .9*valor)
+fit1 <- lm(log(valor1)~area_total + quartos + suites + garagens + 
+            log(dist_b_mar) + I(padrao^-1), data = dados, subset = -c(31, 39))
+```
+
+### Estatísticas dos modelos
+
+```{r, results='asis'}
+stargazer(fit, fit1, header = FALSE, type = "latex", table.placement = "H",
+          title="Comparação dos modelos",
+          dep.var.labels=c("$log(Valor_{oferta})$","$log(Valor_{Hom})$"),
+          ci = TRUE, ci.level = .80, report = "vcst*", single.row = T,
+          intercept.bottom = FALSE, intercept.top = TRUE,
+          decimal.mark = ",", digit.separator = ".",
+          digits = 2, star.cutoffs = c(0.30, 0.20, 0.10),
+          notes.label = "Notas:"
+          #font.size = "footnotesize"
+          )
+```
+
+
+### Previsões com os modelos
+
+a. Com dados de oferta
+
+```{r, echo = TRUE}
+new <- dados[52, ]
+p <- predict(fit, newdata = new, interval = "confidence", level = .80)
+(P <- exp(p))
+```
+```{r}
+campo_arbitrio(P)
+```
+
+
+- Aplicando-se o fator oferta apenas à estimativa de tendência central e deslocando-se os limites do intervalo com a mesma magnitude do valor arbitrado, 
+conforme a NBR 14.653-02 [-@NBR1465302, item A.10.1.2]:
+
+```{r, echo = TRUE}
+P1 <- P
+P1[, "fit"] <- 0.9*P[, "fit"]
+P1[, "lwr"] <- P1[, "lwr"] - (P[, "fit"] - P1[, "fit"])
+P1[, "upr"] <- P1[, "upr"] - (P[, "fit"] - P1[, "fit"])
+P1
+```
+
+
+- Aplicando-se o fator oferta a todos os parâmetros:
+    
+```{r, echo = TRUE}
+(.9*P)
+```
+    
+
+b. Com dados de oferta pré-ajustados
+
+```{r, echo = TRUE}
+p1 <- predict(fit1, newdata = new, interval = "confidence", level = .80)
+(P1 <- exp(p1))
+```
+
+### Com dados simulados
+
+```{r}
+P <- matrix(data = c(fit = 1000000, lwr = .85*1000000, upr = 1.15*1000000),
+            ncol = 3)
+colnames(P) <- c("fit", "lwr", "upr")
+```
+
+```{r, echo = TRUE}
+P1 <- P
+P1[, "fit"] <- 0.9*P[, "fit"]
+P1[, "lwr"] <- P1[, "lwr"] - (P[, "fit"] - P1[, "fit"])
+P1[, "upr"] <- P1[, "upr"] - (P[, "fit"] - P1[, "fit"])
+brf(P1)
+```
+
+
+```{r, echo = TRUE}
+brf(.9*P)
+```
+
+Como pode-se perceber, a diferença entre os intervalos obtidos passa a ser mais
+significante, ainda que o modelo apresente grau I de precisão.
+
+No entanto, a situação ainda se agrava se considera-se que o limite inferior
+deve ser restringido pelo Campo de Arbítrio do avaliador.
+
+```{r}
+P1[, "lwr"] <- 850000
+brf(P1)
+```
+
+## EC2
+
+Foram simulados 100 dados aleatórios de venda ou oferta de imóveis segundo a 
+expressão abaixo, em que $Fonte$ é uma variável dicotômica que assume o valor
+zero em caso de se tratar de um dado de oferta e o valor 1 no caso de se tratar
+de um dado de venda. Ou seja, os dados de venda foram simulados para 
+apresentarem, em média, valor 15% menor do que os dados de oferta de imóveis. A
+variável $Area$ expressa a área do imóvel em metros quadrados e, por fim, a 
+variável $\varepsilon$ é uma variável aleatória com distribuição normal, média
+zero e desvio padrão igual a 150.
+
+$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
+
+Na Figura \ref{fig:dados1} é possível visualizar os dados gerados, assim como as
+retas de regressão para cada tipo de dados separadamente. Como era de se esperar,
+os dados de maior valor unitário, sejam de oferta ou de transação, apresentam 
+uma maior discrepância de valores entre si relativamente aos dados de maior 
+valor unitário, à direita do gráfico.
+
+```{r dados1, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+venda <- rbinom(100, 1, .5)
+vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+dados <- data.frame(VU = vu, Area = area, 
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE)
+```
+
+Como é possível perceber já pela simples visualização gráfica dos dados, um
+modelo de regressão que contemple o fator fonte ou fator oferta na forma 
+direta[^1], deverá fazê-lo por meio da adição de uma interação entre a variável 
+$Fonte$ com as outras variáveis explicativas do modelo.
+
+[^1]: Isto é, sem a utilização de transformação para a variável dependente.
+
+Apenas para efeito ilustrativo, ajustou-se um modelo com a variável $Fonte$ na
+forma direta, sem a adição da interação entre ela e a variável explicativa.
+O modelo mostrou-se bem ajustado.
+
+```{r}
+fit <- lm(VU ~ Area + Fonte, data = dados)
+# summary(fit)
+```
+
+
+```{r wrongModel, fig.height=3, fig.width=6, fig.cap="Fator oferta na forma direta. Má especificação do modelo."}
+plot(predictorEffects(fit, residuals=TRUE),
+     partial.residuals=list(smooth=TRUE, span=0.75,  lty="dashed"),
+     axes=list(grid=FALSE,x=list(rotate=30)))
+```
+
+```{r fitPlot, out.width="50%", fig.show="hold", fig.cap="Diagnóstico do modelo mau especificado na forma direta."}
+plot(fit)
+```
+
+Com esta formulação, o desconto é constante ao longo de todo o modelo.
+É possível verificar a falha na especificação do modelo de forma gráfica, pela
+análise dos gráficos diagnósticos da Figura \ref{fig:fitPlot}, ou através do 
+teste de Breusch-Pagan.
+
+```{r}
+bptest(fit)
+```
+
+Com o ajuste correto do modelo, com a adição da interação entre a variável 
+$Fonte$ e a variável explicativa $Area$, a heteroscedasticidade desaparece.
+
+```{r}
+fit1 <-  lm(VU ~ Area*Fonte, data = dados)
+# summary(fit1)
+```
+
+```{r rightModel, fig.cap="Fator oferta na forma direta. Modelo especificado corretamente."}
+plot(predictorEffect("Area", fit1), 
+     lines=list(multiline=TRUE))
+```
+
+```{r, out.width="50%", fig.show="hold"}
+plot(fit1)
+```
+
+```{r}
+bptest(fit1)
+```
+
+Uma opção dada pela @NBR1465302 é a prévia homogeneização dos dados, conforme
+item 9.2.1.3. A Figura \ref{fig:dadosHomogeneizados} mostra como ficam os dados
+após a homogeneização.
+
+```{r dadosHomogeneizados, fig.cap="Dados homogeneizados."}
+dados <- within(dados, VUhom <- ifelse(Fonte == "Venda", VU, .85*VU))
+ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+```
+
+```{r fithomPlot, fig.show="hold", out.width="50%"}
+fithom <- lm(VUhom~Area, dados)
+#summary(fithom)
+plot(fithom)
+```
+
+
+```{r}
+predict(fit, newdata = data.frame(Area = 500, Fonte = "Venda"))
+predict(fit1, newdata = data.frame(Area = 500, Fonte = "Venda"))
+predict(fithom, newdata = data.frame(Area = 500))
+```
+
+```{r}
+predict(fit, newdata = data.frame(Area = 5000, Fonte = "Venda"))
+predict(fit1, newdata = data.frame(Area = 5000, Fonte = "Venda"))
+predict(fithom, newdata = data.frame(Area = 5000))
+```
+```{r}
+predict(fit, newdata = data.frame(Area = 10000, Fonte = "Venda"))
+predict(fit1, newdata = data.frame(Area = 10000, Fonte = "Venda"))
+predict(fithom, newdata = data.frame(Area = 10000))
+```
+
+```{r, results='asis'}
+stargazer(fit, fit1, fithom,
+          header = FALSE, type = "latex", table.placement = "H",
+          title="Comparação dos modelos",
+          #dep.var.labels=c("$log(Valor_{oferta})$","$log(Valor_{Hom})$"),
+          ci = TRUE, ci.level = .80, report = "vcst*", single.row = T,
+          intercept.bottom = FALSE, intercept.top = TRUE,
+          decimal.mark = ",", digit.separator = ".",
+          digits = 2, star.cutoffs = c(0.30, 0.20, 0.10),
+          notes.label = "Notas:"
+          #font.size = "footnotesize"
+          )
+```
+
+## EC3
+
+Outra possibilidade é o ajuste do modelo com a transformação da variável 
+dependente para a escala logarítmica, o que é muito comum na Engenharia de 
+Avaliações. A transformação, porém, não deve ser feita em função apenas da 
+modelagem do fator oferta: uma vez averiguada a necessidade de transformação
+da variável dependente para a escala logarítmica, pode-se simplesmente adicionar 
+a variável $Fonte$ ao lado direto da equação de regressão, sem a necessidade
+da adição de termos de interação[^2].
+
+[^2]: Isto decorre do fato que a equação de regressão na forma logarítmica, a
+ equação de estimação, obtida pela retransformação da equação de regressão para 
+ a forma direta, através utilização da função exponencial, relaciona os termos 
+ de uma maneira multiplicativa. Por exemplo: se a regressão for ajustada com a
+ forma $log(Y) \sim \beta_1 X_1 + \beta_2 X_2 + \varepsilon$, então a equação de estimação será 
+ $Y = \exp(\beta_1 X_1 + \beta_2 X_2) = \exp(\beta_1 X_1)\cdot \exp(\beta_2 X_2)$.
+ 
+Foram gerados, então, 100 dados de oferta/transações através da seguinte
+expressão, com $\varepsilon \sim N(0, .05^2)$:
+
+$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$
+
+```{r dados2, fig.cap="Dados com distribuição lognormal."}
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+lvu <- 7.5 - .25*log(area) - .15*venda + rnorm(100, mean = 0, sd = .05)
+dados <- data.frame(VU = exp(lvu), Area = area, 
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+```{r}
+fit2 <- lm(log(VU) ~ log(Area) + Fonte, data = dados)
+# summary(fit2)
+```
+
+
+```{r, fig.height=3, fig.width=6}
+plot(predictorEffects(fit2, residuals=TRUE),
+     partial.residuals=list(smooth=TRUE, span=0.5,  lty="dashed"),
+     axes=list(grid=FALSE,x=list(rotate=30)))
+```
+
+```{r, out.width="50%", fig.show="hold"}
+plot(fit2)
+```
+
+
+```{r}
+bptest(fit2)
+```
+
+```{r dadosHomogeneizados2, fig.cap="Dados homogeneizados.", fig.height=6, fig.width=3}
+dados <- within(dados, VUhom <- ifelse(Fonte == "Venda", VU, .85*VU))
+p1 <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VUhom), color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+```{r}
+fithom2 <- lm(log(VUhom)~log(Area), dados)
+```
+
+```{r, results='asis'}
+stargazer(fit2, fithom2,
+          header = FALSE, type = "latex", table.placement = "H",
+          title="Comparação dos modelos",
+          #dep.var.labels=c("$log(Valor_{oferta})$","$log(Valor_{Hom})$"),
+          ci = TRUE, ci.level = .80, report = "vcst*", single.row = T,
+          intercept.bottom = FALSE, intercept.top = TRUE,
+          decimal.mark = ",", digit.separator = ".",
+          digits = 2, star.cutoffs = c(0.30, 0.20, 0.10),
+          notes.label = "Notas:"
+          #font.size = "footnotesize"
+          )
+```
+
+***
+
+```{r, fig.height = 3, fig.width = 6}
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+sqrtvu <- 50 - .005*area + rnorm(100, mean = 0, sd = .5)
+vu <- (1-.15*venda)*sqrtvu^2
+dados <- data.frame(VU = vu, Area = area, 
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = Area, y = sqrt(VU), color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+
+```{r}
+fit3 <- lm(sqrt(VU) ~ Area + Fonte, data = dados)
+summary(fit3)
+```
+
+
+```{r, fig.height=3, fig.width=6}
+plot(predictorEffects(fit3, residuals=TRUE),
+     partial.residuals=list(smooth=TRUE, span=0.5,  lty="dashed"),
+     axes=list(grid=FALSE,x=list(rotate=30)))
+```
+
+```{r fit3Diagnostics, fig.cap="Modelo mau especificado. Fator oferta.", out.width="50%", fig.show="hold"}
+plot(fit3)
+```
+
+```{r}
+fit4 <- lm(sqrt(VU) ~ Area*Fonte, data = dados)
+```
+
+```{r rightModel3, fig.cap="Fator oferta com transformação raiz quadrada. Modelo especificado corretamente."}
+plot(predictorEffect("Area", fit4), 
+     lines=list(multiline=TRUE))
+```
+
+```{r dadosHomogeneizados3, fig.cap="Dados homogeneizados. Transformação raiz quadrada.", fig.height = 3, fig.width = 6}
+dados <- within(dados, VUhom <- ifelse(Fonte == "Venda", VU, .85*VU))
+p1 <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + stat_smooth(se = FALSE)
+p2 <- ggplot(dados, aes(x = Area, y = sqrt(VUhom), color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+
+# Conclusão
+
+Quando da utilização de dados de oferta para elaboração de modelos, além do
+valor da estimativa central, também os limites do intervalo de confiança devem
+ser ajustados pelo fator oferta.
+
+Pelo procedimento preconizado na atual normativa, o intervalo de confiança é
+simplesmente transladado. Isso implica que o valor inferior do intervalo de
+confiança acaba minorado por um fator superior ao fator oferta, enquanto o
+limite superior do intervalo de confiança é minorado com um fator menor do que o
+fator oferta.
+
+Quando a amplitude do intervalo de confiança é relativamente pequena, como no
+estudo de caso apresentado, esta diferença tende também a ser pequena, podendo
+até, em alguns casos, ser negligenciável.
+
+No entanto, caso a amplitude do intervalo de confiança seja relativamente
+grande, isto passa a ser um problema, pois os intervalos de valores admissíveis
+calculados conforme preconiza a NBR 14.653-02, tendem a tornar-se fortemente
+assimétricos, como ilustrado pelo segundo caso apresentado, com dados simulados,
+já que o limite do campo de arbítrio inferior é atingido.
+
+
+# Referências {-}
