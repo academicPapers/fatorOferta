@@ -1243,7 +1243,7 @@ R 4.0.2&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
                    15  ,    25,    8,
                    10.2,     8,    9),
                  ncol = 3, byrow = T)
-R 4.0.2&gt; set.seed(1)
+R 4.0.2&gt; set.seed(2)
 R 4.0.2&gt; dados &lt;- mvrnorm(n=200,
                mu=c(100, 50, 30),
                Sigma=sigma)
@@ -1278,20 +1278,20 @@ R 4.0.2&gt; summary(fitMult)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.7525 -1.0738  0.0342  1.0562  4.1778 
+## -4.1684 -1.0438  0.0357  0.9533  3.7783 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -32.62137    3.15252 -10.348  &lt; 2e-16 ***
-## X1            0.69393    0.04110  16.884  &lt; 2e-16 ***
-## X2           -0.13625    0.03318  -4.107 5.89e-05 ***
-## FonteVenda   -4.25372    0.21881 -19.440  &lt; 2e-16 ***
+## (Intercept) -32.49863    2.83932 -11.446  &lt; 2e-16 ***
+## X1            0.68564    0.03850  17.811  &lt; 2e-16 ***
+## X2           -0.12137    0.03109  -3.904  0.00013 ***
+## FonteVenda   -4.37711    0.20723 -21.122  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.533 on 196 degrees of freedom
-## Multiple R-squared:  0.8074,	Adjusted R-squared:  0.8045 
-## F-statistic: 273.9 on 3 and 196 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 1.457 on 196 degrees of freedom
+## Multiple R-squared:  0.847,	Adjusted R-squared:  0.8447 
+## F-statistic: 361.7 on 3 and 196 DF,  p-value: &lt; 2.2e-16
 ```
 
 ---
@@ -1326,22 +1326,22 @@ R 4.0.2&gt; summary(fitMult2)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -4.3861 -1.1697 -0.0232  1.0383  4.1563 
+## -4.1177 -0.9111  0.0486  0.7468  3.5021 
 ## 
 ## Coefficients:
-##                 Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   -41.677349   4.095385 -10.177  &lt; 2e-16 ***
-## X1              0.784948   0.054812  14.321  &lt; 2e-16 ***
-## X2             -0.137763   0.045821  -3.007  0.00299 ** 
-## FonteVenda     16.843939   6.172261   2.729  0.00694 ** 
-## X1:FonteVenda  -0.212480   0.080253  -2.648  0.00877 ** 
-## X2:FonteVenda   0.003479   0.064441   0.054  0.95700    
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -44.13986    3.93393 -11.220  &lt; 2e-16 ***
+## X1              0.80796    0.05250  15.390  &lt; 2e-16 ***
+## X2             -0.13452    0.04274  -3.147  0.00191 ** 
+## FonteVenda     17.47534    5.43985   3.212  0.00154 ** 
+## X1:FonteVenda  -0.23624    0.07388  -3.197  0.00162 ** 
+## X2:FonteVenda   0.03720    0.05972   0.623  0.53410    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.489 on 194 degrees of freedom
-## Multiple R-squared:  0.8202,	Adjusted R-squared:  0.8156 
-## F-statistic:   177 on 5 and 194 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 1.398 on 194 degrees of freedom
+## Multiple R-squared:  0.8607,	Adjusted R-squared:  0.8571 
+## F-statistic: 239.7 on 5 and 194 DF,  p-value: &lt; 2.2e-16
 ```
 
 ---
@@ -1381,19 +1381,19 @@ R 4.0.2&gt; summary(fithom4)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -3.4121 -1.0049  0.0259  0.9197  3.3705 
+## -3.3685 -0.8418  0.0420  0.7860  2.9552 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -30.91552    2.80745 -11.012  &lt; 2e-16 ***
-## X1            0.63001    0.03659  17.220  &lt; 2e-16 ***
-## X2           -0.13018    0.02937  -4.432 1.55e-05 ***
+## (Intercept) -31.56188    2.46428 -12.808  &lt; 2e-16 ***
+## X1            0.62436    0.03349  18.642  &lt; 2e-16 ***
+## X2           -0.10647    0.02707  -3.933 0.000116 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.366 on 197 degrees of freedom
-## Multiple R-squared:  0.6829,	Adjusted R-squared:  0.6797 
-## F-statistic: 212.1 on 2 and 197 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 1.274 on 197 degrees of freedom
+## Multiple R-squared:  0.7626,	Adjusted R-squared:  0.7602 
+## F-statistic: 316.4 on 2 and 197 DF,  p-value: &lt; 2.2e-16
 ```
 
 ]
@@ -1408,7 +1408,7 @@ R 4.0.2&gt; sd(dados$y)/mean(dados$y)
 ```
 
 ```
-## [1] 0.1237151
+## [1] 0.1312783
 ```
 
 * Coeficiente de variação dos dados homogeneizados:
@@ -1419,10 +1419,18 @@ R 4.0.2&gt; sd(dados$yhom)/mean(dados$yhom)
 ```
 
 ```
-## [1] 0.0940831
+## [1] 0.1008243
 ```
 
 ]
+
+---
+# Gráficos Modelo Homogeneizado
+
+
+
+
+&lt;img src="images/unnamed-chunk-56-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Previsão de valores
@@ -1438,8 +1446,8 @@ R 4.0.2&gt; predict(fitMult, newdata = new90_40,
 ```
 
 ```
-##       fit      lwr      upr
-*## 1 20.1284 19.70817 20.54863
+##        fit      lwr      upr
+*## 1 19.97759 19.61092 20.34425
 ```
 
 
@@ -1450,7 +1458,7 @@ R 4.0.2&gt; predict(fitMult2, newdata = new90_40,
 
 ```
 ##        fit      lwr      upr
-*## 1 21.31735 20.73683 21.89788
+*## 1 20.89722 20.45255 21.34189
 ```
 
 
@@ -1461,7 +1469,7 @@ R 4.0.2&gt; predict(fithom4, newdata = new90_40,
 
 ```
 ##        fit      lwr      upr
-*## 1 20.57808 20.22004 20.93611
+*## 1 20.37176 20.06987 20.67365
 ```
 ]
 
@@ -1476,8 +1484,8 @@ R 4.0.2&gt; predict(fitMult, newdata = new110_60,
 ```
 
 ```
-##      fit      lwr      upr
-*## 1 31.282 30.85395 31.71004
+##        fit      lwr      upr
+*## 1 31.26314 30.90122 31.62506
 ```
 
 
@@ -1487,8 +1495,8 @@ R 4.0.2&gt; predict(fitMult2, newdata = new110_60,
 ```
 
 ```
-##        fit      lwr     upr
-*## 1 30.08103 29.48917 30.6729
+##        fit      lwr      upr
+*## 1 30.38508 29.94864 30.82153
 ```
 
 
@@ -1499,7 +1507,7 @@ R 4.0.2&gt; predict(fithom4, newdata = new110_60,
 
 ```
 ##        fit      lwr      upr
-*## 1 30.57467 30.22547 30.92387
+*## 1 30.72958 30.44099 31.01817
 ```
 
 ]

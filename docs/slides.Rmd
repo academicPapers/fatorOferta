@@ -829,7 +829,7 @@ sigma <- matrix(c(16  ,    15,  10.2,
                   15  ,    25,    8,
                   10.2,     8,    9),
                 ncol = 3, byrow = T)
-set.seed(1)
+set.seed(2)
 dados <- mvrnorm(n=200,
               mu=c(100, 50, 30),
               Sigma=sigma)
@@ -976,6 +976,44 @@ sd(dados$yhom)/mean(dados$yhom)
 ```
 
 ]
+
+---
+# Gráficos Modelo Homogeneizado
+
+```{r}
+coeffs <- coef(fithom4)
+dados <- augment(fithom4, data = dados[, c("X1", "X2", "yhom", "Fonte")])
+```
+
+
+```{r}
+p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1], 
+                        color = Fonte)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  labs(y = "Component + Partial Residuals")
+p2 <- ggplot(dados, aes(x = X2, y = .resid + coeffs[3]*X2 + coeffs[1], 
+                        color = Fonte)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  labs(y = "Component + Partial Residuals")
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
 
 ---
 # Previsão de valores
