@@ -148,6 +148,140 @@ class: inverse, center, middle
 # Estado da arte
 
 ---
+# Estado da arte
+
+* They (valuers) are producers and sellers of information about property markets, 
+performing the important function of bringing together buyers and sellers who generally lack information. It is argued here that valuers are not merely 
+passive gatherers of market information. On the contrary, they actively 
+create information where none existed to enable property markets to function.
+
+--
+
+* By estimating the ‘market value’ of a property, a valuer is effectively 
+laying down a rule for the market in question.
+
+--
+
+  - It must be stressed that valuers do not consciously set out to impose these 
+norms on the market, but this nevertheless is the effect of their actions. Once ‘market value’ has been provided, market participants need not personally search 
+for the distribution of prices. 
+
+--
+
+  - Further, it provides an anchor upon which bargaining between the 
+  participants can be based. ‘Market value’ is thus a device for lowering
+  transaction costs. Its function is to stabilise market expectations by 
+  providing pricing information.
+  
+--
+
+* Conclusão:
+
+--
+
+  - market value is normative
+  
+--
+
+  - market value may be established for any market, whether thin or actively 
+  traded.
+
+--
+
+  - valuers can and do inﬂuence, even determine, prices in property markets.
+  
+
+---
+# Estado da arte
+
+* Criação de valor de mercado *ex nihilo*:
+
+--
+
+  - Windhoek, Namíbia (Mooya, 2008): Na falta de melhores informações, o mercado estava ancorado nos valores constantes do cadastro municipal, que estava com 
+valores desatualizados;
+    
+--
+
+  - Um avaliador foi consultado a respeito do valor de mercado de uma 
+propriedade em terras de propriedade comunal, que não eram possíveis de ser
+negociadas até aquele momento. Não havia informação mercadológica disponível,       portanto, para a avaliação dessa terra.
+
+--
+
+  - De uma maneira ou de outra o avaliador, para a satisfação do seu cliente,
+entregou um laudo de avaliação da área.
+
+--
+  
+  - Após a avaliação, um mercado sobre aquelas terras se desenvolveu, ancorado
+no valor da avaliação prévia.
+    
+--
+
+* Em suma, os avaliadores não são meros observadores do mercado, que trabalham
+com as informações disponíveis, produzindo laudos friamente. Os avaliadores 
+injetam informação no mercado.
+
+---
+# Estado da Arte: O fator oferta
+
+* Utilizado para homogeneizar os dados de oferta, $P_L$, com os dados de 
+transações, $P_R$.
+
+--
+
+* Assumido multiplicativo: $P_{R} = \lambda P_{L}$ (Chinloy, 1980).
+
+--
+
+* Horowitz (1992) remove a hipótese multiplicativa e ajusta um modelo 
+econométrico para estimar os valores de venda à partir dos valores listados e
+das características dos imóveis, com a hipótese que $P_R < P_L$
+
+--
+
+* Haurin et al. (2013) mostram que, em períodos de *boom*, no MI os preços de
+venda podem superar os preços de oferta.
+
+--
+
+* Novas estratégias de venda podem afetar o valor do fator oferta. Enquanto nas
+estratégias convencionais o valor reservado é menor do que o valor ofertado, nas
+novas estratégias de venda é facultado ao proprietário ofertar o seu imóvel a 
+um valor mais baixo que o de mercado, criando assim condições para um maior 
+número de ofertas (leilão).
+
+---
+background-image: url(./images/1-s2.0-S1051137713000041-gr1.jpg)
+background-size: contain
+
+# Fator oferta vs. Tempo
+
+---
+# Estado da Arte: O fator oferta
+    
+## Conclusão
+
+* A forma do fator oferta depende do mercado em questão e do momento em análise;
+
+--
+
+* O avaliador deve analisar os dados de oferta e transação para tomar a melhor
+decisão sobre a relação momentânea entre oferta e transação e a melhor maneira
+de modelá-la;
+
+--
+
+* O avaliador deve prospectar o mercado para averiguar a eventual existência de
+diferentes estratégias de venda nos preços ofertados;
+
+--
+
+* Na falta de melhores informações do mercado, o avaliador deve estar ciente de
+que estará inserindo informação no mercado. O melhor a fazer é estabelecer uma hipótese clara sobre a relação oferta/transação e deixar isso claro em seu laudo.
+    
+---
 class: inverse, center, middle
 
 # Aplicações
@@ -303,19 +437,19 @@ tab_model(fit, fit1, fithom)
 
 .pull-left[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new250 <- 
   data.frame(Area = 250, Fonte = "Venda")
 predict(fit, newdata = new250,
         interval = "confidence", level = .80)
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fit1, newdata = new250,
         interval = "confidence", level = .80)
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fithom, newdata = new250,
         interval = "confidence", level = .80)
 ```
@@ -323,19 +457,19 @@ predict(fithom, newdata = new250,
 
 .pull-right[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new10000 <- 
   data.frame(Area = 10000, Fonte = "Venda")
 predict(fit, newdata = new10000,
         interval = "confidence", level = .80)
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fit1, newdata = new10000,
         interval = "confidence", level = .80)
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fithom, newdata = new10000,
         interval = "confidence", level = .80)
 ```
@@ -471,7 +605,7 @@ tab_model(fit2, fithom2)
 
 .pull-left[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new250 <- 
   data.frame(Area = 250, Fonte = "Venda")
 exp(predict(fit2, newdata = new250,
@@ -479,7 +613,7 @@ exp(predict(fit2, newdata = new250,
 ```
 
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 exp(predict(fithom2, newdata = new250,
         interval = "confidence", level = .80))
 ```
@@ -487,14 +621,14 @@ exp(predict(fithom2, newdata = new250,
 
 .pull-right[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new5000 <- 
   data.frame(Area = 5000, Fonte = "Venda")
 exp(predict(fit2, newdata = new5000,
         interval = "confidence", level = .80))
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 exp(predict(fithom2, newdata = new5000,
         interval = "confidence", level = .80))
 ```
@@ -646,19 +780,19 @@ tab_model(fit3, fit4, fithom3, digits = 3)
 
 .pull-left[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new250 <- 
   data.frame(Area = 250, Fonte = "Venda")
 predict(fit3, newdata = new250,
         interval = "confidence", level = .80)^2
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fit4, newdata = new250,
         interval = "confidence", level = .80)^2
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fithom3, newdata = new250,
         interval = "confidence", level = .80)^2
 ```
@@ -666,24 +800,228 @@ predict(fithom3, newdata = new250,
 
 .pull-right[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 new5000 <- 
   data.frame(Area = 5000, Fonte = "Venda")
 predict(fit3, newdata = new5000,
         interval = "confidence", level = .80)^2
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fit4, newdata = new5000,
         interval = "confidence", level = .80)^2
 ```
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=c(2)}
 predict(fithom3, newdata = new5000,
         interval = "confidence", level = .80)^2
 ```
 
 ]
+
+---
+# Fator Oferta na regressão múltipla
+
+```{r, echo = TRUE}
+library(MASS)
+##                X1       X2      Y
+sigma <- matrix(c(16  ,    15,  10.2,
+                  15  ,    25,    8,
+                  10.2,     8,    9),
+                ncol = 3, byrow = T)
+set.seed(1)
+dados <- mvrnorm(n=200,
+              mu=c(100, 50, 30),
+              Sigma=sigma)
+colnames(dados) <- c("X1", "X2", "y")
+dados <- as.data.frame(dados)
+# cor(dados)
+# cov(dados)
+dados$Fonte <- rbinom(200, 1, .5)
+dados$y <- (1 - .15*dados$Fonte)*dados$y
+dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+```
+
+---
+# Fator Oferta na regressão múltipla
+
+```{r}
+p1 <- ggplot(dados, aes(y = y, x = X1, color = Fonte)) +
+  geom_point()
+p2 <-  ggplot(dados, aes(y = y, x = X2, color = Fonte)) +
+  geom_point()
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+
+---
+# Modelo mal especificado
+
+```{r, echo = TRUE}
+fitMult <- lm(y ~ X1 + X2 + Fonte, dados)
+summary(fitMult)
+```
+
+---
+# Modelo mal especificado
+
+```{r fitMultDiagnostics, fig.cap="Modelo mal especificado. Fator oferta.",, out.width="38%", fig.show="hold"}
+plot(fitMult)
+```
+
+---
+# Análise Exploratória
+
+```{r}
+library(broom)
+coeffs <- coef(fitMult)
+dados <- augment(fitMult, dados)
+```
+
+
+```{r}
+p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1], 
+                        color = Fonte)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  labs(y = "Component + Partial Residuals")
+p2 <- ggplot(dados, aes(x = X2, y = .resid + coeffs[3]*X2 + coeffs[1], 
+                        color = Fonte)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  labs(y = "Component + Partial Residuals")
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+# Modelo Correto
+
+```{r, echo = TRUE}
+fitMult2 <- lm(y ~ (X1 + X2)*Fonte, data = dados)
+summary(fitMult2)
+```
+
+---
+# Modelo Correto
+
+```{r, fig.cap="Regressão Múltiplo. Modelo Correto. Fator Oferta.", out.width="50%", fig.show = "hold"}
+plot(predictorEffect("X1", fitMult2),
+     lines=list(multiline=TRUE))
+plot(predictorEffect("X2", fitMult2), 
+     lines=list(multiline=TRUE))
+```
+
+---
+# Modelo Correto
+
+```{r fitMul2tDiagnostics, fig.cap="Modelo mal especificado. Fator oferta.",, out.width="38%", fig.show="hold"}
+plot(fitMult2)
+```
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+
+```{r, echo = TRUE}
+dados <- within(dados, 
+                yhom <- ifelse(Fonte == "Venda", 
+                                y, .85*y))
+fithom4 <- lm(yhom ~ X1 + X2, dados)
+summary(fithom4)
+```
+
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+```{r, echo = TRUE}
+sd(dados$y)/mean(dados$y)
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+```{r, echo = TRUE}
+sd(dados$yhom)/mean(dados$yhom)
+```
+
+]
+
+---
+# Previsão de valores
+
+.pull-left[
+
+```{r, echo = TRUE, highlight.output=c(2)}
+new90_40 <- 
+  data.frame(X1 = 90, X2 = 40, Fonte = "Venda")
+predict(fitMult, newdata = new90_40,
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE, highlight.output=c(2)}
+predict(fitMult2, newdata = new90_40,
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE, highlight.output=c(2)}
+predict(fithom4, newdata = new90_40,
+        interval = "confidence", level = .80)
+```
+]
+
+.pull-right[
+
+```{r, echo = TRUE, highlight.output=c(2)}
+new110_60 <- 
+  data.frame(X1 = 110, X2 = 60, Fonte = "Venda")
+predict(fitMult, newdata = new110_60,
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE, highlight.output=c(2)}
+predict(fitMult2, newdata = new110_60,
+        interval = "confidence", level = .80)
+```
+
+```{r, echo = TRUE, highlight.output=c(2)}
+predict(fithom4, newdata = new110_60,
+        interval = "confidence", level = .80)
+```
+
+]
+
+
 
 ---
 # Efeitos do Fator Oferta sobre IC e IP

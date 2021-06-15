@@ -116,9 +116,9 @@ comment by Watkins, 1998, p. 57).
 
 * Em um extremo, tem-se a condição de mercado perfeito, e num outro extremo, 
 tem-se a condição de mercado inexistente. Entre as duas situações, partindo do
-extremo de mercado inexistente, à medida que os custos transacionais diminuem,
+extremo de mercado inexistente, à medida que os custos de transação diminuem,
 ruma-se para a condição de mercado perfeito, onde existem muitos compradores,
-muitos vendedores e informação perfeita, *i.e.* os custos transacionais são
+muitos vendedores e informação perfeita, *i.e.* os custos de transação são
 iguais a zero.
 
 --
@@ -138,6 +138,140 @@ class: inverse, center, middle
 
 # Estado da arte
 
+---
+# Estado da arte
+
+* They (valuers) are producers and sellers of information about property markets, 
+performing the important function of bringing together buyers and sellers who generally lack information. It is argued here that valuers are not merely 
+passive gatherers of market information. On the contrary, they actively 
+create information where none existed to enable property markets to function.
+
+--
+
+* By estimating the ‘market value’ of a property, a valuer is effectively 
+laying down a rule for the market in question.
+
+--
+
+  - It must be stressed that valuers do not consciously set out to impose these 
+norms on the market, but this nevertheless is the effect of their actions. Once ‘market value’ has been provided, market participants need not personally search 
+for the distribution of prices. 
+
+--
+
+  - Further, it provides an anchor upon which bargaining between the 
+  participants can be based. ‘Market value’ is thus a device for lowering
+  transaction costs. Its function is to stabilise market expectations by 
+  providing pricing information.
+  
+--
+
+* Conclusão:
+
+--
+
+  - market value is normative
+  
+--
+
+  - market value may be established for any market, whether thin or actively 
+  traded.
+
+--
+
+  - valuers can and do inﬂuence, even determine, prices in property markets.
+  
+
+---
+# Estado da arte
+
+* Criação de valor de mercado *ex nihilo*:
+
+--
+
+  - Windhoek, Namíbia (Mooya, 2008): Na falta de melhores informações, o mercado estava ancorado nos valores constantes do cadastro municipal, que estava com 
+valores desatualizados;
+    
+--
+
+  - Um avaliador foi consultado a respeito do valor de mercado de uma 
+propriedade em terras de propriedade comunal, que não eram possíveis de ser
+negociadas até aquele momento. Não havia informação mercadológica disponível,       portanto, para a avaliação dessa terra.
+
+--
+
+  - De uma maneira ou de outra o avaliador, para a satisfação do seu cliente,
+entregou um laudo de avaliação da área.
+
+--
+  
+  - Após a avaliação, um mercado sobre aquelas terras se desenvolveu, ancorado
+no valor da avaliação prévia.
+    
+--
+
+* Em suma, os avaliadores não são meros observadores do mercado, que trabalham
+com as informações disponíveis, produzindo laudos friamente. Os avaliadores 
+injetam informação no mercado.
+
+---
+# Estado da Arte: O fator oferta
+
+* Utilizado para homogeneizar os dados de oferta, `\(P_L\)`, com os dados de 
+transações, `\(P_R\)`.
+
+--
+
+* Assumido multiplicativo: `\(P_{R} = \lambda P_{L}\)` (Chinloy, 1980).
+
+--
+
+* Horowitz (1992) remove a hipótese multiplicativa e ajusta um modelo 
+econométrico para estimar os valores de venda à partir dos valores listados e
+das características dos imóveis, com a hipótese que `\(P_R &lt; P_L\)`
+
+--
+
+* Haurin et al. (2013) mostram que, em períodos de *boom*, no MI os preços de
+venda podem superar os preços de oferta.
+
+--
+
+* Novas estratégias de venda podem afetar o valor do fator oferta. Enquanto nas
+estratégias convencionais o valor reservado é menor do que o valor ofertado, nas
+novas estratégias de venda é facultado ao proprietário ofertar o seu imóvel a 
+um valor mais baixo que o de mercado, criando assim condições para um maior 
+número de ofertas (leilão).
+
+---
+background-image: url(./images/1-s2.0-S1051137713000041-gr1.jpg)
+background-size: contain
+
+# Fator oferta vs. Tempo
+
+---
+# Estado da Arte: O fator oferta
+    
+## Conclusão
+
+* A forma do fator oferta depende do mercado em questão e do momento em análise;
+
+--
+
+* O avaliador deve analisar os dados de oferta e transação para tomar a melhor
+decisão sobre a relação momentânea entre oferta e transação e a melhor maneira
+de modelá-la;
+
+--
+
+* O avaliador deve prospectar o mercado para averiguar a eventual existência de
+diferentes estratégias de venda nos preços ofertados;
+
+--
+
+* Na falta de melhores informações do mercado, o avaliador deve estar ciente de
+que estará inserindo informação no mercado. O melhor a fazer é estabelecer uma hipótese clara sobre a relação oferta/transação e deixar isso claro em seu laudo.
+    
 ---
 class: inverse, center, middle
 
@@ -458,7 +592,7 @@ R 4.0.2&gt; predict(fit, newdata = new250,
 
 ```
 ##       fit      lwr      upr
-## 1 2608.47 2565.275 2651.666
+*## 1 2608.47 2565.275 2651.666
 ```
 
 
@@ -469,7 +603,7 @@ R 4.0.2&gt; predict(fit1, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-## 1 2496.448 2445.056 2547.841
+*## 1 2496.448 2445.056 2547.841
 ```
 
 
@@ -480,7 +614,7 @@ R 4.0.2&gt; predict(fithom, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-## 1 2501.733 2470.229 2533.236
+*## 1 2501.733 2470.229 2533.236
 ```
 ]
 
@@ -496,7 +630,7 @@ R 4.0.2&gt; predict(fit, newdata = new10000,
 
 ```
 ##        fit     lwr      upr
-## 1 330.4401 286.261 374.6192
+*## 1 330.4401 286.261 374.6192
 ```
 
 
@@ -507,7 +641,7 @@ R 4.0.2&gt; predict(fit1, newdata = new10000,
 
 ```
 ##        fit      lwr      upr
-## 1 447.0103 394.0733 499.9473
+*## 1 447.0103 394.0733 499.9473
 ```
 
 
@@ -518,7 +652,7 @@ R 4.0.2&gt; predict(fithom, newdata = new10000,
 
 ```
 ##        fit      lwr      upr
-## 1 427.5531 395.2578 459.8485
+*## 1 427.5531 395.2578 459.8485
 ```
 
 ]
@@ -708,7 +842,7 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new250,
 
 ```
 ##        fit     lwr     upr
-## 1 393.8706 385.454 402.471
+*## 1 393.8706 385.454 402.471
 ```
 
 
@@ -720,7 +854,7 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-## 1 389.9781 382.0481 398.0727
+*## 1 389.9781 382.0481 398.0727
 ```
 ]
 
@@ -736,7 +870,7 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new5000,
 
 ```
 ##        fit      lwr      upr
-## 1 185.6678 183.4194 187.9437
+*## 1 185.6678 183.4194 187.9437
 ```
 
 
@@ -747,7 +881,7 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
 
 ```
 ##        fit      lwr      upr
-## 1 183.9551 182.0866 185.8428
+*## 1 183.9551 182.0866 185.8428
 ```
 
 ]
@@ -1033,7 +1167,7 @@ R 4.0.2&gt; predict(fit3, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-## 1 4020.876 3948.145 4094.271
+*## 1 4020.876 3948.145 4094.271
 ```
 
 
@@ -1044,7 +1178,7 @@ R 4.0.2&gt; predict(fit4, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-## 1 3872.045 3784.093 3961.007
+*## 1 3872.045 3784.093 3961.007
 ```
 
 
@@ -1055,7 +1189,7 @@ R 4.0.2&gt; predict(fithom3, newdata = new250,
 
 ```
 ##        fit      lwr     upr
-## 1 3881.562 3824.999 3938.54
+*## 1 3881.562 3824.999 3938.54
 ```
 ]
 
@@ -1071,7 +1205,7 @@ R 4.0.2&gt; predict(fit3, newdata = new5000,
 
 ```
 ##        fit      lwr     upr
-## 1 307.1146 286.8096 328.114
+*## 1 307.1146 286.8096 328.114
 ```
 
 
@@ -1082,7 +1216,7 @@ R 4.0.2&gt; predict(fit4, newdata = new5000,
 
 ```
 ##        fit      lwr      upr
-## 1 351.8401 324.9102 379.8422
+*## 1 351.8401 324.9102 379.8422
 ```
 
 
@@ -1093,10 +1227,284 @@ R 4.0.2&gt; predict(fithom3, newdata = new5000,
 
 ```
 ##       fit      lwr      upr
-## 1 341.363 324.3225 358.8399
+*## 1 341.363 324.3225 358.8399
 ```
 
 ]
+
+---
+# Fator Oferta na regressão múltipla
+
+
+```r
+R 4.0.2&gt; library(MASS)
+R 4.0.2&gt; ##                X1       X2      Y
+R 4.0.2&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
+                   15  ,    25,    8,
+                   10.2,     8,    9),
+                 ncol = 3, byrow = T)
+R 4.0.2&gt; set.seed(1)
+R 4.0.2&gt; dados &lt;- mvrnorm(n=200,
+               mu=c(100, 50, 30),
+               Sigma=sigma)
+R 4.0.2&gt; colnames(dados) &lt;- c("X1", "X2", "y")
+R 4.0.2&gt; dados &lt;- as.data.frame(dados)
+R 4.0.2&gt; # cor(dados)
+R 4.0.2&gt; # cov(dados)
+R 4.0.2&gt; dados$Fonte &lt;- rbinom(200, 1, .5)
+R 4.0.2&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
+R 4.0.2&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+```
+
+---
+# Fator Oferta na regressão múltipla
+
+&lt;img src="images/unnamed-chunk-46-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Modelo mal especificado
+
+
+```r
+R 4.0.2&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
+R 4.0.2&gt; summary(fitMult)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ X1 + X2 + Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.7525 -1.0738  0.0342  1.0562  4.1778 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -32.62137    3.15252 -10.348  &lt; 2e-16 ***
+## X1            0.69393    0.04110  16.884  &lt; 2e-16 ***
+## X2           -0.13625    0.03318  -4.107 5.89e-05 ***
+## FonteVenda   -4.25372    0.21881 -19.440  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.533 on 196 degrees of freedom
+## Multiple R-squared:  0.8074,	Adjusted R-squared:  0.8045 
+## F-statistic: 273.9 on 3 and 196 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Modelo mal especificado
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fitMultDiagnostics-1.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMultDiagnostics-2.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMultDiagnostics-3.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMultDiagnostics-4.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo mal especificado. Fator oferta.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Análise Exploratória
+
+
+
+
+&lt;img src="images/unnamed-chunk-49-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Modelo Correto
+
+
+```r
+R 4.0.2&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
+R 4.0.2&gt; summary(fitMult2)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ (X1 + X2) * Fonte, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.3861 -1.1697 -0.0232  1.0383  4.1563 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -41.677349   4.095385 -10.177  &lt; 2e-16 ***
+## X1              0.784948   0.054812  14.321  &lt; 2e-16 ***
+## X2             -0.137763   0.045821  -3.007  0.00299 ** 
+## FonteVenda     16.843939   6.172261   2.729  0.00694 ** 
+## X1:FonteVenda  -0.212480   0.080253  -2.648  0.00877 ** 
+## X2:FonteVenda   0.003479   0.064441   0.054  0.95700    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.489 on 194 degrees of freedom
+## Multiple R-squared:  0.8202,	Adjusted R-squared:  0.8156 
+## F-statistic:   177 on 5 and 194 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Modelo Correto
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/unnamed-chunk-51-1.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;&lt;img src="images/unnamed-chunk-51-2.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;
+&lt;p class="caption"&gt;Regressão Múltiplo. Modelo Correto. Fator Oferta.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Modelo Correto
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/fitMul2tDiagnostics-1.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-2.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-3.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-4.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;
+&lt;p class="caption"&gt;Modelo mal especificado. Fator oferta.&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Opção: aplicação prévia do fator oferta
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; dados &lt;- within(dados, 
+                 yhom &lt;- ifelse(Fonte == "Venda", 
+                                 y, .85*y))
+R 4.0.2&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
+R 4.0.2&gt; summary(fithom4)
+```
+
+```
+## 
+## Call:
+## lm(formula = yhom ~ X1 + X2, data = dados)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.4121 -1.0049  0.0259  0.9197  3.3705 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -30.91552    2.80745 -11.012  &lt; 2e-16 ***
+## X1            0.63001    0.03659  17.220  &lt; 2e-16 ***
+## X2           -0.13018    0.02937  -4.432 1.55e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.366 on 197 degrees of freedom
+## Multiple R-squared:  0.6829,	Adjusted R-squared:  0.6797 
+## F-statistic: 212.1 on 2 and 197 DF,  p-value: &lt; 2.2e-16
+```
+
+]
+
+.pull-right[
+
+* Coeficiente de variação dos dados crus:
+
+
+```r
+R 4.0.2&gt; sd(dados$y)/mean(dados$y)
+```
+
+```
+## [1] 0.1237151
+```
+
+* Coeficiente de variação dos dados homogeneizados:
+
+
+```r
+R 4.0.2&gt; sd(dados$yhom)/mean(dados$yhom)
+```
+
+```
+## [1] 0.0940831
+```
+
+]
+
+---
+# Previsão de valores
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; new90_40 &lt;- 
+   data.frame(X1 = 90, X2 = 40, Fonte = "Venda")
+R 4.0.2&gt; predict(fitMult, newdata = new90_40,
+         interval = "confidence", level = .80)
+```
+
+```
+##       fit      lwr      upr
+*## 1 20.1284 19.70817 20.54863
+```
+
+
+```r
+R 4.0.2&gt; predict(fitMult2, newdata = new90_40,
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+*## 1 21.31735 20.73683 21.89788
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom4, newdata = new90_40,
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+*## 1 20.57808 20.22004 20.93611
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; new110_60 &lt;- 
+   data.frame(X1 = 110, X2 = 60, Fonte = "Venda")
+R 4.0.2&gt; predict(fitMult, newdata = new110_60,
+         interval = "confidence", level = .80)
+```
+
+```
+##      fit      lwr      upr
+*## 1 31.282 30.85395 31.71004
+```
+
+
+```r
+R 4.0.2&gt; predict(fitMult2, newdata = new110_60,
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr     upr
+*## 1 30.08103 29.48917 30.6729
+```
+
+
+```r
+R 4.0.2&gt; predict(fithom4, newdata = new110_60,
+         interval = "confidence", level = .80)
+```
+
+```
+##        fit      lwr      upr
+*## 1 30.57467 30.22547 30.92387
+```
+
+]
+
+
 
 ---
 # Efeitos do Fator Oferta sobre IC e IP
