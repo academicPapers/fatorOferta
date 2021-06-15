@@ -39,28 +39,108 @@ class: inverse, center, middle
 # Contextualização
 
 ---
-
 # Contextualização
 
-* Dados de oferta vs. Dados de Transação
+* Dados de transação:
+
+--
+  - Proxy para o valor de mercado
+  
+--
+
+  - **Se** tratarem-se de *arms' lenght transactions*
+  
+--
+
+  - Transações com valores muito discrepantes podem ser de vendas ocorridas em situações diferentes das que caracterizam as *arm's lenght transactions*
 
 --
 
-* Estimação de um fator oferta
+* Dados de oferta:
 
 --
 
-* Formas de estimação
-
+  - Proxy para o valor de mercado
+  
 --
 
-* Aplicação
+  - **Se** os anúncios forem *validados*
+  
+--
 
+  - Necessidade de um passo a mais: a qual distância do valor de mercado 
+  encontram-se os dados de oferta?
 
 ---
 class: inverse, center, middle
 
 # Conceitos e Paradigmas
+
+---
+# Conceitos e Paradigmas
+
+* Preços de mercado vs. Valor de Mercado (**VM**)
+
+--
+
+* Definições neoclássicas do **VM**:
+
+--
+
+  - Market price is the amount actually paid in a particular transaction, while market value is a hypothetical or estimated sale price that would result from careful consideration by the buyer and seller of all data, with primary reliance 
+on those data that reflect the actions of responsible, prudent buyers and 
+sellers under conditions of a fair sale (Spinney, 2010). 
+
+--
+
+  - IVSC: the estimated amount for which a property should exchange on the date 
+of valuation between a willing buyer and a willing seller **in an arm’s length transaction** after proper marketing wherein the parties had each acted 
+knowledgeably, prudently and without compulsion (French, 2006, p. 87).
+
+--
+
+  - Valor de mercado é a quantia mais provável pela qual se negociaria voluntariamente e conscientemente um bem, em uma data de referência, dentro das condições do mercado vigente (NBR 14653-01/2019).
+  
+---
+# Conceitos e Paradigmas
+
+* Crítica das definições de **VM** a partir da teoria dos custos de transação:
+  
+--
+
+  - most of the literature on the property market is written as though it was the very paradigm of a neo-classical perfect market—many buyers, many sellers, homogeneous product, full information etc (Evans, 1995, p. 6; also see 
+comment by Watkins, 1998, p. 57).
+
+--
+  
+  - actors in real-life markets are faced with positive transaction costs, 
+  mainly arising from incomplete information.
+
+--
+
+  - once transaction costs are introduced, the acquisition of unlimited 
+  knowledge becomes too expensive or impossible.
+  
+--
+
+* Em um extremo, tem-se a condição de mercado perfeito, e num outro extremo, 
+tem-se a condição de mercado inexistente. Entre as duas situações, partindo do
+extremo de mercado inexistente, à medida que os custos de transação diminuem,
+ruma-se para a condição de mercado perfeito, onde existem muitos compradores,
+muitos vendedores e informação perfeita, *i.e.* os custos de transação são
+iguais a zero.
+
+--
+
+  - It would seem therefore that valuation theory is faced with the simultaneity 
+problem akin to that of quantum physics where, in this case, market value cannot exist simultaneously with the need for valuation. Valuers are required when transaction costs are high but at this point market value does not exist. 
+Conversely, valuers are not required when transaction costs are zero and market value has emerged.
+
+---
+background-image: url(https://news.berkeley.edu/wp-content/uploads/2014/07/cats300.jpg)
+background-size: contain
+
+# O gato de Schrodinger
 
 ---
 class: inverse, center, middle
@@ -98,7 +178,7 @@ ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
 ```
 
 ---
-# Modelo mau especificado
+# Modelo mal especificado
 
 .pull-left[
 
@@ -120,7 +200,7 @@ qqnorm(residuals(fit)); qqline(residuals(fit), col = 2)
 
 
 ---
-# Modelo mau especificado
+# Modelo mal especificado
 
 ```{r dados1a, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
 ggplot(dados, aes(x = Area, y = VU)) +
@@ -461,7 +541,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
 
 ---
-# Modelo mau especificado
+# Modelo mal especificado
 
 ```{r, echo = TRUE}
 fit3 <- lm(sqrt(VU) ~ Area + Fonte, data = dados)
@@ -469,9 +549,9 @@ summary(fit3)
 ```
 
 ---
-# Modelo mau especificado
+# Modelo mal especificado
 
-```{r fit3Diagnostics, fig.cap="Modelo mau especificado. Fator oferta.", fig.show="hold", out.width="38%"}
+```{r fit3Diagnostics, fig.cap="Modelo mal especificado. Fator oferta.", fig.show="hold", out.width="38%"}
 plot(fit3)
 ```
 
@@ -497,7 +577,7 @@ plot(predictorEffect("Area", fit4),
 ---
 # Modelo correto
 
-```{r fit4Diagnostics, fig.cap="Modelo mau especificado. Fator oferta.", fig.show="hold", out.width="38%"}
+```{r fit4Diagnostics, fig.cap="Modelo mal especificado. Fator oferta.", fig.show="hold", out.width="38%"}
 plot(fit4)
 ```
 
