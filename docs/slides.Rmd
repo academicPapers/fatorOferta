@@ -665,13 +665,40 @@ predict(fithom, newdata = new10000,
 ---
 # Como descobrir o fator oferta a partir dos dados?
 
-[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
-
+* **NBR 14.653-02**: 
 
 --
 
+  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
+  observados, limitado a **um único fator de homogeneização**, desde que
+  fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
+  (**exemplo: aplicação do fator de fonte para a transformação de preços de 
+  oferta para as condições de transação**). 
+  
+--
+
+  - **Os fatores devem ser calculados por metodologia científica**, como citado 
+  em 8.2.1.4.3, justificados do ponto de vista teórico e prático, com a inclusão
+  de validação, quando pertinente [...]
+  
+--
+
+  - Para a utilização deste tratamento **é recomendável que seja evitado** o uso 
+  de **fatores que**, aplicados isoladamente em relação ao avaliando ou ao 
+  paradigma, **heterogeneizem os valores originais**. Essa recomendação só é 
+  válida com a confirmação do efeito de heterogeneização, após a aplicação 
+  conjunta dos fatores. 
+
+--
+
+[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
+
+
+---
+# Como descobrir o fator oferta a partir dos dados?
+
 ```{r}
-fator <- seq(.5, 1.5, by = .01)
+fator <- seq(.5, 2, by = .01)
 cv <- vector(length = length(fator))
 for (i in seq_along(fator)){
   dados <- within(dados, 
@@ -682,7 +709,7 @@ for (i in seq_along(fator)){
 plotdata <- data.frame(CV = cv, fatorOferta = fator)
 ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
   geom_line(color = "blue", size = 1.5) +
-  scale_x_continuous(breaks = seq(.5, 1.5, by = .05)) +
+  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
@@ -1280,7 +1307,7 @@ predict(fithom4, newdata = new110_60,
 --
 
 ```{r}
-fator <- seq(.5, 1.5, by = .01)
+fator <- seq(.5, 2, by = .01)
 cv <- vector(length = length(fator))
 for (i in seq_along(fator)){
   dados <- within(dados, 
@@ -1291,7 +1318,7 @@ for (i in seq_along(fator)){
 plotdata <- data.frame(CV = cv, fatorOferta = fator)
 ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
   geom_line(color = "blue", size = 1.5) +
-  scale_x_continuous(breaks = seq(.5, 1.5, by = .05)) +
+  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
