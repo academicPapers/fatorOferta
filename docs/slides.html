@@ -914,7 +914,34 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 ```r
 R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, data = dados)
+R 4.0.2&gt; summary(fit2)
 ```
+
+```
+## 
+## Call:
+## lm(formula = log(VU) ~ log(Area) + Fonte, data = dados)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.108967 -0.040772  0.006066  0.034972  0.106846 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.507161   0.054010  139.00   &lt;2e-16 ***
+## log(Area)   -0.251045   0.007012  -35.80   &lt;2e-16 ***
+*## FonteVenda  -0.145003   0.009974  -14.54   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0497 on 97 degrees of freedom
+## Multiple R-squared:  0.9397,	Adjusted R-squared:  0.9385 
+## F-statistic: 756.3 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+# Modelo bem especificado
 
 &lt;img src="images/unnamed-chunk-23-1.svg" style="display: block; margin: auto;" /&gt;
 

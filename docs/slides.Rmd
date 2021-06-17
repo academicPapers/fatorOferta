@@ -806,9 +806,14 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ---
 # Modelo bem especificado
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=13}
 fit2 <- lm(log(VU) ~ log(Area) + Fonte, data = dados)
+summary(fit2)
 ```
+
+
+---
+# Modelo bem especificado
 
 ```{r}
 plot(predictorEffects(fit2, residuals=TRUE),
