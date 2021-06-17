@@ -31,6 +31,7 @@ library(ggvis)
 library(stargazer)
 library(effects)
 library(lmtest)
+library(mosaic)
 ```
 
 
@@ -41,26 +42,29 @@ class: inverse, center, middle
 ---
 # Contextualização
 
-* Dados de transação:
+## Dados de transação:
 
 --
-  - Proxy para o valor de mercado
+
+* Proxy para o valor de mercado
   
 --
 
-  - **Se** tratarem-se de *arms' lenght transactions*
+  - **Se** tratarem-se de *arms' lenght transactions*, ou seja, se as transações
+  forem entre partes independentes.
   
 --
 
-  - Transações com valores muito discrepantes podem ser de vendas ocorridas em situações diferentes das que caracterizam as *arm's lenght transactions*
+  - Transações com valores muito discrepantes podem ser de vendas ocorridas em 
+  situações diferentes das que caracterizam as *arm's lenght transactions*
 
 --
 
-* Dados de oferta:
+## Dados de oferta:
 
 --
 
-  - Proxy para o valor de mercado
+* Proxy para o valor de mercado
   
 --
 
@@ -79,37 +83,216 @@ class: inverse, center, middle
 ---
 # Conceitos e Paradigmas
 
+## Definições neoclássicas do **VM**:
+
+--
+
 * Preços de mercado vs. Valor de Mercado (**VM**)
 
 --
 
-* Definições neoclássicas do **VM**:
+  - O preço de mercado é o valor efetivamente pago em uma determinada transação, 
+enquanto **valor de mercado é um preço de venda hipotético ou estimado** que 
+resultaria da consideração cuidadosa pelo comprador e vendedor de todos os dados, 
+com confiança nos dados que refletem as ações de compradores e vendedores 
+responsáveis e prudentes, sob condições de uma venda justa (Spinney, 2010).
 
 --
 
-  - Market price is the amount actually paid in a particular transaction, while market value is a hypothetical or estimated sale price that would result from careful consideration by the buyer and seller of all data, with primary reliance 
-on those data that reflect the actions of responsible, prudent buyers and 
-sellers under conditions of a fair sale (Spinney, 2010). 
+  - IVSC: o **valor de mercado é a quantia estimada** pela qual uma propriedade 
+  deve ser negociada, na data de avaliação, entre um promitente comprador e um 
+  promitente vendedor, entre partes independentes, após um tempo adequado de 
+  exposição ao mercado, em que ambas as partes ajam com conhecimento,
+  prudência e sem compulsão (French, 2006, p. 87).
 
 --
 
-  - IVSC: the estimated amount for which a property should exchange on the date 
-of valuation between a willing buyer and a willing seller **in an arm’s length transaction** after proper marketing wherein the parties had each acted 
-knowledgeably, prudently and without compulsion (French, 2006, p. 87).
-
---
-
-  - Valor de mercado é a quantia mais provável pela qual se negociaria voluntariamente e conscientemente um bem, em uma data de referência, dentro das condições do mercado vigente (NBR 14653-01/2019).
+  - **Valor de mercado é a quantia mais provável** pela qual se negociaria
+  voluntariamente e conscientemente um bem, em uma data de referência, dentro
+  das condições do mercado vigente (NBR 14653-01/2019).
   
 ---
 # Conceitos e Paradigmas
 
-* Crítica das definições de **VM** a partir da teoria dos custos de transação:
+## Valor mais provável vs. valor mais alto
+
+* Alguns autores entendem que o valor de mercado é o valor mais alto da 
+distribuição de probabilidades (Mooya, 2008):
+
+--
+
+  - **Tome-se o exemplo de uma única propriedade colocada no mercado. Esta 
+  propriedade atrairá uma distribuição de ofertas normal de potenciais 
+  compradores**. O preço mais alto estará na extremidade superior da 
+  distribuição, enquanto o preço mais provável, em termos estatísticos, estará
+  em seu centro.
+
+--
+
+  - Levando em contra que os preços reais de mercado são usados como *proxies*
+  para o valor de mercado, a questão que se coloca é em que ponto da distribuição
+  a propriedade será negociada. Na prática, **um vendedor buscará a maior oferta**
+  possível que ele esteja ciente. 
+
+--
+
+  - **Nestas circunstâncias, a propriedade será negociada próximo à extremidade
+  superior da distribuição, não na média ou na moda da distribução**. De fato,
+  assumindo que os vendedores são 'racionais', todos as vendas observadas 
+  serão ao maior valor possível de ser obtido. Isto leva muitos avaliadores a 
+  definir o **valor de mercado como o máximo preço possível**.
+
+---
+# Conceitos e Paradigmas
+
+## Valor mais provável vs. valor mais alto
+
+* Porém, isto vai de encontro ao senso comum e à intuição:
+
+--
+
+  - Definir o valor de mercado em termos da extremidade superior de uma
+  distribuição normal está, no entanto, em desacordo com a maioria das
+  definições e com a intuição. **Quanto mais próximo se chega da extremidade
+  superior da distribuição, mais se chega próximo a negociações atípicas ou
+  especiais** e, portanto, menos representativas do sentimento do mercado o
+  preço de venda se torna.
+
+--
+
+  - **A maioria das definições de valor de mercado assumem compradores e 
+  vendedores típicos**. Intuitivamente, a maior parte das pessoas não 
+  reconheceria compras especiais (ou vendas forçadas) como boas evidências do 
+  valor de mercado.
+
+--
+
+  - **O senso comum requer que o valor de mercado seja 'representativo'** do 
+mercado em questão e deva, então, se localizar **no centro da distribuição**.
+Avaliadores que concordam com esta visão definem o valor de mercado com o valor
+mais provável.
+
+---
+# Conceitos e Paradigmas
+
+## Valor mais provável vs. valor mais alto
+
+### Como conciliar as duas definições de valor de mercado?
+
+--
+
+* Segundo Mooya (2008), a confusão pode ser facilmente resolvida deixando 
+explícitas as hipóteses em relação às informações disponíveis ao vendedor e a
+extensão do mercado em questão. **Se o vendedor tem informação total sobre todas
+as ofertas potenciais, a propriedade será vendida ao maior preço**.
+
+--
+
+  - **A realidade, contudo, é que o vendedor não terá a informação completa
+  sobre o tamanho e a distribuição das ofertas**. Do ponto de vista do vendedor, 
+  a venda terá lugar ao máximo preço possível. Do ponto de vista de um 
+  observador onisciente, contudo, a propriedade será negociada, *a priori*, ao 
+  preço mais provável. Este preço deverá ser um preço 'médio', apenas porque 
+  haverá mais compradores naquele ponto e, então, uma mais alta probabilidade de 
+  consumar a negociação.
+
+--
+
+  - Deve-se lembrar que o **valor de mercado é uma estimativa de um preço de
+  venda que não se realizou e provavelmenten nunca se realizará**. O preço 
+  realizado é, portanto, inteiramente uma questão de probabilidade
+
+--
+
+* As reflexões acima se referem à localização do valor de mercado dentro de uma
+distribuição de probabilidade de dados de venda. E em relação aos dados de 
+oferta? O valor de mercado pode ser encontrado dentro da distribuição de 
+probabilidades de dados de oferta? Em que região?
+
+---
+# Conceitos e Paradigmas
+
+## Onde se situa o valor de mercado na distribuição de dados de oferta?
+
+--
+
+* **Hipótese:** Em um mercado desaquecido, as negociações se concretizam com 
+grandes descontos em relação aos preços anunciados! O valor de mercado se 
+encontra distante da região central da distribuição de probabilidades de dados 
+de oferta!
+
+```{r}
+p <- gf_dist("norm", mean = 100, sd = 10, kind = "density", resolution = 50,
+        color = "red", size = 2, 
+         fill = "red", alpha = 0.5, geom = "area") %>%
+  gf_dist("norm", mean = 150, sd = 10, kind = "density", resolution = 50,
+          color = "blue", size = 2, 
+          fill = "blue", alpha = 0.5, geom = "area")
+p + 
+  annotate("text", label = "Compradores", 
+           x = 80, y = .03, 
+           size = 4, color = "red") + 
+  annotate("text", label = "Vendedores", 
+           x = 170, y = .03,
+           size = 4, color = "blue") +
+  annotate("text", label = "Fator Oferta",
+           x = 137.5, y = .045,
+           size = 4, color = "black") +
+  geom_vline(xintercept = 125) +
+  geom_vline(xintercept = 150) +
+  geom_segment(x = 125, xend = 150, y = .0425, yend = .0425,
+               arrow = arrow(length=unit(0.30,"cm"), 
+                             ends="both", type = "closed"))+
+  scale_y_continuous(expand = c(0.015, 0))
+```
+
+---
+# Conceitos e Paradigmas
+
+## Onde se situa o valor de mercado na distribuição de dados de oferta?
+
+--
+
+* **Hipótese:** Em um mercado aquecido, o valor de mercado se situa próximo ao 
+centro da distribuição dos dados de oferta. As negociações se dão com pouco 
+desconto, ou ainda, em valores acima dos preços anunciados!
+
+```{r}
+p <- gf_dist("norm", mean = 140, sd = 10, kind = "density", resolution = 50,
+        color = "red", size = 2, 
+         fill = "red", alpha = 0.5, geom = "area") %>%
+  gf_dist("norm", mean = 150, sd = 10, kind = "density", resolution = 50,
+          color = "blue", size = 2, 
+          fill = "blue", alpha = 0.5, geom = "area")
+p + 
+  annotate("text", label = "Compradores", 
+           x = 120, y = .03, 
+           size = 4, color = "red") + 
+  annotate("text", label = "Vendedores", 
+           x = 170, y = .03,
+           size = 4, color = "blue") +
+  annotate("text", label = "Fator Oferta",
+           x = 156, y = .0425,
+           size = 4, color = "black") +
+  geom_vline(xintercept = 145) +
+  geom_vline(xintercept = 150) +
+  geom_segment(x = 145, xend = 150, y = .0425, yend = .0425,
+               arrow = arrow(length=unit(0.30,"cm"), 
+                             ends="both", type = "closed")) +
+  scale_y_continuous(expand = c(0.015, 0))
+```
+
+---
+# Conceitos e Paradigmas
+
+## Crítica das definições de **VM** elaboradas a partir da teoria dos custos de transação
   
 --
 
-  - most of the literature on the property market is written as though it was the very paradigm of a neo-classical perfect market—many buyers, many sellers, homogeneous product, full information etc (Evans, 1995, p. 6; also see 
-comment by Watkins, 1998, p. 57).
+* most of the literature on the property market is written as though it was 
+the very paradigm of a neo-classical perfect market—many buyers, many sellers,
+homogeneous product, full information etc (Evans, 1995, p. 6; also see comment
+by Watkins, 1998, p. 57).
 
 --
   
@@ -133,8 +316,11 @@ iguais a zero.
 --
 
   - It would seem therefore that valuation theory is faced with the simultaneity 
-problem akin to that of quantum physics where, in this case, market value cannot exist simultaneously with the need for valuation. Valuers are required when transaction costs are high but at this point market value does not exist. 
-Conversely, valuers are not required when transaction costs are zero and market value has emerged.
+problem akin to that of quantum physics where, in this case, market value cannot 
+exist simultaneously with the need for valuation. Valuers are required when 
+transaction costs are high but at this point market value does not exist. 
+Conversely, valuers are not required when transaction costs are zero and market 
+value has emerged.
 
 ---
 background-image: url(https://news.berkeley.edu/wp-content/uploads/2014/07/cats300.jpg)
@@ -150,10 +336,11 @@ class: inverse, center, middle
 ---
 # Estado da arte
 
-* They (valuers) are producers and sellers of information about property markets, 
-performing the important function of bringing together buyers and sellers who generally lack information. It is argued here that valuers are not merely 
-passive gatherers of market information. On the contrary, they actively 
-create information where none existed to enable property markets to function.
+* **They (valuers) are producers and sellers of information about property markets**, 
+performing the important function of bringing together buyers and sellers who 
+generally lack information. It is argued here that **valuers are not merely 
+passive gatherers of market information**. On the contrary, **they actively 
+create information where none existed to enable property markets to function**.
 
 --
 
@@ -163,33 +350,16 @@ laying down a rule for the market in question.
 --
 
   - It must be stressed that valuers do not consciously set out to impose these 
-norms on the market, but this nevertheless is the effect of their actions. Once ‘market value’ has been provided, market participants need not personally search 
+norms on the market, but this nevertheless is the effect of their actions. Once 
+‘market value’ has been provided, market participants need not personally search 
 for the distribution of prices. 
 
 --
 
   - Further, it provides an anchor upon which bargaining between the 
-  participants can be based. ‘Market value’ is thus a device for lowering
+  participants can be based. **‘Market value’ is thus a device for lowering
   transaction costs. Its function is to stabilise market expectations by 
-  providing pricing information.
-  
---
-
-* Conclusão:
-
---
-
-  - market value is normative
-  
---
-
-  - market value may be established for any market, whether thin or actively 
-  traded.
-
---
-
-  - valuers can and do inﬂuence, even determine, prices in property markets.
-  
+  providing pricing information**.
 
 ---
 # Estado da arte
@@ -198,14 +368,16 @@ for the distribution of prices.
 
 --
 
-  - Windhoek, Namíbia (Mooya, 2008): Na falta de melhores informações, o mercado estava ancorado nos valores constantes do cadastro municipal, que estava com 
+  - Windhoek, Namíbia (Mooya, 2008): Na falta de melhores informações, o mercado 
+  estava ancorado nos valores constantes do cadastro municipal, que estava com 
 valores desatualizados;
     
 --
 
   - Um avaliador foi consultado a respeito do valor de mercado de uma 
 propriedade em terras de propriedade comunal, que não eram possíveis de ser
-negociadas até aquele momento. Não havia informação mercadológica disponível,       portanto, para a avaliação dessa terra.
+negociadas até aquele momento. Não havia informação mercadológica disponível,       
+portanto, para a avaliação dessa terra.
 
 --
 
@@ -219,9 +391,21 @@ no valor da avaliação prévia.
     
 --
 
-* Em suma, os avaliadores não são meros observadores do mercado, que trabalham
-com as informações disponíveis, produzindo laudos friamente. Os avaliadores 
-injetam informação no mercado.
+* Em suma:
+
+--
+
+  - O valor de mercado é normativo!
+  
+--
+
+  - O valor de mercado pode ser estabelecido para qualquer mercado, tenha ele
+  liquidez ou não.
+
+--
+
+  - avaliadores podem e realmente influenciam, ou até determinam os preços em
+  mercados imobiliários.
 
 ---
 # Estado da Arte: O fator oferta
@@ -263,12 +447,13 @@ background-size: contain
     
 ## Conclusão
 
-* A forma do fator oferta depende do mercado em questão e do momento em análise;
+* A relação entre oferta/transação depende do mercado em questão e do momento em 
+análise;
 
 --
 
 * O avaliador deve analisar os dados de oferta e transação para tomar a melhor
-decisão sobre a relação momentânea entre oferta e transação e a melhor maneira
+decisão sobre a relação momentânea entre ofertas e transações e a melhor maneira
 de modelá-la;
 
 --
@@ -279,7 +464,8 @@ diferentes estratégias de venda nos preços ofertados;
 --
 
 * Na falta de melhores informações do mercado, o avaliador deve estar ciente de
-que estará inserindo informação no mercado. O melhor a fazer é estabelecer uma hipótese clara sobre a relação oferta/transação e deixar isso claro em seu laudo.
+que estará inserindo informação no mercado. O melhor a fazer é estabelecer uma 
+hipótese clara sobre a relação oferta/transação e deixar isso claro em seu laudo.
     
 ---
 class: inverse, center, middle
@@ -475,6 +661,31 @@ predict(fithom, newdata = new10000,
 ```
 
 ]
+
+---
+# Como descobrir o fator oferta a partir dos dados?
+
+[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
+
+
+--
+
+```{r}
+fator <- seq(.5, 1.5, by = .01)
+cv <- vector(length = length(fator))
+for (i in seq_along(fator)){
+  dados <- within(dados, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, fator[i]*VU))
+  cv[i] <- with(dados, sd(VUhom)/mean(VUhom))
+}
+plotdata <- data.frame(CV = cv, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+  geom_line(color = "blue", size = 1.5) +
+  scale_x_continuous(breaks = seq(.5, 1.5, by = .05)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
 
 ---
 # Dados lognormais
@@ -843,7 +1054,7 @@ dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ```
 
 ---
-# Fator Oferta na regressão múltipla
+# Análise Exploratória
 
 ```{r}
 p1 <- ggplot(dados, aes(y = y, x = X1, color = Fonte)) +
@@ -883,7 +1094,7 @@ plot(fitMult)
 ```
 
 ---
-# Análise Exploratória
+# Resíduos Parciais
 
 ```{r}
 library(broom)
@@ -891,6 +1102,8 @@ coeffs <- coef(fitMult)
 dados <- augment(fitMult, dados)
 ```
 
+
+$$p_i = r_i + \hat \beta_jX_i^{(j)}$$
 
 ```{r}
 p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1], 
@@ -982,7 +1195,7 @@ sd(dados$yhom)/mean(dados$yhom)
 
 ```{r}
 coeffs <- coef(fithom4)
-dados <- augment(fithom4, data = dados[, c("X1", "X2", "yhom", "Fonte")])
+dados <- augment(fithom4, data = dados[, c("X1", "X2", "y", "yhom", "Fonte")])
 ```
 
 
@@ -1059,6 +1272,28 @@ predict(fithom4, newdata = new110_60,
 
 ]
 
+---
+# Fator oferta minimiza o CV na RLM?
+
+[App Fator Oferta 2](http://104.248.57.29/shiny/fatorOferta2/)
+
+--
+
+```{r}
+fator <- seq(.5, 1.5, by = .01)
+cv <- vector(length = length(fator))
+for (i in seq_along(fator)){
+  dados <- within(dados, 
+                yhom <- ifelse(Fonte == "Venda", 
+                                y, fator[i]*y))
+  cv[i] <- with(dados, sd(yhom)/mean(yhom))
+}
+plotdata <- data.frame(CV = cv, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+  geom_line(color = "blue", size = 1.5) +
+  scale_x_continuous(breaks = seq(.5, 1.5, by = .05)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
 
 
 ---
