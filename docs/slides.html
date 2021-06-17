@@ -551,6 +551,91 @@ R 4.0.2&gt; summary(fit1)
 ]
 
 ---
+# Como estimar o fator oferta a partir dos dados?
+
+* **NBR 14.653-02**: 
+
+--
+
+  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
+  observados, limitado a **um único fator de homogeneização**, desde que
+  fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
+  (**exemplo: aplicação do fator de fonte para a transformação de preços de 
+  oferta para as condições de transação**). 
+  
+--
+
+  - **Os fatores devem ser calculados por metodologia científica**, como citado 
+  em 8.2.1.4.3, justificados do ponto de vista teórico e prático, com a inclusão
+  de validação, quando pertinente [...]
+  
+--
+
+  - Para a utilização deste tratamento **é recomendável que seja evitado** o uso 
+  de **fatores que**, aplicados isoladamente em relação ao avaliando ou ao 
+  paradigma, **heterogeneizem os valores originais**. Essa recomendação só é 
+  válida com a confirmação do efeito de heterogeneização, após a aplicação 
+  conjunta dos fatores. 
+  
+--
+
+* **Norma IBAPE-SP/2011**:
+
+--
+
+  - 10.1 A superestimativa dos dados de oferta (elasticidade dos negócios)
+  deverá ser descontada do valor total pela aplicação do fator médio observado
+  no mercado. Na impossibilidade da sua determinação, pode ser aplicado o fator
+  consagrado 0,9 (desconto de 10% sobre o preço original pedido). Todos os
+  demais fatores devem ser considerados após a aplicação do fator oferta.
+  
+--
+
+  - 10.6 - 1. A utilização dos fatores deve ser na forma de somatório, **após a 
+  consideração do fator oferta**.
+
+---
+# Forma gráfica
+
+[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
+
+
+---
+# Forma numérica
+
+`$$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F) VU]}{\mu[(1- c\cdot F) VU)]}\right ), \text{com } \, F = \left\{\begin{matrix}
+1,\,\text{se dado de oferta}\\ 
+0,\, \text{se dado de venda}
+\end{matrix}\right.$$`
+
+&lt;img src="images/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Forma numérica: Minimização
+
+
+```r
+R 4.0.2&gt; cv &lt;- function(fator, vu, fonte){
+   vuhom &lt;- ifelse(fonte == "Venda", vu, fator*vu)
+   sd(vuhom)/mean(vuhom)
+ }
+R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
+          vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+
+```
+## $minimum
+## [1] 0.8471863
+## 
+## $objective
+## [1] 0.4263088
+```
+
+---
+
 # Opção: aplicação prévia do fator oferta
 
 .pull-left[
@@ -796,42 +881,7 @@ R 4.0.2&gt; predict(fithom, newdata = new10000,
 
 ]
 
----
-# Como descobrir o fator oferta a partir dos dados?
 
-* **NBR 14.653-02**: 
-
---
-
-  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
-  observados, limitado a **um único fator de homogeneização**, desde que
-  fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
-  (**exemplo: aplicação do fator de fonte para a transformação de preços de 
-  oferta para as condições de transação**). 
-  
---
-
-  - **Os fatores devem ser calculados por metodologia científica**, como citado 
-  em 8.2.1.4.3, justificados do ponto de vista teórico e prático, com a inclusão
-  de validação, quando pertinente [...]
-  
---
-
-  - Para a utilização deste tratamento **é recomendável que seja evitado** o uso 
-  de **fatores que**, aplicados isoladamente em relação ao avaliando ou ao 
-  paradigma, **heterogeneizem os valores originais**. Essa recomendação só é 
-  válida com a confirmação do efeito de heterogeneização, após a aplicação 
-  conjunta dos fatores. 
-
---
-
-[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
-
-
----
-# Como descobrir o fator oferta a partir dos dados?
-
-&lt;img src="images/unnamed-chunk-20-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---

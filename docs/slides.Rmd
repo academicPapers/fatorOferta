@@ -552,6 +552,105 @@ qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
 ]
 
 ---
+# Como estimar o fator oferta a partir dos dados?
+
+* **NBR 14.653-02**: 
+
+--
+
+  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
+  observados, limitado a **um único fator de homogeneização**, desde que
+  fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
+  (**exemplo: aplicação do fator de fonte para a transformação de preços de 
+  oferta para as condições de transação**). 
+  
+--
+
+  - **Os fatores devem ser calculados por metodologia científica**, como citado 
+  em 8.2.1.4.3, justificados do ponto de vista teórico e prático, com a inclusão
+  de validação, quando pertinente [...]
+  
+--
+
+  - Para a utilização deste tratamento **é recomendável que seja evitado** o uso 
+  de **fatores que**, aplicados isoladamente em relação ao avaliando ou ao 
+  paradigma, **heterogeneizem os valores originais**. Essa recomendação só é 
+  válida com a confirmação do efeito de heterogeneização, após a aplicação 
+  conjunta dos fatores. 
+  
+--
+
+* **Norma IBAPE-SP/2011**:
+
+--
+
+  - 10.1 A superestimativa dos dados de oferta (elasticidade dos negócios)
+  deverá ser descontada do valor total pela aplicação do fator médio observado
+  no mercado. Na impossibilidade da sua determinação, pode ser aplicado o fator
+  consagrado 0,9 (desconto de 10% sobre o preço original pedido). Todos os
+  demais fatores devem ser considerados após a aplicação do fator oferta.
+  
+--
+
+  - 10.6 - 1. A utilização dos fatores deve ser na forma de somatório, **após a 
+  consideração do fator oferta**.
+
+---
+# Forma gráfica
+
+[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
+
+
+---
+# Forma numérica
+
+$$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F) VU]}{\mu[(1- c\cdot F) VU)]}\right ), \text{com } \, F = \left\{\begin{matrix}
+1,\,\text{se dado de oferta}\\ 
+0,\, \text{se dado de venda}
+\end{matrix}\right.$$
+
+```{r, fig.width=9, fig.height=5.5}
+fator <- seq(.5, 2, by = .01)
+cv <- vector(length = length(fator))
+for (i in seq_along(fator)){
+  df <- dados
+  df <- within(df, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, fator[i]*VU))
+  cv[i] <- with(df, sd(VUhom)/mean(VUhom))
+}
+plotdata <- data.frame(CV = cv, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+  geom_line(color = "blue", size = 1.5) +
+  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
+  geom_vline(xintercept = 1, color = "grey", lty = 3, size = .7) +
+  geom_vline(xintercept = .85, color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VU)/mean(dados$VU), 
+             color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VUhom)/mean(dados$VUhom), 
+             color = "grey", lty = 3, size = .7) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+---
+# Forma numérica: Minimização
+
+```{r minimize, echo = TRUE, eval = FALSE}
+cv <- function(fator, vu, fonte){
+  vuhom <- ifelse(fonte == "Venda", vu, fator*vu)
+  sd(vuhom)/mean(vuhom)
+}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+```{r minimize, eval = TRUE, echo = FALSE}
+```
+
+---
+
 # Opção: aplicação prévia do fator oferta
 
 .pull-left[
@@ -662,56 +761,7 @@ predict(fithom, newdata = new10000,
 
 ]
 
----
-# Como descobrir o fator oferta a partir dos dados?
 
-* **NBR 14.653-02**: 
-
---
-
-  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
-  observados, limitado a **um único fator de homogeneização**, desde que
-  fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
-  (**exemplo: aplicação do fator de fonte para a transformação de preços de 
-  oferta para as condições de transação**). 
-  
---
-
-  - **Os fatores devem ser calculados por metodologia científica**, como citado 
-  em 8.2.1.4.3, justificados do ponto de vista teórico e prático, com a inclusão
-  de validação, quando pertinente [...]
-  
---
-
-  - Para a utilização deste tratamento **é recomendável que seja evitado** o uso 
-  de **fatores que**, aplicados isoladamente em relação ao avaliando ou ao 
-  paradigma, **heterogeneizem os valores originais**. Essa recomendação só é 
-  válida com a confirmação do efeito de heterogeneização, após a aplicação 
-  conjunta dos fatores. 
-
---
-
-[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
-
-
----
-# Como descobrir o fator oferta a partir dos dados?
-
-```{r}
-fator <- seq(.5, 2, by = .01)
-cv <- vector(length = length(fator))
-for (i in seq_along(fator)){
-  dados <- within(dados, 
-                VUhom <- ifelse(Fonte == "Venda", 
-                                VU, fator[i]*VU))
-  cv[i] <- with(dados, sd(VUhom)/mean(VUhom))
-}
-plotdata <- data.frame(CV = cv, fatorOferta = fator)
-ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
-  geom_line(color = "blue", size = 1.5) +
-  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-```
 
 
 ---
@@ -731,7 +781,7 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ---
 # Dados lognormais: análise exploratória
 
-```{r lognormalExploratoria, fig.width=9, fig.cap="Análise exploratória. Dados lognormais."}
+```{r lognormalExploratoria, fig.cap="Análise exploratória. Dados lognormais.", fig.width=9, fig.height=5.5}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
   geom_point() + stat_smooth(se = FALSE)
 p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
@@ -801,7 +851,7 @@ sd(dados$VUhom)/mean(dados$VUhom)
 ---
 # Opção: Aplicação prévia do Fator Oferta
 
-```{r, fig.width=9}
+```{r, fig.width=9, fig.height=6}
 p1 <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
   geom_point() +
   stat_smooth(se = FALSE)
@@ -891,7 +941,7 @@ dados <- data.frame(VU = vu, Area = area,
 ---
 # Outras transformações: análise exploratória
 
-```{r, fig.width = 9}
+```{r, fig.width=9, fig.height=6}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
   geom_point() + stat_smooth(se = FALSE)
 p2 <- ggplot(dados, aes(x = Area, y = sqrt(VU), color = Fonte)) +
@@ -1083,7 +1133,7 @@ dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ---
 # Análise Exploratória
 
-```{r}
+```{r, fig.width=9, fig.height=6}
 p1 <- ggplot(dados, aes(y = y, x = X1, color = Fonte)) +
   geom_point()
 p2 <-  ggplot(dados, aes(y = y, x = X2, color = Fonte)) +
@@ -1132,7 +1182,7 @@ dados <- augment(fitMult, dados)
 
 $$p_i = r_i + \hat \beta_jX_i^{(j)}$$
 
-```{r}
+```{r, fig.width=9, fig.height=5.5}
 p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1], 
                         color = Fonte)) +
   stat_smooth(method = "lm", se = FALSE) +
@@ -1226,7 +1276,7 @@ dados <- augment(fithom4, data = dados[, c("X1", "X2", "y", "yhom", "Fonte")])
 ```
 
 
-```{r}
+```{r, fig.width=9, fig.height=5.5}
 p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1], 
                         color = Fonte)) +
   stat_smooth(method = "lm", se = FALSE) +
@@ -1306,19 +1356,26 @@ predict(fithom4, newdata = new110_60,
 
 --
 
-```{r}
+```{r, fig.width=9, fig.height=5.5}
 fator <- seq(.5, 2, by = .01)
 cv <- vector(length = length(fator))
 for (i in seq_along(fator)){
-  dados <- within(dados, 
+  df <- dados
+  df <- within(df, 
                 yhom <- ifelse(Fonte == "Venda", 
                                 y, fator[i]*y))
-  cv[i] <- with(dados, sd(yhom)/mean(yhom))
+  cv[i] <- with(df, sd(yhom)/mean(yhom))
 }
 plotdata <- data.frame(CV = cv, fatorOferta = fator)
 ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
   geom_line(color = "blue", size = 1.5) +
   scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
+  geom_vline(xintercept = 1, color = "grey", lty = 3, size = .7) +
+  geom_vline(xintercept = .85, color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$y)/mean(dados$y), 
+             color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$yhom)/mean(dados$yhom), 
+             color = "grey", lty = 3, size = .7) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
