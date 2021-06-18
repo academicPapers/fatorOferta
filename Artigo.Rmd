@@ -39,6 +39,16 @@ library(lmtest)
 
 # Introdução
 
+De acordo com @mooya2009, ...
+
+Chinloy [-@chinloy] parece ter sido o primeiro trabalho a abordar o fator
+oferta de maneira científica.
+
+Posteriormente, @horowitz...
+
+Haurin et al. [-@haurin] mostram que, em períodos de *boom* no mercado 
+imobiliário, os preços de venda podem superar os preços listados.
+
 # Revisão Bibliográfica
 
 Segundo Matloff [-@matloff2009, p. 54), a variância ($\mathbb V$) do produto de

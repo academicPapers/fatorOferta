@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.11)  12 JUN 2021 17:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.11)  15 JUN 2021 16:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -707,78 +707,75 @@ LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
 {c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}] [2]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-00.
+12.
 (c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 305.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 317.
 [3pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.335 \begin{Shaded}
-                    ] [4pdfTeX warning (ext4): destination with the same identi
-fier (name{table.2}) has been already used, duplicate ignored
+l.335 \end{Shaded}
+                  ] [4pdfTeX warning (ext4): destination with the same identifi
+er (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.443 \end{verbatim}
-                    ] [5]
+l.445 \end{Shaded}
+                  ] [5]
 
-LaTeX Warning: Reference `fig:dados1' on page 6 undefined on input line 561.
+LaTeX Warning: Reference `fig:dados1' on page 6 undefined on input line 573.
 
-<./images/dados1-1.png, id=140, 469.755pt x 325.215pt>
+<./images/dados1-1.png, id=148, 469.755pt x 325.215pt>
 File: ./images/dados1-1.png Graphic file (type png)
 <use ./images/dados1-1.png>
-Package pdftex.def Info: ./images/dados1-1.png  used on input line 573.
+Package pdftex.def Info: ./images/dados1-1.png  used on input line 585.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 581.
+(Font)              <9> on input line 593.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 581.
-<./images/wrongModel-1.png, id=142, 433.62pt x 216.81pt>
+(Font)              <6> on input line 593.
+<./images/wrongModel-1.png, id=150, 433.62pt x 216.81pt>
 File: ./images/wrongModel-1.png Graphic file (type png)
 <use ./images/wrongModel-1.png>
-Package pdftex.def Info: ./images/wrongModel-1.png  used on input line 591.
+Package pdftex.def Info: ./images/wrongModel-1.png  used on input line 603.
 (pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
-<./images/fitPlot-1.png, id=143, 469.755pt x 325.215pt>
+<./images/fitPlot-1.png, id=151, 469.755pt x 325.215pt>
 File: ./images/fitPlot-1.png Graphic file (type png)
 <use ./images/fitPlot-1.png>
-Package pdftex.def Info: ./images/fitPlot-1.png  used on input line 596.
+Package pdftex.def Info: ./images/fitPlot-1.png  used on input line 608.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fitPlot-2.png, id=144, 469.755pt x 325.215pt>
+<./images/fitPlot-2.png, id=152, 469.755pt x 325.215pt>
 File: ./images/fitPlot-2.png Graphic file (type png)
 <use ./images/fitPlot-2.png>
-Package pdftex.def Info: ./images/fitPlot-2.png  used on input line 596.
+Package pdftex.def Info: ./images/fitPlot-2.png  used on input line 608.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fitPlot-3.png, id=145, 469.755pt x 325.215pt>
+<./images/fitPlot-3.png, id=153, 469.755pt x 325.215pt>
 File: ./images/fitPlot-3.png Graphic file (type png)
 <use ./images/fitPlot-3.png>
-Package pdftex.def Info: ./images/fitPlot-3.png  used on input line 596.
+Package pdftex.def Info: ./images/fitPlot-3.png  used on input line 608.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fitPlot-4.png, id=146, 469.755pt x 325.215pt>
+<./images/fitPlot-4.png, id=154, 469.755pt x 325.215pt>
 File: ./images/fitPlot-4.png Graphic file (type png)
 <use ./images/fitPlot-4.png>
-Package pdftex.def Info: ./images/fitPlot-4.png  used on input line 596.
+Package pdftex.def Info: ./images/fitPlot-4.png  used on input line 608.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 596--596
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 608--608
 [][] []
  []
 
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 596--596
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 608--608
 [] []
  []
-
-
-Underfull \vbox (badness 1824) has occurred while \output is active []
 
 [6pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.598 
+l.610 
        <./images/dados1-1.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -786,50 +783,50 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.604 \begin{verbatim}
+l.616 \begin{verbatim}
                       pdfTeX warning (ext4): destination with the same identifi
 er (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.604 \begin{verbatim}
+l.616 \begin{verbatim}
                        <./images/wrongModel-1.png> <./images/fitPlot-1.png> <./
 images/fitPlot-2.png> <./images/fitPlot-3.png> <./images/fitPlot-4.png>]
-<./images/rightModel-1.png, id=171, 469.755pt x 325.215pt>
+<./images/rightModel-1.png, id=179, 469.755pt x 325.215pt>
 File: ./images/rightModel-1.png Graphic file (type png)
 <use ./images/rightModel-1.png>
-Package pdftex.def Info: ./images/rightModel-1.png  used on input line 618.
+Package pdftex.def Info: ./images/rightModel-1.png  used on input line 630.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<./images/unnamed-chunk-20-1.png, id=172, 469.755pt x 325.215pt>
+<./images/unnamed-chunk-20-1.png, id=180, 469.755pt x 325.215pt>
 File: ./images/unnamed-chunk-20-1.png Graphic file (type png)
 <use ./images/unnamed-chunk-20-1.png>
-Package pdftex.def Info: ./images/unnamed-chunk-20-1.png  used on input line 62
-3.
-(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-20-2.png, id=173, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-20-2.png Graphic file (type png)
-<use ./images/unnamed-chunk-20-2.png>
-Package pdftex.def Info: ./images/unnamed-chunk-20-2.png  used on input line 62
-4.
-(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-20-3.png, id=174, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-20-3.png Graphic file (type png)
-<use ./images/unnamed-chunk-20-3.png>
-Package pdftex.def Info: ./images/unnamed-chunk-20-3.png  used on input line 62
+Package pdftex.def Info: ./images/unnamed-chunk-20-1.png  used on input line 63
 5.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-20-4.png, id=175, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-20-4.png Graphic file (type png)
-<use ./images/unnamed-chunk-20-4.png>
-Package pdftex.def Info: ./images/unnamed-chunk-20-4.png  used on input line 62
+<./images/unnamed-chunk-20-2.png, id=181, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-20-2.png Graphic file (type png)
+<use ./images/unnamed-chunk-20-2.png>
+Package pdftex.def Info: ./images/unnamed-chunk-20-2.png  used on input line 63
 6.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
+<./images/unnamed-chunk-20-3.png, id=182, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-20-3.png Graphic file (type png)
+<use ./images/unnamed-chunk-20-3.png>
+Package pdftex.def Info: ./images/unnamed-chunk-20-3.png  used on input line 63
+7.
+(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
+<./images/unnamed-chunk-20-4.png, id=183, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-20-4.png Graphic file (type png)
+<use ./images/unnamed-chunk-20-4.png>
+Package pdftex.def Info: ./images/unnamed-chunk-20-4.png  used on input line 63
+8.
+(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 623--627
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 635--639
 [][] []
  []
 
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 623--627
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 635--639
 [] [] 
  []
 
@@ -840,45 +837,45 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.628 \begin{verbatim}
+l.640 \begin{verbatim}
                        <./images/rightModel-1.png>]
 
 LaTeX Warning: Reference `fig:dadosHomogeneizados' on page 9 undefined on input
- line 638.
+ line 650.
 
-<./images/dadosHomogeneizados-1.png, id=183, 469.755pt x 325.215pt>
+<./images/dadosHomogeneizados-1.png, id=191, 469.755pt x 325.215pt>
 File: ./images/dadosHomogeneizados-1.png Graphic file (type png)
 <use ./images/dadosHomogeneizados-1.png>
 Package pdftex.def Info: ./images/dadosHomogeneizados-1.png  used on input line
- 647.
+ 659.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<./images/fithomPlot-1.png, id=184, 469.755pt x 325.215pt>
+<./images/fithomPlot-1.png, id=192, 469.755pt x 325.215pt>
 File: ./images/fithomPlot-1.png Graphic file (type png)
 <use ./images/fithomPlot-1.png>
-Package pdftex.def Info: ./images/fithomPlot-1.png  used on input line 651.
+Package pdftex.def Info: ./images/fithomPlot-1.png  used on input line 663.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fithomPlot-2.png, id=185, 469.755pt x 325.215pt>
+<./images/fithomPlot-2.png, id=193, 469.755pt x 325.215pt>
 File: ./images/fithomPlot-2.png Graphic file (type png)
 <use ./images/fithomPlot-2.png>
-Package pdftex.def Info: ./images/fithomPlot-2.png  used on input line 652.
+Package pdftex.def Info: ./images/fithomPlot-2.png  used on input line 664.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fithomPlot-3.png, id=186, 469.755pt x 325.215pt>
+<./images/fithomPlot-3.png, id=194, 469.755pt x 325.215pt>
 File: ./images/fithomPlot-3.png Graphic file (type png)
 <use ./images/fithomPlot-3.png>
-Package pdftex.def Info: ./images/fithomPlot-3.png  used on input line 653.
+Package pdftex.def Info: ./images/fithomPlot-3.png  used on input line 665.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fithomPlot-4.png, id=187, 469.755pt x 325.215pt>
+<./images/fithomPlot-4.png, id=195, 469.755pt x 325.215pt>
 File: ./images/fithomPlot-4.png Graphic file (type png)
 <use ./images/fithomPlot-4.png>
-Package pdftex.def Info: ./images/fithomPlot-4.png  used on input line 654.
+Package pdftex.def Info: ./images/fithomPlot-4.png  used on input line 666.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 651--655
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 663--667
 [][] []
  []
 
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 651--655
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 663--667
 [] [] 
  []
 
@@ -893,11 +890,11 @@ Overfull \vbox (47.84283pt too high) has occurred while \output is active []
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.656 \begin{verbatim}
+l.668 \begin{verbatim}
                        <./images/dadosHomogeneizados-1.png> <./images/fithomPlo
 t-1.png> <./images/fithomPlot-2.png> <./images/fithomPlot-3.png> <./images/fith
 omPlot-4.png>]
-Overfull \hbox (45.43976pt too wide) in paragraph at lines 704--730
+Overfull \hbox (45.43976pt too wide) in paragraph at lines 716--742
  [][] 
  []
 
@@ -905,18 +902,19 @@ Overfull \hbox (45.43976pt too wide) in paragraph at lines 704--730
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.754 \[
-        VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,1\cdot Fonte + \varepsilon)\]]
-<./images/dados2-1.png, id=218, 469.755pt x 325.215pt>
+l.766 \[
+        VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)\]
+]
+<./images/dados2-1.png, id=226, 469.755pt x 325.215pt>
 File: ./images/dados2-1.png Graphic file (type png)
 <use ./images/dados2-1.png>
-Package pdftex.def Info: ./images/dados2-1.png  used on input line 770.
+Package pdftex.def Info: ./images/dados2-1.png  used on input line 782.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<./images/unnamed-chunk-27-1.png, id=219, 433.62pt x 216.81pt>
+<./images/unnamed-chunk-27-1.png, id=227, 433.62pt x 216.81pt>
 File: ./images/unnamed-chunk-27-1.png Graphic file (type png)
 <use ./images/unnamed-chunk-27-1.png>
-Package pdftex.def Info: ./images/unnamed-chunk-27-1.png  used on input line 77
-4.
+Package pdftex.def Info: ./images/unnamed-chunk-27-1.png  used on input line 78
+6.
 (pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -925,51 +923,51 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.776 \includegraphics
+l.788 \includegraphics
                       [width=0.5\linewidth]{./images/unnamed-chunk-28-1} <./ima
 ges/dados2-1.png>]
-<./images/unnamed-chunk-28-1.png, id=226, 469.755pt x 325.215pt>
+<./images/unnamed-chunk-28-1.png, id=234, 469.755pt x 325.215pt>
 File: ./images/unnamed-chunk-28-1.png Graphic file (type png)
 <use ./images/unnamed-chunk-28-1.png>
-Package pdftex.def Info: ./images/unnamed-chunk-28-1.png  used on input line 77
-6.
-(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-28-2.png, id=227, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-28-2.png Graphic file (type png)
-<use ./images/unnamed-chunk-28-2.png>
-Package pdftex.def Info: ./images/unnamed-chunk-28-2.png  used on input line 77
-7.
-(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-28-3.png, id=228, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-28-3.png Graphic file (type png)
-<use ./images/unnamed-chunk-28-3.png>
-Package pdftex.def Info: ./images/unnamed-chunk-28-3.png  used on input line 77
+Package pdftex.def Info: ./images/unnamed-chunk-28-1.png  used on input line 78
 8.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/unnamed-chunk-28-4.png, id=229, 469.755pt x 325.215pt>
-File: ./images/unnamed-chunk-28-4.png Graphic file (type png)
-<use ./images/unnamed-chunk-28-4.png>
-Package pdftex.def Info: ./images/unnamed-chunk-28-4.png  used on input line 77
+<./images/unnamed-chunk-28-2.png, id=235, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-28-2.png Graphic file (type png)
+<use ./images/unnamed-chunk-28-2.png>
+Package pdftex.def Info: ./images/unnamed-chunk-28-2.png  used on input line 78
 9.
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
+<./images/unnamed-chunk-28-3.png, id=236, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-28-3.png Graphic file (type png)
+<use ./images/unnamed-chunk-28-3.png>
+Package pdftex.def Info: ./images/unnamed-chunk-28-3.png  used on input line 79
+0.
+(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
+<./images/unnamed-chunk-28-4.png, id=237, 469.755pt x 325.215pt>
+File: ./images/unnamed-chunk-28-4.png Graphic file (type png)
+<use ./images/unnamed-chunk-28-4.png>
+Package pdftex.def Info: ./images/unnamed-chunk-28-4.png  used on input line 79
+1.
+(pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 776--780
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 788--792
 [][] []
  []
 
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 776--780
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 788--792
 [] [] 
  []
 
 [13 <./images/unnamed-chunk-27-1.png> <./images/unnamed-chunk-28-1.png> <./imag
 es/unnamed-chunk-28-2.png> <./images/unnamed-chunk-28-3.png> <./images/unnamed-
 chunk-28-4.png>]
-<./images/dadosHomogeneizados2-1.png, id=240, 216.81pt x 433.62pt>
+<./images/dadosHomogeneizados2-1.png, id=248, 216.81pt x 433.62pt>
 File: ./images/dadosHomogeneizados2-1.png Graphic file (type png)
 <use ./images/dadosHomogeneizados2-1.png>
 Package pdftex.def Info: ./images/dadosHomogeneizados2-1.png  used on input lin
-e 803.
+e 815.
 (pdftex.def)             Requested size: 216.80946pt x 433.61894pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -978,57 +976,57 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.835 
+l.847 
        <./images/dadosHomogeneizados2-1.png>]
-<./images/unnamed-chunk-32-1.png, id=247, 433.62pt x 216.81pt>
+<./images/unnamed-chunk-32-1.png, id=255, 433.62pt x 216.81pt>
 File: ./images/unnamed-chunk-32-1.png Graphic file (type png)
 <use ./images/unnamed-chunk-32-1.png>
-Package pdftex.def Info: ./images/unnamed-chunk-32-1.png  used on input line 84
-4.
+Package pdftex.def Info: ./images/unnamed-chunk-32-1.png  used on input line 85
+6.
 (pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
 [15pdfTeX warning (ext4): destination with the same identifier (name{table.4}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.866 \end{verbatim}
+l.878 \end{verbatim}
                      <./images/unnamed-chunk-32-1.png>]
-<./images/unnamed-chunk-34-1.png, id=254, 433.62pt x 216.81pt>
+<./images/unnamed-chunk-34-1.png, id=262, 433.62pt x 216.81pt>
 File: ./images/unnamed-chunk-34-1.png Graphic file (type png)
 <use ./images/unnamed-chunk-34-1.png>
-Package pdftex.def Info: ./images/unnamed-chunk-34-1.png  used on input line 86
-8.
+Package pdftex.def Info: ./images/unnamed-chunk-34-1.png  used on input line 88
+0.
 (pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
-<./images/fit3Diagnostics-1.png, id=255, 469.755pt x 325.215pt>
+<./images/fit3Diagnostics-1.png, id=263, 469.755pt x 325.215pt>
 File: ./images/fit3Diagnostics-1.png Graphic file (type png)
 <use ./images/fit3Diagnostics-1.png>
-Package pdftex.def Info: ./images/fit3Diagnostics-1.png  used on input line 871
+Package pdftex.def Info: ./images/fit3Diagnostics-1.png  used on input line 883
 .
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fit3Diagnostics-2.png, id=256, 469.755pt x 325.215pt>
+<./images/fit3Diagnostics-2.png, id=264, 469.755pt x 325.215pt>
 File: ./images/fit3Diagnostics-2.png Graphic file (type png)
 <use ./images/fit3Diagnostics-2.png>
-Package pdftex.def Info: ./images/fit3Diagnostics-2.png  used on input line 871
+Package pdftex.def Info: ./images/fit3Diagnostics-2.png  used on input line 883
 .
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fit3Diagnostics-3.png, id=257, 469.755pt x 325.215pt>
+<./images/fit3Diagnostics-3.png, id=265, 469.755pt x 325.215pt>
 File: ./images/fit3Diagnostics-3.png Graphic file (type png)
 <use ./images/fit3Diagnostics-3.png>
-Package pdftex.def Info: ./images/fit3Diagnostics-3.png  used on input line 871
+Package pdftex.def Info: ./images/fit3Diagnostics-3.png  used on input line 883
 .
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
-<./images/fit3Diagnostics-4.png, id=258, 469.755pt x 325.215pt>
+<./images/fit3Diagnostics-4.png, id=266, 469.755pt x 325.215pt>
 File: ./images/fit3Diagnostics-4.png Graphic file (type png)
 <use ./images/fit3Diagnostics-4.png>
-Package pdftex.def Info: ./images/fit3Diagnostics-4.png  used on input line 871
+Package pdftex.def Info: ./images/fit3Diagnostics-4.png  used on input line 883
 .
 (pdftex.def)             Requested size: 234.87749pt x 162.6071pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 871--871
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 883--883
 [][] []
  []
 
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 871--871
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 883--883
 [] []
  []
 
@@ -1036,16 +1034,16 @@ Overfull \hbox (2.2222pt too wide) in paragraph at lines 871--871
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [16 <./images/unnamed-chunk-34-1.png>]
-<./images/rightModel3-1.png, id=264, 469.755pt x 325.215pt>
+<./images/rightModel3-1.png, id=272, 469.755pt x 325.215pt>
 File: ./images/rightModel3-1.png Graphic file (type png)
 <use ./images/rightModel3-1.png>
-Package pdftex.def Info: ./images/rightModel3-1.png  used on input line 876.
+Package pdftex.def Info: ./images/rightModel3-1.png  used on input line 888.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<./images/dadosHomogeneizados3-1.png, id=265, 433.62pt x 216.81pt>
+<./images/dadosHomogeneizados3-1.png, id=273, 433.62pt x 216.81pt>
 File: ./images/dadosHomogeneizados3-1.png Graphic file (type png)
 <use ./images/dadosHomogeneizados3-1.png>
 Package pdftex.def Info: ./images/dadosHomogeneizados3-1.png  used on input lin
-e 895.
+e 907.
 (pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
 
 Underfull \vbox (badness 2856) has occurred while \output is active []
@@ -1054,22 +1052,22 @@ Underfull \vbox (badness 2856) has occurred while \output is active []
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.932 \leavevmode
-                 \hypertarget{ref-faraway2004linear}{}% <./images/fit3Diagnosti
-cs-1.png> <./images/fit3Diagnostics-2.png> <./images/fit3Diagnostics-3.png> <./
-images/fit3Diagnostics-4.png>] [18pdfTeX warning (ext4): destination with the s
-ame identifier (name{figure.9}) has been already used, duplicate ignored
+l.944 \leavevmode
+                 \hypertarget{ref-chinloy}{}% <./images/fit3Diagnostics-1.png> 
+<./images/fit3Diagnostics-2.png> <./images/fit3Diagnostics-3.png> <./images/fit
+3Diagnostics-4.png>] [18pdfTeX warning (ext4): destination with the same identi
+fier (name{figure.9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.932 \leavevmode
-                 \hypertarget{ref-faraway2004linear}{}%pdfTeX warning (ext4): d
-estination with the same identifier (name{figure.10}) has been already used, du
-plicate ignored
+l.944 \leavevmode
+                 \hypertarget{ref-chinloy}{}%pdfTeX warning (ext4): destination
+ with the same identifier (name{figure.10}) has been already used, duplicate ig
+nored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.932 \leavevmode
-                 \hypertarget{ref-faraway2004linear}{}% <./images/rightModel3-1
-.png> <./images/dadosHomogeneizados3-1.png>]
+l.944 \leavevmode
+                 \hypertarget{ref-chinloy}{}% <./images/rightModel3-1.png> <./i
+mages/dadosHomogeneizados3-1.png>]
 No file Artigo.bbl.
 [19] (./Artigo.aux)
 
@@ -1085,11 +1083,11 @@ Package rerunfilecheck Info: File `Artigo.out' has not changed.
 (rerunfilecheck)             Checksum: 8F437932991461A07AF8168DA45F8CFF;1844.
  ) 
 Here is how much of TeX's memory you used:
- 13218 strings out of 480453
- 211519 string characters out of 5895795
+ 13227 strings out of 480453
+ 211622 string characters out of 5895795
  671842 words of memory out of 5000000
- 30449 multiletter control sequences out of 15000+600000
- 469460 words of font info for 125 fonts, out of 8000000 for 9000
+ 30450 multiletter control sequences out of 15000+600000
+ 469673 words of font info for 127 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  72i,12n,80p,395b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
@@ -1119,10 +1117,10 @@ lm/lmsy9.pfb><c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
 lic/lm/lmtk10.pfb><c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmtt10.pfb><c:/Users/lfpdr/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Artigo.pdf (19 pages, 2251028 bytes).
+Output written on Artigo.pdf (19 pages, 2254311 bytes).
 PDF statistics:
- 410 PDF objects out of 1000 (max. 8388607)
- 281 compressed objects within 3 object streams
- 83 named destinations out of 1000 (max. 500000)
+ 423 PDF objects out of 1000 (max. 8388607)
+ 294 compressed objects within 3 object streams
+ 87 named destinations out of 1000 (max. 500000)
  38156 words of extra memory for PDF output out of 42996 (max. 10000000)
 

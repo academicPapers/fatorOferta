@@ -767,13 +767,35 @@ predict(fithom, newdata = new10000,
 ---
 # Dados lognormais
 
-$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$
+--
+
+Uma das propriedades da função logarítmica é: $\log(x \cdot y) = \log(x) + \log(y)$
+
+--
+
+Portanto, se $V_{venda} = 0,85\cdot V_{oferta}$, na escala $\log$:
+
+--
+
+$$\log(V_{venda}) = \log(0,85\cdot V_{oferta}) = \log (0,85) + \log(V_{oferta})$$
+
+$$\log(V_{oferta}) = \log(V_{venda}) - \log(0,85)$$ 
+
+--
+
+$$\log(V_{oferta}) = \log(V_{venda}) - 0,1625$$
+
+--
+
+$$\log(VU) = 7,5 - 0,25\cdot \log(Area) - 0,1625\cdot Fonte + \varepsilon$$
+
+--
 
 ```{r, echo = TRUE}
 set.seed(2)
 area <- runif(100, min = 250, max = 5000)
 venda <- rbinom(100, 1, .5)
-lvu <- 7.5 - .25*log(area) - .15*venda + rnorm(100, mean = 0, sd = .05)
+lvu <- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
 dados <- data.frame(VU = exp(lvu), Area = area, 
                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
@@ -781,7 +803,7 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ---
 # Dados lognormais: análise exploratória
 
-```{r lognormalExploratoria, fig.cap="Análise exploratória. Dados lognormais.", fig.width=9, fig.height=5.5}
+```{r lognormalExploratoria, fig.cap="Análise exploratória. Dados lognormais.", fig.width=9, fig.height=5.25}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
   geom_point() + stat_smooth(se = FALSE)
 p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
@@ -806,11 +828,21 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ---
 # Modelo bem especificado
 
+.pull-left[
+
 ```{r, echo = TRUE, highlight.output=13}
 fit2 <- lm(log(VU) ~ log(Area) + Fonte, data = dados)
 summary(fit2)
 ```
+]
 
+.pull-right[
+
+```{r, echo = TRUE}
+# Cálculo do Fator Oferta
+exp(-.157503)
+```
+]
 
 ---
 # Modelo bem especificado
@@ -832,11 +864,26 @@ plot(fit2)
 ---
 # Opção: Aplicação prévia do Fator Oferta
 
+```{r minimizeLog, echo = TRUE, eval = FALSE}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+```{r minimizeLog, echo = FALSE}
+```
+
+
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
 .pull-left[
 ```{r, echo = TRUE}
 dados <- within(dados, 
                 VUhom <- ifelse(Fonte == "Venda", 
-                                VU, .85*VU))
+                                VU,  0.835*VU))
 fithom2 <- lm(log(VUhom) ~ log(Area), dados)
 summary(fithom2)
 ```
@@ -852,6 +899,34 @@ sd(dados$VU)/mean(dados$VU)
 sd(dados$VUhom)/mean(dados$VUhom)
 ```
 ]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+
+```{r, fig.width=9, fig.height=5.5}
+fator <- seq(.5, 2, by = .01)
+CV <- vector(length = length(fator))
+for (i in seq_along(fator)){
+  df <- dados
+  df <- within(df, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, fator[i]*VU))
+  CV[i] <- with(df, sd(VUhom)/mean(VUhom))
+}
+plotdata <- data.frame(CV = CV, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+  geom_line(color = "blue", size = 1.5) +
+  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
+  geom_vline(xintercept = 1, color = "grey", lty = 3, size = .7) +
+  geom_vline(xintercept = .85, color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VU)/mean(dados$VU), 
+             color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VUhom)/mean(dados$VUhom), 
+             color = "grey", lty = 3, size = .7) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
 
 ---
 # Opção: Aplicação prévia do Fator Oferta
@@ -1008,6 +1083,20 @@ plot(predictorEffect("Area", fit4),
 plot(fit4)
 ```
 
+
+---
+# Opção: aplicação prévia do fator oferta
+
+```{r minimizesqrt, echo = TRUE, eval = FALSE}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+```{r minimizesqrt, echo = FALSE}
+```
+
 ---
 # Opção: aplicação prévia do fator oferta
 
@@ -1038,6 +1127,33 @@ sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+```{r, fig.width=9, fig.height=5.5}
+fator <- seq(.5, 2, by = .01)
+CV <- vector(length = length(fator))
+for (i in seq_along(fator)){
+  df <- dados
+  df <- within(df, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, fator[i]*VU))
+  CV[i] <- with(df, sd(VUhom)/mean(VUhom))
+}
+plotdata <- data.frame(CV = CV, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+  geom_line(color = "blue", size = 1.5) +
+  scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
+  geom_vline(xintercept = 1, color = "grey", lty = 3, size = .7) +
+  geom_vline(xintercept = .85, color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VU)/mean(dados$VU), 
+             color = "grey", lty = 3, size = .7) +
+  geom_hline(yintercept = sd(dados$VUhom)/mean(dados$VUhom), 
+             color = "grey", lty = 3, size = .7) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
 
 ---
 # Opção: aplicação prévia do fator oferta
@@ -1244,6 +1360,15 @@ plot(fitMult2)
 ---
 # Opção: aplicação prévia do fator oferta
 
+```{r, echo = TRUE}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$y, fonte = dados$Fonte)
+```
+
+
+---
+# Opção: aplicação prévia do fator oferta
+
 .pull-left[
 
 ```{r, echo = TRUE}
@@ -1363,15 +1488,15 @@ predict(fithom4, newdata = new110_60,
 
 ```{r, fig.width=9, fig.height=5.5}
 fator <- seq(.5, 2, by = .01)
-cv <- vector(length = length(fator))
+CV <- vector(length = length(fator))
 for (i in seq_along(fator)){
   df <- dados
   df <- within(df, 
                 yhom <- ifelse(Fonte == "Venda", 
                                 y, fator[i]*y))
-  cv[i] <- with(df, sd(yhom)/mean(yhom))
+  CV[i] <- with(df, sd(yhom)/mean(yhom))
 }
-plotdata <- data.frame(CV = cv, fatorOferta = fator)
+plotdata <- data.frame(CV = CV, fatorOferta = fator)
 ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
   geom_line(color = "blue", size = 1.5) +
   scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
@@ -1386,9 +1511,156 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 
 
 ---
+# Efeito da omissão de variáveis relevantes na estimação do fator oferta
+
+```{r, echo = TRUE}
+set.seed(1)
+area <- runif(200, min = 250, max = 5000)
+distancia <- runif(200, min = 10, max = 500)
+venda <- rbinom(200, 1, .5)
+lvu <- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
+dados <- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
+                 Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+--
+
+```{r, echo = TRUE}
+fitComplete <- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
+fitOVB <- lm(log(VU) ~ log(Area) + Fonte, dados)
+```
+
+---
+# Efeito da omissão de variáveis relevantes na estimação do fator oferta
+
+```{r}
+tab_model(fitComplete, fitOVB)
+```
+
+
+--
+
+* A estimativa central não muda muito, mesmo com o viés devido à omissão da variável;
+
+--
+
+* A eficiência da estimação, no entanto, é bem inferior à obtida com o modelo completo.
+
+---
+# Obtenção à partir da minimização do CV
+
+```{r}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$VU, fonte = dados$Fonte)
+```
+
+---
 # Efeitos do Fator Oferta sobre IC e IP
 
+$$\mathbb{E}[c \cdot VU] = c\mathbb{E}[VU]$$
 
+--
+
+$$\mathbb{E}[VU_{venda}] = \mathbb{E}[c\cdot VU_{oferta}] = c \mathbb{E}[VU_{oferta}]$$
+
+--
+
+$$\mathbb{V}[c \cdot VU] = c^2\mathbb{V}[VU]$$
+
+--
+
+$$\mathbb{V}[VU_{venda}] = \mathbb{V}[c\cdot VU_{oferta}] = c^2 \mathbb{V}[VU_{oferta}]$$
+
+--
+
+* Intervalos de Confiança ([Matloff, p. 272](https://github.com/matloff/probstatbook/blob/master/ProbStatBook.pdf)):
+
+$$IC_\alpha = \hat\theta \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat \theta)$$
+--
+
+* $s.e.(\hat \theta) = \frac{s}{\sqrt{n}} \, , \text{onde} \, s\, \text{é o desvio-padrão amostral}$
+
+* $\mathbb{\hat V}(\hat \theta) = \frac{s^2}{n}$
+
+* $s.e.(\hat \theta) = \sqrt{\mathbb{\hat V}(\hat \theta)}$
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+* $s.e.(\hat{VU}_{venda}) = s.e.(c \hat{VU}_{oferta}) = \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})}$
+
+--
+
+* $s.e.(\hat{VU}_{venda}) = \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})}$
+
+--
+
+* $s.e.(\hat{VU}_{venda}) = c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} = c\cdot s.e.(\hat{VU}_{oferta})$
+
+--
+
+* O IC dos valores de venda, portanto, pode ser escrito assim:
+
+$$IC_{VU_{venda}} = \hat{VU}_{venda} \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat{VU}_{venda})$$
+
+--
+* Ou assim:
+
+$$IC_{VU_{venda}} = c \cdot \hat{VU}_{oferta} \pm Z_{1 - \frac{\alpha}{2}} \cdot c \cdot s.e.(\hat{VU}_{oferta})$$
+
+--
+
+* Em suma:
+
+$$IC_{VU_{venda}} = c \cdot IC_{VU_{oferta}}$$
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+* Dados exclusivamente de ofertas:
+
+```{r, echo = TRUE}
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+vu <- 3000 - .25*area + rnorm(100, 0, 2000)
+dados <- data.frame(VU = vu, Area = area)
+```
+
+--
+
+
+.pull-left[
+
+* Avaliador A:
+
+```{r, echo = TRUE, highlight.output=2}
+dados$VUvenda <- .9*dados$VU
+fit <- lm(VUvenda ~ Area, data = dados)
+p <- predict(fit, 
+        newdata = data.frame(Area = 5000),
+        interval = "confidence", level = .80)
+p
+```
+
+]
+
+.pull-right[
+
+* Avaliador B:
+
+```{r, echo = TRUE}
+fit1 <- lm(VU ~ Area, data = dados)
+p1 <- predict(fit1, 
+            newdata = data.frame(Area = 5000),
+            interval = "confidence", level = .80)
+p1
+```
+```{r, echo = TRUE, highlight.output=2}
+.9*p1
+```
+
+
+]
 
 ---
 class: inverse, center, middle

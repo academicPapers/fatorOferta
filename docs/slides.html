@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 17 de junho de 2021
+### 18 de junho de 2021
 
 ---
 
@@ -887,14 +887,36 @@ R 4.0.2&gt; predict(fithom, newdata = new10000,
 ---
 # Dados lognormais
 
-`$$VU = \exp(7,5 - 0,25\cdot \log(Area) - 0,15\cdot Fonte + \varepsilon)$$`
+--
+
+Uma das propriedades da função logarítmica é: `\(\log(x \cdot y) = \log(x) + \log(y)\)`
+
+--
+
+Portanto, se `\(V_{venda} = 0,85\cdot V_{oferta}\)`, na escala `\(\log\)`:
+
+--
+
+`$$\log(V_{venda}) = \log(0,85\cdot V_{oferta}) = \log (0,85) + \log(V_{oferta})$$`
+
+`$$\log(V_{oferta}) = \log(V_{venda}) - \log(0,85)$$` 
+
+--
+
+`$$\log(V_{oferta}) = \log(V_{venda}) - 0,1625$$`
+
+--
+
+`$$\log(VU) = 7,5 - 0,25\cdot \log(Area) - 0,1625\cdot Fonte + \varepsilon$$`
+
+--
 
 
 ```r
 R 4.0.2&gt; set.seed(2)
 R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 5000)
 R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
-R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) - .15*venda + rnorm(100, mean = 0, sd = .05)
+R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
 R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
                   Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
@@ -910,6 +932,8 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 ---
 # Modelo bem especificado
+
+.pull-left[
 
 
 ```r
@@ -930,20 +954,33 @@ R 4.0.2&gt; summary(fit2)
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)  7.507161   0.054010  139.00   &lt;2e-16 ***
 ## log(Area)   -0.251045   0.007012  -35.80   &lt;2e-16 ***
-*## FonteVenda  -0.145003   0.009974  -14.54   &lt;2e-16 ***
+*## FonteVenda  -0.157503   0.009974  -15.79   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.0497 on 97 degrees of freedom
-## Multiple R-squared:  0.9397,	Adjusted R-squared:  0.9385 
-## F-statistic: 756.3 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+## Multiple R-squared:  0.9412,	Adjusted R-squared:   0.94 
+## F-statistic: 776.1 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+
+```r
+R 4.0.2&gt; # Cálculo do Fator Oferta
+R 4.0.2&gt; exp(-.157503)
 ```
 
+```
+## [1] 0.8542743
+```
+]
 
 ---
 # Modelo bem especificado
 
-&lt;img src="images/unnamed-chunk-23-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-24-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo bem especificado
@@ -957,12 +994,34 @@ R 4.0.2&gt; summary(fit2)
 ---
 # Opção: Aplicação prévia do Fator Oferta
 
+
+```r
+R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
+          vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+
+```
+## $minimum
+## [1] 0.8344358
+## 
+## $objective
+## [1] 0.2005459
+```
+
+
+
+---
+# Opção: Aplicação prévia do Fator Oferta
+
 .pull-left[
 
 ```r
 R 4.0.2&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Venda", 
-                                 VU, .85*VU))
+                                 VU,  0.835*VU))
 R 4.0.2&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
 R 4.0.2&gt; summary(fithom2)
 ```
@@ -974,18 +1033,18 @@ R 4.0.2&gt; summary(fithom2)
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.099541 -0.040705  0.002982  0.037372  0.108366 
+## -0.097443 -0.042308  0.000524  0.036701  0.111177 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  7.351000   0.054459   135.0   &lt;2e-16 ***
-## log(Area)   -0.250823   0.007085   -35.4   &lt;2e-16 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.33512    0.05504  133.27   &lt;2e-16 ***
+## log(Area)   -0.25076    0.00716  -35.02   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.05023 on 98 degrees of freedom
-## Multiple R-squared:  0.9275,	Adjusted R-squared:  0.9267 
-## F-statistic:  1253 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 0.05077 on 98 degrees of freedom
+## Multiple R-squared:  0.926,	Adjusted R-squared:  0.9253 
+## F-statistic:  1226 on 1 and 98 DF,  p-value: &lt; 2.2e-16
 ```
 ]
 
@@ -997,7 +1056,7 @@ R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
-## [1] 0.2179645
+## [1] 0.2204912
 ```
 
 
@@ -1006,14 +1065,21 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
-## [1] 0.2005692
+## [1] 0.2005462
 ```
 ]
 
 ---
+# Opção: aplicação prévia do fator oferta
+
+
+&lt;img src="images/unnamed-chunk-28-1.svg" style="display: block; margin: auto;" /&gt;
+
+
+---
 # Opção: Aplicação prévia do Fator Oferta
 
-&lt;img src="images/unnamed-chunk-27-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-29-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Diagnóstico modelo com dados homogeneizados
@@ -1046,8 +1112,8 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.51&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.40&amp;nbsp;&amp;ndash;&amp;nbsp;7.61&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.35&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.24&amp;nbsp;&amp;ndash;&amp;nbsp;7.46&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.34&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.23&amp;nbsp;&amp;ndash;&amp;nbsp;7.44&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1061,8 +1127,8 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.15&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&amp;nbsp;&amp;ndash;&amp;nbsp;-0.13&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.18&amp;nbsp;&amp;ndash;&amp;nbsp;-0.14&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
@@ -1075,8 +1141,8 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.940 / 0.938&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.927 / 0.927&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.941 / 0.940&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.926 / 0.925&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
@@ -1095,8 +1161,8 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new250,
 ```
 
 ```
-##        fit     lwr     upr
-*## 1 393.8706 385.454 402.471
+##        fit      lwr      upr
+*## 1 388.9779 380.6658 397.4714
 ```
 
 
@@ -1108,7 +1174,7 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-*## 1 389.9781 382.0481 398.0727
+*## 1 383.9771 376.0865 392.0331
 ```
 ]
 
@@ -1123,8 +1189,8 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new5000,
 ```
 
 ```
-##        fit      lwr      upr
-*## 1 185.6678 183.4194 187.9437
+##        fit      lwr     upr
+*## 1 183.3614 181.1409 185.609
 ```
 
 
@@ -1135,7 +1201,7 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
 
 ```
 ##        fit      lwr      upr
-*## 1 183.9551 182.0866 185.8428
+*## 1 181.1609 179.3012 183.0398
 ```
 
 ]
@@ -1159,7 +1225,7 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 ---
 # Outras transformações: análise exploratória
 
-&lt;img src="images/unnamed-chunk-34-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-36-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo mal especificado
@@ -1248,6 +1314,27 @@ R 4.0.2&gt; summary(fit4)
 &lt;p class="caption"&gt;Modelo mal especificado. Fator oferta.&lt;/p&gt;
 &lt;/div&gt;
 
+
+---
+# Opção: aplicação prévia do fator oferta
+
+
+```r
+R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
+          vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+
+```
+## $minimum
+## [1] 0.8414493
+## 
+## $objective
+## [1] 0.5776991
+```
+
 ---
 # Opção: aplicação prévia do fator oferta
 
@@ -1310,6 +1397,12 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ]
+
+---
+# Opção: aplicação prévia do fator oferta
+
+&lt;img src="images/unnamed-chunk-42-1.svg" style="display: block; margin: auto;" /&gt;
+
 
 ---
 # Opção: aplicação prévia do fator oferta
@@ -1513,7 +1606,7 @@ R 4.0.2&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ---
 # Análise Exploratória
 
-&lt;img src="images/unnamed-chunk-49-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-52-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -1564,7 +1657,7 @@ R 4.0.2&gt; summary(fitMult)
 
 `$$p_i = r_i + \hat \beta_jX_i^{(j)}$$`
 
-&lt;img src="images/unnamed-chunk-52-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-55-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo Correto
@@ -1604,7 +1697,7 @@ R 4.0.2&gt; summary(fitMult2)
 # Modelo Correto
 
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/unnamed-chunk-54-1.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;&lt;img src="images/unnamed-chunk-54-2.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;
+&lt;img src="images/unnamed-chunk-57-1.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;&lt;img src="images/unnamed-chunk-57-2.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;
 &lt;p class="caption"&gt;Regressão Múltiplo. Modelo Correto. Fator Oferta.&lt;/p&gt;
 &lt;/div&gt;
 
@@ -1615,6 +1708,24 @@ R 4.0.2&gt; summary(fitMult2)
 &lt;img src="images/fitMul2tDiagnostics-1.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-2.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-3.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;&lt;img src="images/fitMul2tDiagnostics-4.svg" alt="Modelo mal especificado. Fator oferta." width="38%" /&gt;
 &lt;p class="caption"&gt;Modelo mal especificado. Fator oferta.&lt;/p&gt;
 &lt;/div&gt;
+
+---
+# Opção: aplicação prévia do fator oferta
+
+
+```r
+R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
+          vu = dados$y, fonte = dados$Fonte)
+```
+
+```
+## $minimum
+## [1] 0.8453076
+## 
+## $objective
+## [1] 0.1007858
+```
+
 
 ---
 # Opção: aplicação prévia do fator oferta
@@ -1686,7 +1797,7 @@ R 4.0.2&gt; sd(dados$yhom)/mean(dados$yhom)
 
 
 
-&lt;img src="images/unnamed-chunk-59-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-63-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Previsão de valores
@@ -1775,13 +1886,245 @@ R 4.0.2&gt; predict(fithom4, newdata = new110_60,
 
 --
 
-&lt;img src="images/unnamed-chunk-66-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-70-1.svg" style="display: block; margin: auto;" /&gt;
 
+
+---
+# Efeito da omissão de variáveis relevantes na estimação do fator oferta
+
+
+```r
+R 4.0.2&gt; set.seed(1)
+R 4.0.2&gt; area &lt;- runif(200, min = 250, max = 5000)
+R 4.0.2&gt; distancia &lt;- runif(200, min = 10, max = 500)
+R 4.0.2&gt; venda &lt;- rbinom(200, 1, .5)
+R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
+R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
+                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+```
+
+--
+
+
+```r
+R 4.0.2&gt; fitComplete &lt;- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
+R 4.0.2&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
+```
+
+---
+# Efeito da omissão de variáveis relevantes na estimação do fator oferta
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VU)&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VU)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.52&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.42&amp;nbsp;&amp;ndash;&amp;nbsp;7.63&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;6.37&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;6.03&amp;nbsp;&amp;ndash;&amp;nbsp;6.70&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area [log]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.28&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.32&amp;nbsp;&amp;ndash;&amp;nbsp;-0.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Distancia [log]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.17&amp;nbsp;&amp;ndash;&amp;nbsp;-0.14&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.13&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.18&amp;nbsp;&amp;ndash;&amp;nbsp;-0.07&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;200&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;200&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.959 / 0.958&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.490 / 0.485&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+
+--
+
+* A estimativa central não muda muito, mesmo com o viés devido à omissão da variável;
+
+--
+
+* A eficiência da estimação, no entanto, é bem inferior à obtida com o modelo completo.
+
+---
+# Obtenção à partir da minimização do CV
+
+
+```
+## $minimum
+## [1] 0.8529226
+## 
+## $objective
+## [1] 0.2745698
+```
 
 ---
 # Efeitos do Fator Oferta sobre IC e IP
 
+`$$\mathbb{E}[c \cdot VU] = c\mathbb{E}[VU]$$`
 
+--
+
+`$$\mathbb{E}[VU_{venda}] = \mathbb{E}[c\cdot VU_{oferta}] = c \mathbb{E}[VU_{oferta}]$$`
+
+--
+
+`$$\mathbb{V}[c \cdot VU] = c^2\mathbb{V}[VU]$$`
+
+--
+
+`$$\mathbb{V}[VU_{venda}] = \mathbb{V}[c\cdot VU_{oferta}] = c^2 \mathbb{V}[VU_{oferta}]$$`
+
+--
+
+* Intervalos de Confiança ([Matloff, p. 272](https://github.com/matloff/probstatbook/blob/master/ProbStatBook.pdf)):
+
+`$$IC_\alpha = \hat\theta \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat \theta)$$`
+--
+
+* `\(s.e.(\hat \theta) = \frac{s}{\sqrt{n}} \, , \text{onde} \, s\, \text{é o desvio-padrão amostral}\)`
+
+* `\(\mathbb{\hat V}(\hat \theta) = \frac{s^2}{n}\)`
+
+* `\(s.e.(\hat \theta) = \sqrt{\mathbb{\hat V}(\hat \theta)}\)`
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+* `\(s.e.(\hat{VU}_{venda}) = s.e.(c \hat{VU}_{oferta}) = \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})}\)`
+
+--
+
+* `\(s.e.(\hat{VU}_{venda}) = \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})}\)`
+
+--
+
+* `\(s.e.(\hat{VU}_{venda}) = c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} = c\cdot s.e.(\hat{VU}_{oferta})\)`
+
+--
+
+* O IC dos valores de venda, portanto, pode ser escrito assim:
+
+`$$IC_{VU_{venda}} = \hat{VU}_{venda} \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat{VU}_{venda})$$`
+
+--
+* Ou assim:
+
+`$$IC_{VU_{venda}} = c \cdot \hat{VU}_{oferta} \pm Z_{1 - \frac{\alpha}{2}} \cdot c \cdot s.e.(\hat{VU}_{oferta})$$`
+
+--
+
+* Em suma:
+
+`$$IC_{VU_{venda}} = c \cdot IC_{VU_{oferta}}$$`
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+* Dados exclusivamente de ofertas:
+
+
+```r
+R 4.0.2&gt; set.seed(2)
+R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
+R 4.0.2&gt; vu &lt;- 3000 - .25*area + rnorm(100, 0, 2000)
+R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area)
+```
+
+--
+
+
+.pull-left[
+
+* Avaliador A:
+
+
+```r
+R 4.0.2&gt; dados$VUvenda &lt;- .9*dados$VU
+R 4.0.2&gt; fit &lt;- lm(VUvenda ~ Area, data = dados)
+R 4.0.2&gt; p &lt;- predict(fit, 
+         newdata = data.frame(Area = 5000),
+         interval = "confidence", level = .80)
+R 4.0.2&gt; p
+```
+
+```
+##        fit      lwr      upr
+*## 1 1618.635 1357.652 1879.617
+```
+
+]
+
+.pull-right[
+
+* Avaliador B:
+
+
+```r
+R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area, data = dados)
+R 4.0.2&gt; p1 &lt;- predict(fit1, 
+             newdata = data.frame(Area = 5000),
+             interval = "confidence", level = .80)
+R 4.0.2&gt; p1
+```
+
+```
+##        fit      lwr      upr
+## 1 1798.483 1508.503 2088.463
+```
+
+```r
+R 4.0.2&gt; .9*p1
+```
+
+```
+##        fit      lwr      upr
+*## 1 1618.635 1357.652 1879.617
+```
+
+
+]
 
 ---
 class: inverse, center, middle
