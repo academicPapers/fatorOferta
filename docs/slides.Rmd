@@ -1682,6 +1682,8 @@ antes da modelagem
 * A má especificação do fator oferta pode levar a modelos tendenciosos, que 
 podem produzir más previsões de valores, especialmente nos extremos dos dados
 
-* O fator oferta também influencia no cômputo dos intervalos de confiança e
-predição. É um erro comparar valores de mercado com intervalos obtidos com 
-dados de oferta antes de um tratamento destes intervalos.
+* Quando da utilização exclusiva de dados de oferta, a aplicação do fator oferta
+antes ou após o ajuste do modelo de regressão deveria conduzir aos mesmos
+valores previstos, tanto para a estimativa central, quanto para os limites dos
+intervalos de confiança e predição. A norma deveria estabelecer este 
+procedimento explicitamente.
