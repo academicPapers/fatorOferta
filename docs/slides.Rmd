@@ -25,6 +25,7 @@ knitr::opts_chunk$set(cache=FALSE, echo = FALSE, warning = FALSE,
 options(htmltools.dir.version = FALSE)
 library(sjPlot)
 library(ggplot2)
+library(ggExtra)
 library(cowplot)
 theme_set(theme_cowplot())
 library(ggvis)
@@ -32,6 +33,7 @@ library(stargazer)
 library(effects)
 library(lmtest)
 library(mosaic)
+library(car)
 ```
 
 
@@ -473,93 +475,14 @@ class: inverse, center, middle
 # Aplicações
 
 ---
-# Modelo de regressão na forma direta 
-
-
-$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
-
-```{r, echo = TRUE}
-set.seed(2)
-area <- runif(100, min = 250, max = 10000)
-venda <- rbinom(100, 1, .5)
-vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
-dados <- data.frame(VU = vu, Area = area, 
-                 Fonte = factor(venda, 
-                                labels = c("Oferta", "Venda")))
-```
-
----
-# Análise Exploratória
-
-```{r dados1, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
-ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
-  geom_point() +
-  stat_smooth(method = "lm", se = FALSE)
-```
-
----
-# Modelo mal especificado
-
-.pull-left[
-
-```{r, echo = TRUE}
-fit <- lm(VU ~ Area + Fonte, data = dados)
-summary(fit)
-```
-
-]
-
-.pull-right[
-
-```{r}
-bptest(fit)
-qqnorm(residuals(fit)); qqline(residuals(fit), col = 2)
-```
-
-]
-
-
----
-# Modelo mal especificado
-
-```{r dados1a, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
-ggplot(dados, aes(x = Area, y = VU)) +
-  geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], 
-              color = "red") +
-  geom_abline(intercept = coef(fit)[1] + coef(fit)[3], slope = coef(fit)[2], 
-              color = "blue") +
-  geom_point(aes(color = Fonte))
-```
-
----
-# Modelo bem especificado
-
-.pull-left[
-
-```{r, echo = TRUE}
-fit1 <- lm(VU ~ Area*Fonte, data = dados)
-summary(fit1)
-```
-]
-
-.pull-right[
-
-```{r}
-bptest(fit1)
-qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
-```
-
-]
-
----
-# Como estimar o fator oferta a partir dos dados?
+# Estimação do fator oferta
 
 * **NBR 14.653-02**: 
 
 --
 
-  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
-  observados, limitado a **um único fator de homogeneização**, desde que
+  - 9.2.1.3 **É permitida a utilização de tratamento prévio dos preços**
+  observados, **limitado a um único fator de homogeneização**, desde que
   fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
   (**exemplo: aplicação do fator de fonte para a transformação de preços de 
   oferta para as condições de transação**). 
@@ -596,20 +519,119 @@ qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
   consideração do fator oferta**.
 
 ---
-# Forma gráfica
+# Estimação do fator oferta
+
+## Modelo de regressão na forma direta 
+
+
+$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
+
+```{r, echo = TRUE}
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+venda <- rbinom(100, 1, .5)
+vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+dados <- data.frame(VU = vu, Area = area, 
+                 Fonte = factor(venda, 
+                                labels = c("Oferta", "Venda")))
+```
+
+---
+# Estimação do fator oferta
+
+## Análise Exploratória
+
+```{r dados1, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
+p <- ggplot(dados, aes(x = Area, y = VU, colour = Fonte)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) + 
+  theme(legend.position = "bottom")
+p1 <- ggMarginal(p, type="boxplot", margins = "y", groupColour = T)
+p1
+```
+
+---
+# Estimação do fator oferta
+
+## Modelo mal especificado
+
+.pull-left[
+
+```{r, echo = TRUE}
+fit <- lm(VU ~ Area + Fonte, data = dados)
+S(fit, brief = T)
+```
+
+]
+
+.pull-right[
+
+```{r}
+bptest(fit)
+qqnorm(residuals(fit)); qqline(residuals(fit), col = 2)
+```
+
+]
+
+
+---
+# Estimação do fator oferta
+
+## Modelo mal especificado
+
+```{r dados1a, fig.cap="Dados randômicos de oferta (em vermelho) e transação (em verde)"}
+ggplot(dados, aes(x = Area, y = VU)) +
+  geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], 
+              color = "red") +
+  geom_abline(intercept = coef(fit)[1] + coef(fit)[3], slope = coef(fit)[2], 
+              color = "blue") +
+  geom_point(aes(color = Fonte))
+```
+
+---
+# Estimação do fator oferta
+
+## Modelo bem especificado
+
+.pull-left[
+
+```{r, echo = TRUE}
+fit1 <- lm(VU ~ Area*Fonte, data = dados)
+S(fit1, brief = T)
+```
+]
+
+.pull-right[
+
+```{r}
+bptest(fit1)
+qqnorm(residuals(fit1)); qqline(residuals(fit1), col = 2)
+```
+
+]
+
+---
+# Estimação do fator oferta
+
+## Forma gráfica
 
 [App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
 
 
 ---
-# Forma numérica
+# Estimação do fator oferta
+
+## Forma numérica
 
 $$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F) VU]}{\mu[(1- c\cdot F) VU)]}\right ), \text{com } \, F = \left\{\begin{matrix}
 1,\,\text{se dado de oferta}\\ 
 0,\, \text{se dado de venda}
 \end{matrix}\right.$$
 
-```{r, fig.width=9, fig.height=5.5}
+```{r, fig.width=9, fig.height=4.5}
+dados <- within(dados, 
+                VUhom <- ifelse(Fonte == "Venda", 
+                                VU, .85*VU))
 fator <- seq(.5, 2, by = .01)
 cv <- vector(length = length(fator))
 for (i in seq_along(fator)){
@@ -633,7 +655,9 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 ```
 
 ---
-# Forma numérica: Minimização
+# Estimação do fator oferta
+
+## Forma numérica: Minimização
 
 ```{r minimize, echo = TRUE, eval = FALSE}
 cv <- function(fator, vu, fonte){
@@ -650,8 +674,9 @@ optimise(cv, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
+# Estimação do fator oferta
 
-# Opção: aplicação prévia do fator oferta
+## Aplicação prévia do fator oferta
 
 .pull-left[
 
@@ -678,25 +703,31 @@ sd(dados$VUhom)/mean(dados$VUhom)
 .pull-right[
 
 ```{r dadosHomogeneizados, fig.cap="Dados homogeneizados."}
-ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
-  geom_point() + stat_smooth(method = "lm", se = FALSE)
+p <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + 
+  stat_smooth(method = "lm", se = FALSE) + 
+  theme(legend.position = "bottom")
+p1 <- ggMarginal(p, type="boxplot", margins = "y", groupColour = T)
+p1
 ```
 
 ]
 
 ---
-# Opção: aplicação prévia do fator oferta
+# Estimação do fator oferta
 
-* Modelo:
+## Aplicação prévia do fator oferta
 
 ```{r, echo = TRUE}
 fithom <- lm(VUhom ~ Area, dados)
-summary(fithom)
+S(fithom, brief = T)
 ```
 
 
 ---
-# Resumo
+# Estimação do fator oferta
+
+## Resumo
 
 ```{r, results='asis', include = FALSE}
 stargazer(fit, fit1, fithom,
@@ -718,7 +749,9 @@ tab_model(fit, fit1, fithom)
 
 
 ---
-# Previsão de valores
+# Estimação do fator oferta
+
+## Previsão de valores
 
 .pull-left[
 
@@ -765,7 +798,9 @@ predict(fithom, newdata = new10000,
 
 
 ---
-# Dados lognormais
+# Estimação do fator oferta
+
+## Dados lognormais
 
 --
 
@@ -801,42 +836,55 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
-# Dados lognormais: análise exploratória
+# Estimação do fator oferta
+
+## Dados lognormais: análise exploratória
 
 ```{r lognormalExploratoria, fig.cap="Análise exploratória. Dados lognormais.", fig.width=9, fig.height=5.25}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) + 
-  geom_point() + stat_smooth(se = FALSE)
-p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
-  geom_point() + stat_smooth(method = "lm", se = FALSE)
-prow <- plot_grid(
-  p1 + theme(legend.position="none"),
-  p2 + theme(legend.position="none"),
-  align = 'vh',
-  labels = c("A", "B"),
-  hjust = -1,
-  nrow = 1
-)
+  geom_point() + 
+  stat_smooth(se = FALSE)
 legend <- get_legend(
   p1 + 
     guides(color = guide_legend(nrow = 1)) +
     theme(legend.position = "bottom")
 )
+p1 <- p1 + theme(legend.position="none")
+p1 <- ggMarginal(p1, type="boxplot", margins = "y", groupColour = T)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VU), color = Fonte)) +
+  geom_point() + stat_smooth(method = "lm", se = FALSE) +
+  theme(legend.position="none")
+p2 <- ggMarginal(p2, type="boxplot", margins = "y", groupColour = T)
+prow <- plot_grid(
+  p1,
+  p2 ,
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+
 plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
 
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
 
 .pull-left[
 
-```{r, echo = TRUE, highlight.output=13}
-fit2 <- lm(log(VU) ~ log(Area) + Fonte, data = dados)
-summary(fit2)
+## Modelo bem especificado
+
+```{r, echo = TRUE, highlight.output=5}
+fit2 <- lm(log(VU) ~ log(Area) + Fonte, 
+           data = dados)
+S(fit2, brief = T)
 ```
 ]
 
 .pull-right[
+
+## Cálculo do Fator Oferta a partir do coeficiente estimado
 
 ```{r, echo = TRUE}
 # Cálculo do Fator Oferta
@@ -845,7 +893,9 @@ exp(-.157503)
 ]
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
+
+## Modelo bem especificado
 
 ```{r}
 plot(predictorEffects(fit2, residuals=TRUE),
@@ -854,7 +904,9 @@ plot(predictorEffects(fit2, residuals=TRUE),
 ```
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
+
+## Modelo bem especificado
 
 ```{r fit2Diagnostics, fig.cap="Modelo correto. Fator oferta. Dados lognormais.",, fig.show = "hold", out.width="38%"}
 plot(fit2)
@@ -862,7 +914,9 @@ plot(fit2)
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do Fator Oferta
 
 ```{r minimizeLog, echo = TRUE, eval = FALSE}
 optimise(cv, c(0.5, 2), tol = 0.0001, 
@@ -877,15 +931,17 @@ optimise(cv, c(0.5, 2), tol = 0.0001,
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do Fator Oferta
 
 .pull-left[
 ```{r, echo = TRUE}
 dados <- within(dados, 
                 VUhom <- ifelse(Fonte == "Venda", 
-                                VU,  0.835*VU))
+                                VU,  0.85*VU))
 fithom2 <- lm(log(VUhom) ~ log(Area), dados)
-summary(fithom2)
+S(fithom2, brief = T)
 ```
 ]
 
@@ -901,7 +957,9 @@ sd(dados$VUhom)/mean(dados$VUhom)
 ]
 
 ---
-# Opção: aplicação prévia do fator oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do fator oferta
 
 
 ```{r, fig.width=9, fig.height=5.5}
@@ -929,47 +987,59 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
 
-```{r, fig.width=9, fig.height=6}
+## Aplicação prévia do Fator Oferta
+
+```{r, fig.width=9, fig.height=4.5}
 p1 <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
   geom_point() +
   stat_smooth(se = FALSE)
-p2 <- ggplot(dados, aes(x = log(Area), y = log(VUhom), color = Fonte)) +
-  geom_point() +
-  stat_smooth(method = "lm", se = FALSE)
-prow <- plot_grid(
-  p1 + theme(legend.position="none"),
-  p2 + theme(legend.position="none"),
-  align = 'vh',
-  labels = c("A", "B"),
-  hjust = -1,
-  nrow = 1
-)
 legend <- get_legend(
   p1 + 
     guides(color = guide_legend(nrow = 1)) +
     theme(legend.position = "bottom")
 )
+p1 <- p1 + theme(legend.position="none")
+p1 <- ggMarginal(p1, type = "boxplot", margins = "y", groupColour = T)
+p2 <- ggplot(dados, aes(x = log(Area), y = log(VUhom), color = Fonte)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  theme(legend.position="none")
+p2 <- ggMarginal(p2, type = "boxplot", margins = "y", groupColour = T)
+prow <- plot_grid(
+  p1,
+  p2,
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
 plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
 
 ---
-# Diagnóstico modelo com dados homogeneizados
+# Estimação do fator oferta
+
+## Diagnóstico modelo com dados homogeneizados
 
 ```{r fit2homDiagnostics, fig.cap="Modelo com dados homogeneizados. Dados lognormais.",, fig.show = "hold", out.width="38%"}
 plot(fithom2)
 ```
 
 ---
-# Resumo dos modelos
+# Estimação do fator oferta
+
+## Resumo dos modelos
 
 ```{r}
 tab_model(fit2, fithom2)
 ```
 
 ---
-# Previsão de valores
+# Estimação do fator oferta
+
+## Previsão de valores
 
 .pull-left[
 
@@ -1004,7 +1074,9 @@ exp(predict(fithom2, newdata = new5000,
 ]
 
 ---
-# Outras transformações
+# Estimação do fator oferta
+
+## Outras transformações
 
 $$VU = (1-0,15\cdot Fonte)(50 - 0,01\cdot Area + \varepsilon)^2$$
 
@@ -1019,25 +1091,33 @@ dados <- data.frame(VU = vu, Area = area,
 ```
 
 ---
-# Outras transformações: análise exploratória
+# Estimação do fator oferta
 
-```{r, fig.width=9, fig.height=6}
+## Outras transformações: análise exploratória
+
+```{r, fig.width=9, fig.height=4.5}
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
-  geom_point() + stat_smooth(se = FALSE)
-p2 <- ggplot(dados, aes(x = Area, y = sqrt(VU), color = Fonte)) +
-  geom_point() + stat_smooth(se = FALSE)
-prow <- plot_grid(
-  p1 + theme(legend.position="none"),
-  p2 + theme(legend.position="none"),
-  align = 'vh',
-  labels = c("A", "B"),
-  hjust = -1,
-  nrow = 1
-)
+  geom_point() + 
+  stat_smooth(se = FALSE) + 
+  theme(legend.position="none")
 legend <- get_legend(
   p1 + 
     guides(color = guide_legend(nrow = 1)) +
     theme(legend.position = "bottom")
+)
+p1 <- ggMarginal(p1, type="boxplot", margins = "y", groupColour = T)
+p2 <- ggplot(dados, aes(x = Area, y = sqrt(VU), color = Fonte)) +
+  geom_point() + 
+  stat_smooth(se = FALSE) + 
+  theme(legend.position="none")
+p2 <- ggMarginal(p2, type="boxplot", margins = "y", groupColour = T)
+prow <- plot_grid(
+  p1,
+  p2 ,
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
 )
 plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
@@ -1047,7 +1127,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 ```{r, echo = TRUE}
 fit3 <- lm(sqrt(VU) ~ Area + Fonte, data = dados)
-summary(fit3)
+S(fit3, brief = T)
 ```
 
 ---
@@ -1062,7 +1142,7 @@ plot(fit3)
 
 ```{r, echo = TRUE}
 fit4 <- lm(sqrt(VU) ~ Area*Fonte, data = dados)
-summary(fit4)
+S(fit4, brief = T)
 ```
 
 ---
@@ -1107,7 +1187,7 @@ dados <- within(dados,
                 VUhom <- ifelse(Fonte == "Venda", 
                                 VU, .85*VU))
 fithom3 <- lm(sqrt(VUhom) ~ Area, dados)
-summary(fithom3)
+S(fithom3, brief = T)
 ```
 
 ]
@@ -1159,8 +1239,12 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 # Opção: aplicação prévia do fator oferta
 
 ```{r dadosHomogeneizados3, fig.cap="Dados homogeneizados."}
-ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
-  geom_point() + stat_smooth(se = FALSE)
+p <- ggplot(dados, aes(x = Area, y = VUhom, color = Fonte)) +
+  geom_point() + 
+  stat_smooth(se = FALSE) +
+  theme(legend.position = "bottom")
+p <- ggMarginal(p, type = "boxplot", margins = "y", groupColour = T)
+p
 ```
 
 ---
@@ -1281,7 +1365,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 ```{r, echo = TRUE}
 fitMult <- lm(y ~ X1 + X2 + Fonte, dados)
-summary(fitMult)
+S(fitMult, brief = T)
 ```
 
 ---
@@ -1337,7 +1421,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 ```{r, echo = TRUE}
 fitMult2 <- lm(y ~ (X1 + X2)*Fonte, data = dados)
-summary(fitMult2)
+S(fitMult2, brief = T)
 ```
 
 ---
@@ -1376,7 +1460,7 @@ dados <- within(dados,
                 yhom <- ifelse(Fonte == "Venda", 
                                 y, .85*y))
 fithom4 <- lm(yhom ~ X1 + X2, dados)
-summary(fithom4)
+S(fithom4, brief = T)
 ```
 
 ]

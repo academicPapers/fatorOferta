@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 18 de junho de 2021
+### 19 de junho de 2021
 
 ---
 
@@ -417,148 +417,14 @@ class: inverse, center, middle
 # Aplicações
 
 ---
-# Modelo de regressão na forma direta 
-
-
-`$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$`
-
-
-```r
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
-R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
-R 4.0.2&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
-R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
-                  Fonte = factor(venda, 
-                                 labels = c("Oferta", "Venda")))
-```
-
----
-# Análise Exploratória
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/dados1-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
-&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
-&lt;/div&gt;
-
----
-# Modelo mal especificado
-
-.pull-left[
-
-
-```r
-R 4.0.2&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
-R 4.0.2&gt; summary(fit)
-```
-
-```
-## 
-## Call:
-## lm(formula = VU ~ Area + Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -284.11 -133.96   -5.26  107.93  344.03 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  2.915e+03  3.349e+01  87.037  &lt; 2e-16 ***
-## Area        -2.336e-01  5.224e-03 -44.724  &lt; 2e-16 ***
-## FonteVenda  -2.479e+02  3.036e+01  -8.168 1.18e-12 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 151.3 on 97 degrees of freedom
-## Multiple R-squared:  0.9551,	Adjusted R-squared:  0.9542 
-## F-statistic:  1032 on 2 and 97 DF,  p-value: &lt; 2.2e-16
-```
-
-]
-
-.pull-right[
-
-
-```
-## 
-## 	studentized Breusch-Pagan test
-## 
-## data:  fit
-## BP = 6.4355, df = 2, p-value = 0.04005
-```
-
-&lt;img src="images/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
-
-]
-
-
----
-# Modelo mal especificado
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/dados1a-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
-&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
-&lt;/div&gt;
-
----
-# Modelo bem especificado
-
-.pull-left[
-
-
-```r
-R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
-R 4.0.2&gt; summary(fit1)
-```
-
-```
-## 
-## Call:
-## lm(formula = VU ~ Area * Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -277.58 -111.34   19.66   97.02  323.54 
-## 
-## Coefficients:
-##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      3.011e+03  3.766e+01  79.961  &lt; 2e-16 ***
-## Area            -2.527e-01  6.445e-03 -39.204  &lt; 2e-16 ***
-## FonteVenda      -4.621e+02  5.594e+01  -8.260 7.99e-13 ***
-## Area:FonteVenda  4.248e-02  9.628e-03   4.412 2.68e-05 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 138.7 on 96 degrees of freedom
-## Multiple R-squared:  0.9627,	Adjusted R-squared:  0.9615 
-## F-statistic: 825.3 on 3 and 96 DF,  p-value: &lt; 2.2e-16
-```
-]
-
-.pull-right[
-
-
-```
-## 
-## 	studentized Breusch-Pagan test
-## 
-## data:  fit1
-## BP = 3.9476, df = 3, p-value = 0.2672
-```
-
-&lt;img src="images/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" /&gt;
-
-]
-
----
-# Como estimar o fator oferta a partir dos dados?
+# Estimação do fator oferta
 
 * **NBR 14.653-02**: 
 
 --
 
-  - 9.2.1.3 **É permitida a utilização de** tratamento prévio dos preços
-  observados, limitado a **um único fator de homogeneização**, desde que
+  - 9.2.1.3 **É permitida a utilização de tratamento prévio dos preços**
+  observados, **limitado a um único fator de homogeneização**, desde que
   fundamentado conforme 8.2.1.4.2, sem prejuízo dos ajustes citados em 9.2.1.2
   (**exemplo: aplicação do fator de fonte para a transformação de preços de 
   oferta para as condições de transação**). 
@@ -595,13 +461,149 @@ R 4.0.2&gt; summary(fit1)
   consideração do fator oferta**.
 
 ---
-# Forma gráfica
+# Estimação do fator oferta
+
+## Modelo de regressão na forma direta 
+
+
+`$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$`
+
+
+```r
+R 4.0.2&gt; set.seed(2)
+R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
+R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
+R 4.0.2&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
+                  Fonte = factor(venda, 
+                                 labels = c("Oferta", "Venda")))
+```
+
+---
+# Estimação do fator oferta
+
+## Análise Exploratória
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dados1-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
+&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Estimação do fator oferta
+
+## Modelo mal especificado
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
+R 4.0.2&gt; S(fit, brief = T)
+```
+
+```
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.915e+03  3.349e+01  87.037  &lt; 2e-16 ***
+## Area        -2.336e-01  5.224e-03 -44.724  &lt; 2e-16 ***
+## FonteVenda  -2.479e+02  3.036e+01  -8.168 1.18e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard deviation: 151.3 on 97 degrees of freedom
+## Multiple R-squared: 0.9551
+## F-statistic:  1032 on 2 and 97 DF,  p-value: &lt; 2.2e-16 
+##     AIC     BIC 
+## 1292.59 1303.01
+```
+
+]
+
+.pull-right[
+
+
+```
+## 
+## 	studentized Breusch-Pagan test
+## 
+## data:  fit
+## BP = 6.4355, df = 2, p-value = 0.04005
+```
+
+&lt;img src="images/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+# Estimação do fator oferta
+
+## Modelo mal especificado
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/dados1a-1.svg" alt="Dados randômicos de oferta (em vermelho) e transação (em verde)"  /&gt;
+&lt;p class="caption"&gt;Dados randômicos de oferta (em vermelho) e transação (em verde)&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Estimação do fator oferta
+
+## Modelo bem especificado
+
+.pull-left[
+
+
+```r
+R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
+R 4.0.2&gt; S(fit1, brief = T)
+```
+
+```
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      3.011e+03  3.766e+01  79.961  &lt; 2e-16 ***
+## Area            -2.527e-01  6.445e-03 -39.204  &lt; 2e-16 ***
+## FonteVenda      -4.621e+02  5.594e+01  -8.260 7.99e-13 ***
+## Area:FonteVenda  4.248e-02  9.628e-03   4.412 2.68e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard deviation: 138.7 on 96 degrees of freedom
+## Multiple R-squared: 0.9627
+## F-statistic: 825.3 on 3 and 96 DF,  p-value: &lt; 2.2e-16 
+##     AIC     BIC 
+## 1276.12 1289.15
+```
+]
+
+.pull-right[
+
+
+```
+## 
+## 	studentized Breusch-Pagan test
+## 
+## data:  fit1
+## BP = 3.9476, df = 3, p-value = 0.2672
+```
+
+&lt;img src="images/unnamed-chunk-7-1.svg" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# Estimação do fator oferta
+
+## Forma gráfica
 
 [App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
 
 
 ---
-# Forma numérica
+# Estimação do fator oferta
+
+## Forma numérica
 
 `$$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F) VU]}{\mu[(1- c\cdot F) VU)]}\right ), \text{com } \, F = \left\{\begin{matrix}
 1,\,\text{se dado de oferta}\\ 
@@ -611,7 +613,9 @@ R 4.0.2&gt; summary(fit1)
 &lt;img src="images/unnamed-chunk-8-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Forma numérica: Minimização
+# Estimação do fator oferta
+
+## Forma numérica: Minimização
 
 
 ```r
@@ -635,8 +639,9 @@ R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
+# Estimação do fator oferta
 
-# Opção: aplicação prévia do fator oferta
+## Aplicação prévia do fator oferta
 
 .pull-left[
 
@@ -681,25 +686,17 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ]
 
 ---
-# Opção: aplicação prévia do fator oferta
+# Estimação do fator oferta
 
-* Modelo:
+## Aplicação prévia do fator oferta
 
 
 ```r
 R 4.0.2&gt; fithom &lt;- lm(VUhom ~ Area, dados)
-R 4.0.2&gt; summary(fithom)
+R 4.0.2&gt; S(fithom, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = VUhom ~ Area, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -271.45 -105.53   11.75   92.98  265.71 
-## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) 2554.91700   25.35580  100.76   &lt;2e-16 ***
@@ -707,14 +704,18 @@ R 4.0.2&gt; summary(fithom)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 126.3 on 98 degrees of freedom
-## Multiple R-squared:  0.9605,	Adjusted R-squared:  0.9601 
-## F-statistic:  2381 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 126.3 on 98 degrees of freedom
+## Multiple R-squared: 0.9605
+## F-statistic:  2381 on 1 and 98 DF,  p-value: &lt; 2.2e-16 
+##     AIC     BIC 
+## 1255.45 1263.27
 ```
 
 
 ---
-# Resumo
+# Estimação do fator oferta
+
+## Resumo
 
 
 
@@ -802,7 +803,9 @@ R 4.0.2&gt; summary(fithom)
 
 
 ---
-# Previsão de valores
+# Estimação do fator oferta
+
+## Previsão de valores
 
 .pull-left[
 
@@ -885,7 +888,9 @@ R 4.0.2&gt; predict(fithom, newdata = new10000,
 
 
 ---
-# Dados lognormais
+# Estimação do fator oferta
+
+## Dados lognormais
 
 --
 
@@ -922,7 +927,9 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
-# Dados lognormais: análise exploratória
+# Estimação do fator oferta
+
+## Dados lognormais: análise exploratória
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="images/lognormalExploratoria-1.svg" alt="Análise exploratória. Dados lognormais."  /&gt;
@@ -931,25 +938,20 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
 
 .pull-left[
 
+## Modelo bem especificado
+
 
 ```r
-R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, data = dados)
-R 4.0.2&gt; summary(fit2)
+R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, 
+            data = dados)
+R 4.0.2&gt; S(fit2, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = log(VU) ~ log(Area) + Fonte, data = dados)
-## 
-## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.108967 -0.040772  0.006066  0.034972  0.106846 
-## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)  7.507161   0.054010  139.00   &lt;2e-16 ***
@@ -958,13 +960,17 @@ R 4.0.2&gt; summary(fit2)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.0497 on 97 degrees of freedom
-## Multiple R-squared:  0.9412,	Adjusted R-squared:   0.94 
-## F-statistic: 776.1 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 0.0497 on 97 degrees of freedom
+## Multiple R-squared: 0.9412
+## F-statistic: 776.1 on 2 and 97 DF,  p-value: &lt; 2.2e-16 
+##     AIC     BIC 
+## -311.59 -301.17
 ```
 ]
 
 .pull-right[
+
+## Cálculo do Fator Oferta a partir do coeficiente estimado
 
 
 ```r
@@ -978,12 +984,16 @@ R 4.0.2&gt; exp(-.157503)
 ]
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
+
+## Modelo bem especificado
 
 &lt;img src="images/unnamed-chunk-24-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Modelo bem especificado
+# Estimação do fator oferta
+
+## Modelo bem especificado
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="images/fit2Diagnostics-1.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-2.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-3.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2Diagnostics-4.svg" alt="Modelo correto. Fator oferta. Dados lognormais." width="38%" /&gt;
@@ -992,7 +1002,9 @@ R 4.0.2&gt; exp(-.157503)
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do Fator Oferta
 
 
 ```r
@@ -1014,37 +1026,33 @@ R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do Fator Oferta
 
 .pull-left[
 
 ```r
 R 4.0.2&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Venda", 
-                                 VU,  0.835*VU))
+                                 VU,  0.85*VU))
 R 4.0.2&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
-R 4.0.2&gt; summary(fithom2)
+R 4.0.2&gt; S(fithom2, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = log(VUhom) ~ log(Area), data = dados)
-## 
-## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.097443 -0.042308  0.000524  0.036701  0.111177 
-## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  7.33512    0.05504  133.27   &lt;2e-16 ***
-## log(Area)   -0.25076    0.00716  -35.02   &lt;2e-16 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.346462   0.053683  136.85   &lt;2e-16 ***
+## log(Area)   -0.250981   0.006984  -35.94   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.05077 on 98 degrees of freedom
-## Multiple R-squared:  0.926,	Adjusted R-squared:  0.9253 
-## F-statistic:  1226 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 0.04951 on 98 degrees of freedom
+## Multiple R-squared: 0.9295
+## F-statistic:  1292 on 1 and 98 DF,  p-value: &lt; 2.2e-16 
+##     AIC     BIC 
+## -313.33 -305.52
 ```
 ]
 
@@ -1065,24 +1073,30 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
-## [1] 0.2005462
+## [1] 0.2007681
 ```
 ]
 
 ---
-# Opção: aplicação prévia do fator oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do fator oferta
 
 
 &lt;img src="images/unnamed-chunk-28-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
-# Opção: Aplicação prévia do Fator Oferta
+# Estimação do fator oferta
+
+## Aplicação prévia do Fator Oferta
 
 &lt;img src="images/unnamed-chunk-29-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Diagnóstico modelo com dados homogeneizados
+# Estimação do fator oferta
+
+## Diagnóstico modelo com dados homogeneizados
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="images/fit2homDiagnostics-1.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-2.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-3.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;&lt;img src="images/fit2homDiagnostics-4.svg" alt="Modelo com dados homogeneizados. Dados lognormais." width="38%" /&gt;
@@ -1090,7 +1104,9 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;/div&gt;
 
 ---
-# Resumo dos modelos
+# Estimação do fator oferta
+
+## Resumo dos modelos
 
 &lt;table style="border-collapse:collapse; border:none;"&gt;
 &lt;tr&gt;
@@ -1112,8 +1128,8 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.51&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.40&amp;nbsp;&amp;ndash;&amp;nbsp;7.61&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.34&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.23&amp;nbsp;&amp;ndash;&amp;nbsp;7.44&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.35&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.24&amp;nbsp;&amp;ndash;&amp;nbsp;7.45&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1142,13 +1158,15 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.941 / 0.940&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.926 / 0.925&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.929 / 0.929&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
 
 ---
-# Previsão de valores
+# Estimação do fator oferta
+
+## Previsão de valores
 
 .pull-left[
 
@@ -1174,7 +1192,7 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
 
 ```
 ##        fit      lwr      upr
-*## 1 383.9771 376.0865 392.0331
+*## 1 387.8732 380.0972 395.8082
 ```
 ]
 
@@ -1201,13 +1219,15 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
 
 ```
 ##        fit      lwr      upr
-*## 1 181.1609 179.3012 183.0398
+*## 1 182.8754 181.0442 184.7252
 ```
 
 ]
 
 ---
-# Outras transformações
+# Estimação do fator oferta
+
+## Outras transformações
 
 `$$VU = (1-0,15\cdot Fonte)(50 - 0,01\cdot Area + \varepsilon)^2$$`
 
@@ -1223,7 +1243,9 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 ```
 
 ---
-# Outras transformações: análise exploratória
+# Estimação do fator oferta
+
+## Outras transformações: análise exploratória
 
 &lt;img src="images/unnamed-chunk-36-1.svg" style="display: block; margin: auto;" /&gt;
 
@@ -1233,18 +1255,10 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 
 ```r
 R 4.0.2&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
-R 4.0.2&gt; summary(fit3)
+R 4.0.2&gt; S(fit3, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = sqrt(VU) ~ Area + Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.0834 -1.8384  0.0321  1.4690  4.5725 
-## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) 69.086281   0.461259 149.777  &lt; 2e-16 ***
@@ -1253,9 +1267,11 @@ R 4.0.2&gt; summary(fit3)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 2.018 on 97 degrees of freedom
-## Multiple R-squared:  0.9794,	Adjusted R-squared:  0.979 
-## F-statistic:  2311 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 2.018 on 97 degrees of freedom
+## Multiple R-squared: 0.9794
+## F-statistic:  2311 on 2 and 97 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 429.15 439.57
 ```
 
 ---
@@ -1272,18 +1288,10 @@ R 4.0.2&gt; summary(fit3)
 
 ```r
 R 4.0.2&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
-R 4.0.2&gt; summary(fit4)
+R 4.0.2&gt; S(fit4, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = sqrt(VU) ~ Area * Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.0144 -1.5075  0.2621  1.3703  4.3139 
-## 
 ## Coefficients:
 ##                   Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)     70.1570222  0.5412342 129.624  &lt; 2e-16 ***
@@ -1293,9 +1301,11 @@ R 4.0.2&gt; summary(fit4)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.918 on 96 degrees of freedom
-## Multiple R-squared:  0.9816,	Adjusted R-squared:  0.981 
-## F-statistic:  1709 on 3 and 96 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 1.918 on 96 degrees of freedom
+## Multiple R-squared: 0.9816
+## F-statistic:  1709 on 3 and 96 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 419.94 432.97
 ```
 
 ---
@@ -1346,18 +1356,10 @@ R 4.0.2&gt; dados &lt;- within(dados,
                  VUhom &lt;- ifelse(Fonte == "Venda", 
                                  VU, .85*VU))
 R 4.0.2&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
-R 4.0.2&gt; summary(fithom3)
+R 4.0.2&gt; S(fithom3, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = sqrt(VUhom) ~ Area, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.9257 -1.5261  0.1699  1.3447  3.8428 
-## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) 64.6088206  0.3811754  169.50   &lt;2e-16 ***
@@ -1365,9 +1367,11 @@ R 4.0.2&gt; summary(fithom3)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.826 on 98 degrees of freedom
-## Multiple R-squared:  0.9811,	Adjusted R-squared:  0.9809 
-## F-statistic:  5082 on 1 and 98 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 1.826 on 98 degrees of freedom
+## Multiple R-squared: 0.9811
+## F-statistic:  5082 on 1 and 98 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 408.20 416.02
 ```
 
 ]
@@ -1615,18 +1619,10 @@ R 4.0.2&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 
 ```r
 R 4.0.2&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
-R 4.0.2&gt; summary(fitMult)
+R 4.0.2&gt; S(fitMult, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = y ~ X1 + X2 + Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.1684 -1.0438  0.0357  0.9533  3.7783 
-## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) -32.49863    2.83932 -11.446  &lt; 2e-16 ***
@@ -1636,9 +1632,11 @@ R 4.0.2&gt; summary(fitMult)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.457 on 196 degrees of freedom
-## Multiple R-squared:  0.847,	Adjusted R-squared:  0.8447 
-## F-statistic: 361.7 on 3 and 196 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 1.457 on 196 degrees of freedom
+## Multiple R-squared: 0.847
+## F-statistic: 361.7 on 3 and 196 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 724.13 740.62
 ```
 
 ---
@@ -1665,18 +1663,10 @@ R 4.0.2&gt; summary(fitMult)
 
 ```r
 R 4.0.2&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
-R 4.0.2&gt; summary(fitMult2)
+R 4.0.2&gt; S(fitMult2, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = y ~ (X1 + X2) * Fonte, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.1177 -0.9111  0.0486  0.7468  3.5021 
-## 
 ## Coefficients:
 ##                Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)   -44.13986    3.93393 -11.220  &lt; 2e-16 ***
@@ -1688,9 +1678,11 @@ R 4.0.2&gt; summary(fitMult2)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.398 on 194 degrees of freedom
-## Multiple R-squared:  0.8607,	Adjusted R-squared:  0.8571 
-## F-statistic: 239.7 on 5 and 194 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 1.398 on 194 degrees of freedom
+## Multiple R-squared: 0.8607
+## F-statistic: 239.7 on 5 and 194 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 709.42 732.51
 ```
 
 ---
@@ -1738,18 +1730,10 @@ R 4.0.2&gt; dados &lt;- within(dados,
                  yhom &lt;- ifelse(Fonte == "Venda", 
                                  y, .85*y))
 R 4.0.2&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
-R 4.0.2&gt; summary(fithom4)
+R 4.0.2&gt; S(fithom4, brief = T)
 ```
 
 ```
-## 
-## Call:
-## lm(formula = yhom ~ X1 + X2, data = dados)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.3685 -0.8418  0.0420  0.7860  2.9552 
-## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept) -31.56188    2.46428 -12.808  &lt; 2e-16 ***
@@ -1758,9 +1742,11 @@ R 4.0.2&gt; summary(fithom4)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 1.274 on 197 degrees of freedom
-## Multiple R-squared:  0.7626,	Adjusted R-squared:  0.7602 
-## F-statistic: 316.4 on 2 and 197 DF,  p-value: &lt; 2.2e-16
+## Residual standard deviation: 1.274 on 197 degrees of freedom
+## Multiple R-squared: 0.7626
+## F-statistic: 316.4 on 2 and 197 DF,  p-value: &lt; 2.2e-16 
+##    AIC    BIC 
+## 669.28 682.47
 ```
 
 ]
