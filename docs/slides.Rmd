@@ -1870,6 +1870,261 @@ optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ---
+class: inverse, center, middle
+
+# Estudo de caso
+
+---
+# Estudo de Caso
+
+## Atibaia/SP
+
+```{r}
+library(readxl)
+atibaia <- read_excel('data/Atibaia.xlsx')
+atibaia <- within(atibaia, {
+  VUoferta <- ValorOfertado/AreaConstruida
+  VUvenda <- ValorVendido/AreaConstruida
+  FatorOferta <- ValorVendido/ValorOfertado
+  PC <- PadraoConstrutivo
+})
+ggplot(atibaia, aes(y = FatorOferta, 
+                    x=PC, color = PC)) +
+  geom_boxplot()
+# ggplot(atibaia, aes(y = FatorOferta, 
+#                     x=AreaConstruida, color = PC)) +
+#   geom_point()
+# fit <- lm(log(ValorVendido/ValorOfertado) ~ log(AreaConstruida), 
+#           data = atibaia)
+# summary(fit)
+```
+
+---
+# Estudo de Caso
+
+## Análise Exploratória
+
+
+```{r}
+p1 <- ggplot(atibaia, aes(x = log(AreaConstruida), y = log(VUoferta), 
+                 colour = PC), pch = 21) +
+  geom_point(alpha = .5) + 
+  stat_smooth(method = "lm", se = FALSE, lty = 2) +
+  geom_point(data = atibaia, 
+             aes(x = log(AreaConstruida), 
+                 y = log(VUvenda), 
+                 colour = PC), pch = 17) +
+  stat_smooth(data = atibaia, aes(x = log(AreaConstruida), 
+                                  y = log(VUvenda),
+                                  colour = PC),
+              method = "lm", se = F)
+p2 <- ggplot(atibaia, aes(x = log(IndiceFiscal), y = log(VUoferta), 
+                 colour = PC), pch = 21) +
+  geom_point(alpha = .5) + 
+  stat_smooth(method = "lm", se = FALSE, lty = 2) +
+  geom_point(data = atibaia, 
+             aes(x = log(IndiceFiscal), 
+                 y = log(VUvenda), 
+                 colour = PC), pch = 17) +
+  stat_smooth(data = atibaia, aes(x = log(AreaConstruida), 
+                                  y = log(VUvenda),
+                                  colour = PC),
+              method = "lm", se = F)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+# Ajuste de modelos
+
+```{r, echo = T}
+fitOferta <- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
+                data = atibaia)
+
+fitVenda <- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
+               data = atibaia)
+```
+
+
+---
+# Resíduos Parciais
+
+## Model de Oferta
+
+```{r}
+coeffs <- coef(fitOferta)
+Oferta <- augment(fitOferta, atibaia)
+```
+
+
+```{r, fig.width=9, fig.height=5.5}
+p1 <- ggplot(Oferta, aes(x = log(AreaConstruida), 
+                        y = .resid + coeffs[3]*log(AreaConstruida) + coeffs[1], 
+                        color = PC)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  labs(y = "Component + Partial Residuals")
+p2 <- ggplot(Oferta, aes(x = log(IndiceFiscal), 
+                        y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
+                        color = PC)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  labs(y = "Component + Partial Residuals")
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+# Resíduos Parciais
+
+## Model de Venda
+
+```{r}
+coeffs <- coef(fitVenda)
+Venda <- augment(fitVenda, atibaia)
+```
+
+
+```{r, fig.width=9, fig.height=5.5}
+p1 <- ggplot(Venda, aes(x = log(AreaConstruida), 
+                        y = .resid + coeffs[3]*log(AreaConstruida) + coeffs[1], 
+                        color = PC)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  labs(y = "Component + Partial Residuals")
+p2 <- ggplot(Venda, aes(x = log(IndiceFiscal), 
+                        y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
+                        color = PC)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  labs(y = "Component + Partial Residuals")
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("A", "B"),
+  hjust = -1,
+  nrow = 1
+)
+legend <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+```
+
+---
+
+```{r}
+plot(predictorEffects(fitOferta))
+```
+
+---
+
+```{r}
+plot(predictorEffects(fitVenda))
+```
+
+---
+# Estimação do Fator Oferta
+
+## Resumo
+
+```{r}
+tab_model(fitOferta, fitVenda)
+```
+
+
+---
+# Estimação do fator oferta
+
+.pull-left[
+
+```{r}
+linearHypothesis(fitOferta, c("log(IndiceFiscal) = 0.10", 
+                 "log(AreaConstruida) = -.375"))
+```
+]
+
+.pull-right[
+```{r}
+linearHypothesis(fitVenda, c("log(IndiceFiscal) = 0.10", 
+                 "log(AreaConstruida) = -.375"))
+```
+
+]
+
+
+## Modelos restritos
+
+
+```{r, echo = T}
+fitVenda <- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
+                 PC - 1, data = atibaia)
+fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
+                 PC - 1, data = atibaia)
+```
+
+---
+# Estimação do Fator Oferta
+
+.pull-left[
+
+```{r}
+tab_model(fitVenda, fitOferta, show.ci = FALSE, show.p = FALSE, show.r2 = FALSE)
+```
+
+]
+
+.pull-right[
+
+```{r, echo = T}
+exp(9.68-9.78)
+exp(9.34-9.40)
+exp(9.08-9.14)
+exp(9.33-9.41)
+```
+
+
+]
+
+---
+class: inverse, center, middle
+
+# Efeitos do Fator Oferta sobre IC e IP
+
+
+---
 # Efeitos do Fator Oferta sobre IC e IP
 
 $$\mathbb{E}[c \cdot VU] = c\mathbb{E}[VU]$$

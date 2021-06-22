@@ -4,6 +4,7 @@
     <title>Fator Oferta</title>
     <meta charset="utf-8" />
     <meta name="author" content="Luiz Fernando Palin Droubi" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
@@ -16,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 19 de junho de 2021
+### 22 de junho de 2021
 
 ---
 
@@ -470,11 +471,11 @@ class: inverse, center, middle
 
 
 ```r
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
-R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
-R 4.0.2&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
-R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
+R&gt; set.seed(2)
+R&gt; area &lt;- runif(100, min = 250, max = 10000)
+R&gt; venda &lt;- rbinom(100, 1, .5)
+R&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+R&gt; dados &lt;- data.frame(VU = vu, Area = area, 
                   Fonte = factor(venda, 
                                  labels = c("Oferta", "Venda")))
 ```
@@ -496,7 +497,7 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 
 
 ```r
-R 4.0.2&gt; t.test(VU ~ Fonte, dados,
+R&gt; t.test(VU ~ Fonte, dados,
         alternative = "greater")
 ```
 
@@ -506,7 +507,7 @@ R 4.0.2&gt; t.test(VU ~ Fonte, dados,
 ## 
 ## data:  VU by Fonte
 ## t = 1.7467, df = 97.856, p-value = 0.04191
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
 ## 95 percent confidence interval:
 ##  11.90665      Inf
 ## sample estimates:
@@ -523,10 +524,10 @@ R 4.0.2&gt; t.test(VU ~ Fonte, dados,
 
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Oferta", 
                                  .85*VU, VU))
-R 4.0.2&gt; t.test(VUhom ~ Fonte, dados,
+R&gt; t.test(VUhom ~ Fonte, dados,
         alternative = "greater")
 ```
 
@@ -536,7 +537,7 @@ R 4.0.2&gt; t.test(VUhom ~ Fonte, dados,
 ## 
 ## data:  VUhom by Fonte
 ## t = -0.14668, df = 96.512, p-value = 0.5582
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
 ## 95 percent confidence interval:
 ##  -229.5684       Inf
 ## sample estimates:
@@ -571,11 +572,11 @@ composição.
 
 
 ```r
-R 4.0.2&gt; cv &lt;- function(fator, vu, fonte){
+R&gt; cv &lt;- function(fator, vu, fonte){
    vuhom &lt;- ifelse(fonte == "Venda", vu, fator*vu)
    sd(vuhom)/mean(vuhom)
  }
-R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
           vu = dados$VU, fonte = dados$Fonte)
 ```
 
@@ -600,14 +601,14 @@ R 4.0.2&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R 4.0.2&gt; set.seed(1)
-R 4.0.2&gt; areavenda &lt;- runif(50, min = 1000, max = 10000)
-R 4.0.2&gt; areaoferta &lt;-  runif(50, min = 250, max = 8000)
-R 4.0.2&gt; venda &lt;- c(rep(0, 50), rep(1, 50))
-R 4.0.2&gt; vuvenda &lt;- .85*(3000 - .25*areavenda + rnorm(50, 0, 150))
-R 4.0.2&gt; vuoferta &lt;- 3000 - .25*areaoferta + rnorm(50, 0, 150)
-R 4.0.2&gt; vu &lt;- c(vuoferta, vuvenda)
-R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
+R&gt; set.seed(1)
+R&gt; areavenda &lt;- runif(50, min = 1000, max = 10000)
+R&gt; areaoferta &lt;-  runif(50, min = 250, max = 8000)
+R&gt; venda &lt;- c(rep(0, 50), rep(1, 50))
+R&gt; vuvenda &lt;- .85*(3000 - .25*areavenda + rnorm(50, 0, 150))
+R&gt; vuoferta &lt;- 3000 - .25*areaoferta + rnorm(50, 0, 150)
+R&gt; vu &lt;- c(vuoferta, vuvenda)
+R&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
                   Fonte = factor(venda, 
                                  labels = c("Oferta", "Venda")))
 ```
@@ -629,7 +630,7 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda),
 
 
 ```r
-R 4.0.2&gt; t.test(VU ~ Fonte, dados,
+R&gt; t.test(VU ~ Fonte, dados,
         alternative = "greater")
 ```
 
@@ -639,7 +640,7 @@ R 4.0.2&gt; t.test(VU ~ Fonte, dados,
 ## 
 ## data:  VU by Fonte
 ## t = 5.7788, df = 97.49, p-value = 4.51e-08
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
 ## 95 percent confidence interval:
 ##  431.8508      Inf
 ## sample estimates:
@@ -656,10 +657,10 @@ R 4.0.2&gt; t.test(VU ~ Fonte, dados,
 
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Oferta", 
                                  .85*VU, VU))
-R 4.0.2&gt; t.test(VUhom ~ Fonte, dados,
+R&gt; t.test(VUhom ~ Fonte, dados,
         alternative = "greater")
 ```
 
@@ -669,7 +670,7 @@ R 4.0.2&gt; t.test(VUhom ~ Fonte, dados,
 ## 
 ## data:  VUhom by Fonte
 ## t = 3.256, df = 97.216, p-value = 0.0007781
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
 ## 95 percent confidence interval:
 ##  154.3427      Inf
 ## sample estimates:
@@ -719,8 +720,8 @@ R 4.0.2&gt; t.test(VUhom ~ Fonte, dados,
 
 
 ```r
-R 4.0.2&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
-R 4.0.2&gt; S(fit, brief = T)
+R&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
+R&gt; S(fit, brief = T)
 ```
 
 ```
@@ -777,8 +778,8 @@ R 4.0.2&gt; S(fit, brief = T)
 
 
 ```r
-R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
-R 4.0.2&gt; S(fit1, brief = T)
+R&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
+R&gt; S(fit1, brief = T)
 ```
 
 ```
@@ -822,9 +823,9 @@ R 4.0.2&gt; S(fit1, brief = T)
 
 
 ```r
-R 4.0.2&gt; fm1 &lt;- aov(VU ~ Area*Fonte, 
+R&gt; fm1 &lt;- aov(VU ~ Area*Fonte, 
             data = dados)
-R 4.0.2&gt; TukeyHSD(fm1)
+R&gt; TukeyHSD(fm1)
 ```
 
 ```
@@ -844,9 +845,9 @@ R 4.0.2&gt; TukeyHSD(fm1)
 
 
 ```r
-R 4.0.2&gt; fm1 &lt;- aov(VUhom ~ Area*Fonte, 
+R&gt; fm1 &lt;- aov(VUhom ~ Area*Fonte, 
             data = dados)
-R 4.0.2&gt; TukeyHSD(fm1)
+R&gt; TukeyHSD(fm1)
 ```
 
 ```
@@ -871,7 +872,7 @@ R 4.0.2&gt; TukeyHSD(fm1)
 
 
 ```r
-R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+R&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
    dados &lt;- data
    dados$VUhom &lt;- ifelse(dados[, fator] == "Venda", 
                               dados[, valor], 
@@ -880,7 +881,7 @@ R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"
    a &lt;- TukeyHSD(fm)
    abs(a[[fator]][, "diff"])
  }
-R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
           data = dados, valor = "VU", fator = "Fonte")
 ```
 
@@ -904,7 +905,7 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Venda", 
                                  VU, 0.865*VU))
 ```
@@ -913,7 +914,7 @@ R 4.0.2&gt; dados &lt;- within(dados,
 
 
 ```r
-R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+R&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
@@ -924,7 +925,7 @@ R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
@@ -949,8 +950,8 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R 4.0.2&gt; fithom &lt;- lm(VUhom ~ Area, dados)
-R 4.0.2&gt; S(fithom, brief = T)
+R&gt; fithom &lt;- lm(VUhom ~ Area, dados)
+R&gt; S(fithom, brief = T)
 ```
 
 ```
@@ -998,34 +999,34 @@ R 4.0.2&gt; S(fithom, brief = T)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2866.65&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2800.69&amp;nbsp;&amp;ndash;&amp;nbsp;2932.62&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;3003.57&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2921.47&amp;nbsp;&amp;ndash;&amp;nbsp;3085.66&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;2545.53&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;2490.26&amp;nbsp;&amp;ndash;&amp;nbsp;2600.81&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.22&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.24&amp;nbsp;&amp;ndash;&amp;nbsp;-0.21&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&amp;#45;0.21&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&amp;#45;0.22&amp;nbsp;&amp;ndash;&amp;nbsp;-0.20&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;238.70&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;298.96&amp;nbsp;&amp;ndash;&amp;nbsp;-178.44&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;509.71&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;634.11&amp;nbsp;&amp;ndash;&amp;nbsp;-385.30&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
@@ -1037,7 +1038,7 @@ R 4.0.2&gt; S(fithom, brief = T)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.06&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.08&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
@@ -1067,9 +1068,9 @@ R 4.0.2&gt; S(fithom, brief = T)
 
 
 ```r
-R 4.0.2&gt; new250 &lt;- 
+R&gt; new250 &lt;- 
    data.frame(Area = 250, Fonte = "Venda")
-R 4.0.2&gt; predict(fit, newdata = new250,
+R&gt; predict(fit, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -1080,7 +1081,7 @@ R 4.0.2&gt; predict(fit, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; predict(fit1, newdata = new250,
+R&gt; predict(fit1, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -1091,7 +1092,7 @@ R 4.0.2&gt; predict(fit1, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; predict(fithom, newdata = new250,
+R&gt; predict(fithom, newdata = new250,
          interval = "confidence", level = .80)
 ```
 
@@ -1105,9 +1106,9 @@ R 4.0.2&gt; predict(fithom, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; new10000 &lt;- 
+R&gt; new10000 &lt;- 
    data.frame(Area = 10000, Fonte = "Venda")
-R 4.0.2&gt; predict(fit, newdata = new10000,
+R&gt; predict(fit, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -1118,7 +1119,7 @@ R 4.0.2&gt; predict(fit, newdata = new10000,
 
 
 ```r
-R 4.0.2&gt; predict(fit1, newdata = new10000,
+R&gt; predict(fit1, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -1129,7 +1130,7 @@ R 4.0.2&gt; predict(fit1, newdata = new10000,
 
 
 ```r
-R 4.0.2&gt; predict(fithom, newdata = new10000,
+R&gt; predict(fithom, newdata = new10000,
          interval = "confidence", level = .80)
 ```
 
@@ -1171,11 +1172,11 @@ Portanto, se `\(V_{venda} = 0,85\cdot V_{oferta}\)`, na escala `\(\log\)`:
 
 
 ```r
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 5000)
-R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
-R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
-R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
+R&gt; set.seed(2)
+R&gt; area &lt;- runif(100, min = 250, max = 5000)
+R&gt; venda &lt;- rbinom(100, 1, .5)
+R&gt; lvu &lt;- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
+R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
                   Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
@@ -1199,9 +1200,9 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 
 ```r
-R 4.0.2&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, 
+R&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, 
             data = dados)
-R 4.0.2&gt; S(fit2, brief = T)
+R&gt; S(fit2, brief = T)
 ```
 
 ```
@@ -1227,8 +1228,8 @@ R 4.0.2&gt; S(fit2, brief = T)
 
 
 ```r
-R 4.0.2&gt; # Cálculo do Fator Oferta
-R 4.0.2&gt; exp(-.157503)
+R&gt; # Cálculo do Fator Oferta
+R&gt; exp(-.157503)
 ```
 
 ```
@@ -1261,7 +1262,7 @@ R 4.0.2&gt; exp(-.157503)
 
 
 ```r
-R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+R&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
    dados &lt;- data
    dados$VUhom &lt;- ifelse(dados[, fator] == "Venda", 
                               dados[, valor], 
@@ -1270,7 +1271,7 @@ R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"
    a &lt;- TukeyHSD(fm, fator)
    abs(a[[fator]][, "diff"])
  }
-R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
           data = dados, valor = "VU", fator = "Fonte")
 ```
 
@@ -1295,11 +1296,11 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 .pull-left[
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Venda", 
                                  VU,  0.85*VU))
-R 4.0.2&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
-R 4.0.2&gt; S(fithom2, brief = T)
+R&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
+R&gt; S(fithom2, brief = T)
 ```
 
 ```
@@ -1322,7 +1323,7 @@ R 4.0.2&gt; S(fithom2, brief = T)
 
 
 ```r
-R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+R&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
@@ -1331,7 +1332,7 @@ R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
@@ -1390,25 +1391,25 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.51&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.40&amp;nbsp;&amp;ndash;&amp;nbsp;7.61&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.35&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.24&amp;nbsp;&amp;ndash;&amp;nbsp;7.45&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area [log]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.18&amp;nbsp;&amp;ndash;&amp;nbsp;-0.14&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;/td&gt;
@@ -1435,9 +1436,9 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R 4.0.2&gt; new250 &lt;- 
+R&gt; new250 &lt;- 
    data.frame(Area = 250, Fonte = "Venda")
-R 4.0.2&gt; exp(predict(fit2, newdata = new250,
+R&gt; exp(predict(fit2, newdata = new250,
          interval = "confidence", level = .80))
 ```
 
@@ -1449,7 +1450,7 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
+R&gt; exp(predict(fithom2, newdata = new250,
          interval = "confidence", level = .80))
 ```
 
@@ -1463,9 +1464,9 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; new5000 &lt;- 
+R&gt; new5000 &lt;- 
    data.frame(Area = 5000, Fonte = "Venda")
-R 4.0.2&gt; exp(predict(fit2, newdata = new5000,
+R&gt; exp(predict(fit2, newdata = new5000,
          interval = "confidence", level = .80))
 ```
 
@@ -1476,7 +1477,7 @@ R 4.0.2&gt; exp(predict(fit2, newdata = new5000,
 
 
 ```r
-R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
+R&gt; exp(predict(fithom2, newdata = new5000,
          interval = "confidence", level = .80))
 ```
 
@@ -1496,12 +1497,12 @@ R 4.0.2&gt; exp(predict(fithom2, newdata = new5000,
 
 
 ```r
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 5000)
-R 4.0.2&gt; venda &lt;- rbinom(100, 1, .5)
-R 4.0.2&gt; sqrtvu &lt;- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
-R 4.0.2&gt; vu &lt;- (1-.15*venda)*sqrtvu^2
-R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area, 
+R&gt; set.seed(2)
+R&gt; area &lt;- runif(100, min = 250, max = 5000)
+R&gt; venda &lt;- rbinom(100, 1, .5)
+R&gt; sqrtvu &lt;- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
+R&gt; vu &lt;- (1-.15*venda)*sqrtvu^2
+R&gt; dados &lt;- data.frame(VU = vu, Area = area, 
                   Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
@@ -1517,8 +1518,8 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area,
 
 
 ```r
-R 4.0.2&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
-R 4.0.2&gt; S(fit3, brief = T)
+R&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
+R&gt; S(fit3, brief = T)
 ```
 
 ```
@@ -1550,8 +1551,8 @@ R 4.0.2&gt; S(fit3, brief = T)
 
 
 ```r
-R 4.0.2&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
-R 4.0.2&gt; S(fit4, brief = T)
+R&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
+R&gt; S(fit4, brief = T)
 ```
 
 ```
@@ -1593,7 +1594,7 @@ R 4.0.2&gt; S(fit4, brief = T)
 
 
 ```r
-R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+R&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
    dados &lt;- data
    dados$VUhom &lt;- ifelse(dados[, fator] == "Venda", 
                               dados[, valor], 
@@ -1602,7 +1603,7 @@ R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"
    a &lt;- TukeyHSD(fm, "Fonte")
    abs(a[[fator]][, "diff"])
  }
-R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
           data = dados, valor = "VU", fator = "Fonte")
 ```
 
@@ -1624,11 +1625,11 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  VUhom &lt;- ifelse(Fonte == "Venda", 
                                  VU, .85*VU))
-R 4.0.2&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
-R 4.0.2&gt; S(fithom3, brief = T)
+R&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
+R&gt; S(fithom3, brief = T)
 ```
 
 ```
@@ -1654,7 +1655,7 @@ R 4.0.2&gt; S(fithom3, brief = T)
 
 
 ```r
-R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
+R&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
@@ -1665,7 +1666,7 @@ R 4.0.2&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
+R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
@@ -1716,34 +1717,34 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;69.086&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;68.171&amp;nbsp;&amp;ndash;&amp;nbsp;70.002&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;70.157&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;69.083&amp;nbsp;&amp;ndash;&amp;nbsp;71.231&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;64.609&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;63.852&amp;nbsp;&amp;ndash;&amp;nbsp;65.365&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&amp;nbsp;&amp;ndash;&amp;nbsp;-0.009&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.010&amp;nbsp;&amp;ndash;&amp;nbsp;-0.010&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&amp;#45;0.009&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&amp;#45;0.009&amp;nbsp;&amp;ndash;&amp;nbsp;-0.009&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;3.261&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;4.064&amp;nbsp;&amp;ndash;&amp;nbsp;-2.457&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;5.643&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;7.240&amp;nbsp;&amp;ndash;&amp;nbsp;-4.047&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;/td&gt;
@@ -1782,9 +1783,9 @@ R 4.0.2&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R 4.0.2&gt; new250 &lt;- 
+R&gt; new250 &lt;- 
    data.frame(Area = 250, Fonte = "Venda")
-R 4.0.2&gt; predict(fit3, newdata = new250,
+R&gt; predict(fit3, newdata = new250,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1795,7 +1796,7 @@ R 4.0.2&gt; predict(fit3, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; predict(fit4, newdata = new250,
+R&gt; predict(fit4, newdata = new250,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1806,7 +1807,7 @@ R 4.0.2&gt; predict(fit4, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; predict(fithom3, newdata = new250,
+R&gt; predict(fithom3, newdata = new250,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1820,9 +1821,9 @@ R 4.0.2&gt; predict(fithom3, newdata = new250,
 
 
 ```r
-R 4.0.2&gt; new5000 &lt;- 
+R&gt; new5000 &lt;- 
    data.frame(Area = 5000, Fonte = "Venda")
-R 4.0.2&gt; predict(fit3, newdata = new5000,
+R&gt; predict(fit3, newdata = new5000,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1833,7 +1834,7 @@ R 4.0.2&gt; predict(fit3, newdata = new5000,
 
 
 ```r
-R 4.0.2&gt; predict(fit4, newdata = new5000,
+R&gt; predict(fit4, newdata = new5000,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1844,7 +1845,7 @@ R 4.0.2&gt; predict(fit4, newdata = new5000,
 
 
 ```r
-R 4.0.2&gt; predict(fithom3, newdata = new5000,
+R&gt; predict(fithom3, newdata = new5000,
          interval = "confidence", level = .80)^2
 ```
 
@@ -1860,23 +1861,23 @@ R 4.0.2&gt; predict(fithom3, newdata = new5000,
 
 
 ```r
-R 4.0.2&gt; library(MASS)
-R 4.0.2&gt; ##                X1       X2      Y
-R 4.0.2&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
+R&gt; library(MASS)
+R&gt; ##                X1       X2      Y
+R&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
                    15  ,    25,    8,
                    10.2,     8,    9),
                  ncol = 3, byrow = T)
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; dados &lt;- mvrnorm(n=200,
+R&gt; set.seed(2)
+R&gt; dados &lt;- mvrnorm(n=200,
                mu=c(100, 50, 30),
                Sigma=sigma)
-R 4.0.2&gt; colnames(dados) &lt;- c("X1", "X2", "y")
-R 4.0.2&gt; dados &lt;- as.data.frame(dados)
-R 4.0.2&gt; # cor(dados)
-R 4.0.2&gt; # cov(dados)
-R 4.0.2&gt; dados$Fonte &lt;- rbinom(200, 1, .5)
-R 4.0.2&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
-R 4.0.2&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+R&gt; colnames(dados) &lt;- c("X1", "X2", "y")
+R&gt; dados &lt;- as.data.frame(dados)
+R&gt; # cor(dados)
+R&gt; # cov(dados)
+R&gt; dados$Fonte &lt;- rbinom(200, 1, .5)
+R&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
+R&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ```
 
 ---
@@ -1890,8 +1891,8 @@ R 4.0.2&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 
 
 ```r
-R 4.0.2&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
-R 4.0.2&gt; S(fitMult, brief = T)
+R&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
+R&gt; S(fitMult, brief = T)
 ```
 
 ```
@@ -1934,8 +1935,8 @@ R 4.0.2&gt; S(fitMult, brief = T)
 
 
 ```r
-R 4.0.2&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
-R 4.0.2&gt; S(fitMult2, brief = T)
+R&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
+R&gt; S(fitMult2, brief = T)
 ```
 
 ```
@@ -1978,7 +1979,7 @@ R 4.0.2&gt; S(fitMult2, brief = T)
 
 
 ```r
-R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+R&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
    dados &lt;- data
    dados$VUhom &lt;- ifelse(dados[, fator] == "Venda", 
                               dados[, valor, drop=T], 
@@ -1987,7 +1988,7 @@ R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"
    a &lt;- TukeyHSD(fm, fator)
    abs(a[[fator]][, "diff"])
  }
-R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
           data = dados, valor = "y", fator = "Fonte")
 ```
 
@@ -2011,11 +2012,11 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R 4.0.2&gt; dados &lt;- within(dados, 
+R&gt; dados &lt;- within(dados, 
                  yhom &lt;- ifelse(Fonte == "Venda", 
                                  y, .85*y))
-R 4.0.2&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
-R 4.0.2&gt; S(fithom4, brief = T)
+R&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
+R&gt; S(fithom4, brief = T)
 ```
 
 ```
@@ -2042,7 +2043,7 @@ R 4.0.2&gt; S(fithom4, brief = T)
 
 
 ```r
-R 4.0.2&gt; sd(dados$y)/mean(dados$y)
+R&gt; sd(dados$y)/mean(dados$y)
 ```
 
 ```
@@ -2053,7 +2054,7 @@ R 4.0.2&gt; sd(dados$y)/mean(dados$y)
 
 
 ```r
-R 4.0.2&gt; sd(dados$yhom)/mean(dados$yhom)
+R&gt; sd(dados$yhom)/mean(dados$yhom)
 ```
 
 ```
@@ -2077,9 +2078,9 @@ R 4.0.2&gt; sd(dados$yhom)/mean(dados$yhom)
 
 
 ```r
-R 4.0.2&gt; new90_40 &lt;- 
+R&gt; new90_40 &lt;- 
    data.frame(X1 = 90, X2 = 40, Fonte = "Venda")
-R 4.0.2&gt; predict(fitMult, newdata = new90_40,
+R&gt; predict(fitMult, newdata = new90_40,
          interval = "confidence", level = .80)
 ```
 
@@ -2090,7 +2091,7 @@ R 4.0.2&gt; predict(fitMult, newdata = new90_40,
 
 
 ```r
-R 4.0.2&gt; predict(fitMult2, newdata = new90_40,
+R&gt; predict(fitMult2, newdata = new90_40,
          interval = "confidence", level = .80)
 ```
 
@@ -2101,7 +2102,7 @@ R 4.0.2&gt; predict(fitMult2, newdata = new90_40,
 
 
 ```r
-R 4.0.2&gt; predict(fithom4, newdata = new90_40,
+R&gt; predict(fithom4, newdata = new90_40,
          interval = "confidence", level = .80)
 ```
 
@@ -2115,9 +2116,9 @@ R 4.0.2&gt; predict(fithom4, newdata = new90_40,
 
 
 ```r
-R 4.0.2&gt; new110_60 &lt;- 
+R&gt; new110_60 &lt;- 
    data.frame(X1 = 110, X2 = 60, Fonte = "Venda")
-R 4.0.2&gt; predict(fitMult, newdata = new110_60,
+R&gt; predict(fitMult, newdata = new110_60,
          interval = "confidence", level = .80)
 ```
 
@@ -2128,7 +2129,7 @@ R 4.0.2&gt; predict(fitMult, newdata = new110_60,
 
 
 ```r
-R 4.0.2&gt; predict(fitMult2, newdata = new110_60,
+R&gt; predict(fitMult2, newdata = new110_60,
          interval = "confidence", level = .80)
 ```
 
@@ -2139,7 +2140,7 @@ R 4.0.2&gt; predict(fitMult2, newdata = new110_60,
 
 
 ```r
-R 4.0.2&gt; predict(fithom4, newdata = new110_60,
+R&gt; predict(fithom4, newdata = new110_60,
          interval = "confidence", level = .80)
 ```
 
@@ -2165,12 +2166,12 @@ R 4.0.2&gt; predict(fithom4, newdata = new110_60,
 
 
 ```r
-R 4.0.2&gt; set.seed(1)
-R 4.0.2&gt; area &lt;- runif(200, min = 250, max = 5000)
-R 4.0.2&gt; distancia &lt;- runif(200, min = 10, max = 500)
-R 4.0.2&gt; venda &lt;- rbinom(200, 1, .5)
-R 4.0.2&gt; lvu &lt;- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
-R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
+R&gt; set.seed(1)
+R&gt; area &lt;- runif(200, min = 250, max = 5000)
+R&gt; distancia &lt;- runif(200, min = 10, max = 500)
+R&gt; venda &lt;- rbinom(200, 1, .5)
+R&gt; lvu &lt;- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
+R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
                   Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
@@ -2178,8 +2179,8 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = dista
 
 
 ```r
-R 4.0.2&gt; fitComplete &lt;- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
-R 4.0.2&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
+R&gt; fitComplete &lt;- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
+R&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 ```
 
 ---
@@ -2204,25 +2205,25 @@ R 4.0.2&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.52&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;7.42&amp;nbsp;&amp;ndash;&amp;nbsp;7.63&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;6.37&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;6.03&amp;nbsp;&amp;ndash;&amp;nbsp;6.70&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area [log]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.28&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.32&amp;nbsp;&amp;ndash;&amp;nbsp;-0.23&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Distancia [log]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;/td&gt;
@@ -2231,10 +2232,10 @@ R 4.0.2&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.16&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.17&amp;nbsp;&amp;ndash;&amp;nbsp;-0.14&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.13&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.18&amp;nbsp;&amp;ndash;&amp;nbsp;-0.07&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
@@ -2264,7 +2265,7 @@ R 4.0.2&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 
 
 ```r
-R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+R&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
    dados &lt;- data
    dados$VUhom &lt;- ifelse(dados[, fator] == "Venda", 
                               dados[, valor], 
@@ -2273,7 +2274,7 @@ R 4.0.2&gt; THSD &lt;- function(fatorOferta, data, valor = "VU", fator = "Fonte"
    a &lt;- TukeyHSD(fm, fator)
    abs(a[[fator]][, "diff"])
  }
-R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
+R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
           data = dados, valor = "VU", fator = "Fonte")
 ```
 
@@ -2287,6 +2288,298 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 ## $objective
 ## [1] 2.414254e-05
 ```
+
+
+---
+class: inverse, center, middle
+
+# Estudo de caso
+
+---
+# Estudo de Caso
+
+## Atibaia/SP
+
+&lt;img src="images/unnamed-chunk-81-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Estudo de Caso
+
+## Análise Exploratória
+
+
+&lt;img src="images/unnamed-chunk-82-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Ajuste de modelos
+
+
+```r
+R&gt; fitOferta &lt;- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
+                 data = atibaia)
+R&gt; 
+R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
+                data = atibaia)
+```
+
+
+---
+# Resíduos Parciais
+
+## Model de Oferta
+
+
+
+
+&lt;img src="images/unnamed-chunk-85-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Resíduos Parciais
+
+## Model de Venda
+
+
+
+
+&lt;img src="images/unnamed-chunk-87-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="images/unnamed-chunk-88-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="images/unnamed-chunk-89-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+# Estimação do Fator Oferta
+
+## Resumo
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUoferta)&lt;/th&gt;
+&lt;th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUvenda)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;p&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;CI&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7"&gt;p&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.56&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;8.76&amp;nbsp;&amp;ndash;&amp;nbsp;10.35&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.90&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.12&amp;nbsp;&amp;ndash;&amp;nbsp;10.67&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;IndiceFiscal [log]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.11&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.18&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.006&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.10&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.17&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.008&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;AreaConstruida [log]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.34&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.47&amp;nbsp;&amp;ndash;&amp;nbsp;-0.22&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.41&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.53&amp;nbsp;&amp;ndash;&amp;nbsp;-0.29&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Médio]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.36&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.50&amp;nbsp;&amp;ndash;&amp;nbsp;-0.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.37&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.50&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Simples]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.58&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.99&amp;nbsp;&amp;ndash;&amp;nbsp;-0.17&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.006&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.65&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;1.05&amp;nbsp;&amp;ndash;&amp;nbsp;-0.26&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.002&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Superior]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.38&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.57&amp;nbsp;&amp;ndash;&amp;nbsp;-0.19&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.35&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.53&amp;nbsp;&amp;ndash;&amp;nbsp;-0.16&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;65&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;65&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.456 / 0.410&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.520 / 0.480&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+
+---
+# Estimação do fator oferta
+
+.pull-left[
+
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## log(IndiceFiscal) = 0.1
+## log(AreaConstruida) = - 0.375
+## 
+## Model 1: restricted model
+## Model 2: log(VUoferta) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
+## 
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     61 1.6837                           
+## 2     59 1.6746  2 0.0090006 0.1586 0.8537
+```
+]
+
+.pull-right[
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## log(IndiceFiscal) = 0.1
+## log(AreaConstruida) = - 0.375
+## 
+## Model 1: restricted model
+## Model 2: log(VUvenda) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
+## 
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     61 1.5974                           
+## 2     59 1.5858  2  0.011569 0.2152  0.807
+```
+
+]
+
+
+## Modelos restritos
+
+
+
+```r
+R&gt; fitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
+                  PC - 1, data = atibaia)
+R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
+                  PC - 1, data = atibaia)
+```
+
+---
+# Estimação do Fator Oferta
+
+.pull-left[
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUvenda)&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUoferta)&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Fino]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.68&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.78&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Médio]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.34&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.40&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Simples]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.08&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.14&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Superior]&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.33&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.41&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;65&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;65&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+
+```r
+R&gt; exp(9.68-9.78)
+```
+
+```
+## [1] 0.9048374
+```
+
+```r
+R&gt; exp(9.34-9.40)
+```
+
+```
+## [1] 0.9417645
+```
+
+```r
+R&gt; exp(9.08-9.14)
+```
+
+```
+## [1] 0.9417645
+```
+
+```r
+R&gt; exp(9.33-9.41)
+```
+
+```
+## [1] 0.9231163
+```
+
+
+]
+
+---
+class: inverse, center, middle
+
+# Efeitos do Fator Oferta sobre IC e IP
 
 
 ---
@@ -2356,10 +2649,10 @@ R 4.0.2&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R 4.0.2&gt; set.seed(2)
-R 4.0.2&gt; area &lt;- runif(100, min = 250, max = 10000)
-R 4.0.2&gt; vu &lt;- 3000 - .25*area + rnorm(100, 0, 2000)
-R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area)
+R&gt; set.seed(2)
+R&gt; area &lt;- runif(100, min = 250, max = 10000)
+R&gt; vu &lt;- 3000 - .25*area + rnorm(100, 0, 2000)
+R&gt; dados &lt;- data.frame(VU = vu, Area = area)
 ```
 
 --
@@ -2371,12 +2664,12 @@ R 4.0.2&gt; dados &lt;- data.frame(VU = vu, Area = area)
 
 
 ```r
-R 4.0.2&gt; dados$VUvenda &lt;- .9*dados$VU
-R 4.0.2&gt; fit &lt;- lm(VUvenda ~ Area, data = dados)
-R 4.0.2&gt; p &lt;- predict(fit, 
+R&gt; dados$VUvenda &lt;- .9*dados$VU
+R&gt; fit &lt;- lm(VUvenda ~ Area, data = dados)
+R&gt; p &lt;- predict(fit, 
          newdata = data.frame(Area = 5000),
          interval = "confidence", level = .80)
-R 4.0.2&gt; p
+R&gt; p
 ```
 
 ```
@@ -2392,11 +2685,11 @@ R 4.0.2&gt; p
 
 
 ```r
-R 4.0.2&gt; fit1 &lt;- lm(VU ~ Area, data = dados)
-R 4.0.2&gt; p1 &lt;- predict(fit1, 
+R&gt; fit1 &lt;- lm(VU ~ Area, data = dados)
+R&gt; p1 &lt;- predict(fit1, 
              newdata = data.frame(Area = 5000),
              interval = "confidence", level = .80)
-R 4.0.2&gt; p1
+R&gt; p1
 ```
 
 ```
@@ -2405,7 +2698,7 @@ R 4.0.2&gt; p1
 ```
 
 ```r
-R 4.0.2&gt; .9*p1
+R&gt; .9*p1
 ```
 
 ```
