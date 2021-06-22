@@ -2316,10 +2316,10 @@ class: inverse, center, middle
 
 ```r
 R&gt; fitOferta &lt;- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-                 data = atibaia)
+                 data = atibaia, subset = -60)
 R&gt; 
 R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-                data = atibaia)
+                data = atibaia, subset = -60)
 ```
 
 
@@ -2373,71 +2373,74 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.56&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;8.76&amp;nbsp;&amp;ndash;&amp;nbsp;10.35&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.83&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.08&amp;nbsp;&amp;ndash;&amp;nbsp;10.59&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.90&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.12&amp;nbsp;&amp;ndash;&amp;nbsp;10.67&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;10.16&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.43&amp;nbsp;&amp;ndash;&amp;nbsp;10.90&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;IndiceFiscal [log]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.11&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.18&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.006&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.04&amp;nbsp;&amp;ndash;&amp;nbsp;0.18&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.003&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.10&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.17&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.008&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.004&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;AreaConstruida [log]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.34&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.47&amp;nbsp;&amp;ndash;&amp;nbsp;-0.22&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.39&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.51&amp;nbsp;&amp;ndash;&amp;nbsp;-0.28&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.41&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.53&amp;nbsp;&amp;ndash;&amp;nbsp;-0.29&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.46&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.58&amp;nbsp;&amp;ndash;&amp;nbsp;-0.35&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Médio]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.36&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.50&amp;nbsp;&amp;ndash;&amp;nbsp;-0.23&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.39&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.51&amp;nbsp;&amp;ndash;&amp;nbsp;-0.26&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.37&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.50&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.39&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.51&amp;nbsp;&amp;ndash;&amp;nbsp;-0.27&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Simples]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.58&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.99&amp;nbsp;&amp;ndash;&amp;nbsp;-0.17&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.006&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.65&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;1.05&amp;nbsp;&amp;ndash;&amp;nbsp;-0.26&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.002&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.66&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;1.03&amp;nbsp;&amp;ndash;&amp;nbsp;-0.28&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.73&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;1.10&amp;nbsp;&amp;ndash;&amp;nbsp;-0.36&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Superior]&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.38&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.57&amp;nbsp;&amp;ndash;&amp;nbsp;-0.19&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.56&amp;nbsp;&amp;ndash;&amp;nbsp;-0.20&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.35&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.53&amp;nbsp;&amp;ndash;&amp;nbsp;-0.16&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;0.001&lt;/strong&gt;&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.52&amp;nbsp;&amp;ndash;&amp;nbsp;-0.17&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;65&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;65&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;64&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3"&gt;64&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.456 / 0.410&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.520 / 0.480&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.535 / 0.495&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.595 / 0.560&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
 
+--
+
+### E agora? Como estimar o fator oferta???
 
 ---
 # Estimação do fator oferta
@@ -2450,14 +2453,14 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 ## 
 ## Hypothesis:
 ## log(IndiceFiscal) = 0.1
-## log(AreaConstruida) = - 0.375
+## log(AreaConstruida) = - 0.46
 ## 
 ## Model 1: restricted model
 ## Model 2: log(VUoferta) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
 ## 
 ##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     61 1.6837                           
-## 2     59 1.6746  2 0.0090006 0.1586 0.8537
+## 1     60 1.4331                           
+## 2     58 1.3995  2  0.033616 0.6966 0.5024
 ```
 ]
 
@@ -2468,28 +2471,29 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 ## 
 ## Hypothesis:
 ## log(IndiceFiscal) = 0.1
-## log(AreaConstruida) = - 0.375
+## log(AreaConstruida) = - 0.46
 ## 
 ## Model 1: restricted model
 ## Model 2: log(VUvenda) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
 ## 
-##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     61 1.5974                           
-## 2     59 1.5858  2  0.011569 0.2152  0.807
+##   Res.Df    RSS Df  Sum of Sq      F Pr(&gt;F)
+## 1     60 1.3235                            
+## 2     58 1.3234  2 0.00010981 0.0024 0.9976
 ```
 
 ]
 
+--
 
 ## Modelos restritos
 
 
 
 ```r
-R&gt; fitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
-                  PC - 1, data = atibaia)
-R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
-                  PC - 1, data = atibaia)
+R&gt; fitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+                  PC, data = atibaia, subset = -60)
+R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+                  PC, data = atibaia, subset = -60)
 ```
 
 ---
@@ -2500,8 +2504,8 @@ R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-
 &lt;table style="border-collapse:collapse; border:none;"&gt;
 &lt;tr&gt;
 &lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
-&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUvenda)&lt;/th&gt;
-&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;log(VUoferta)&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;Dependent variable&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;Dependent variable&lt;/th&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
@@ -2509,70 +2513,85 @@ R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-
 &lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Fino]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.68&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.78&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;10.157&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;10.262&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Médio]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.34&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.40&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCMédio&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.387&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.431&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Simples]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.08&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.14&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCSimples&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.725&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.773&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PC [Superior]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.33&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.41&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCSuperior&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.346&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.376&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;65&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;65&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;64&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="1"&gt;0.592 / 0.572&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="1"&gt;0.578 / 0.557&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
+
+* Padrão Fino:
+
+
+```r
+R&gt; exp(10.157 - 10.262)
+```
+
+```
+## [1] 0.9003245
+```
 
 ]
 
 .pull-right[
 
 
-```r
-R&gt; exp(9.68-9.78)
-```
+* Padrão Médio:
 
-```
-## [1] 0.9048374
-```
 
 ```r
-R&gt; exp(9.34-9.40)
+R&gt; exp((10.157 - .387) - (10.262 - .431))
 ```
 
 ```
-## [1] 0.9417645
+## [1] 0.9408232
 ```
 
-```r
-R&gt; exp(9.08-9.14)
-```
+* Padrão Simples:
 
-```
-## [1] 0.9417645
-```
 
 ```r
-R&gt; exp(9.33-9.41)
+R&gt; exp((10.157 - .725) - (10.262 - .773))
 ```
 
 ```
-## [1] 0.9231163
+## [1] 0.9445941
 ```
 
+* Padrão Superior:
+
+```r
+R&gt; exp((10.157 - .346) - (10.262 - .376))
+```
+
+```
+## [1] 0.9277435
+```
 
 ]
 
@@ -2717,23 +2736,49 @@ class: inverse, center, middle
 ---
 # Conclusão
 
-* A modelagem e aplicação do Fator Oferta deve ser feita com cuidado. Deve-se
-ter em mente que assumir que `\(V_{venda} = \lambda V_{oferta}\)` é apenas uma 
-hipótese que deve ser verificada
+* A estimação e aplicação do Fator Oferta deve ser feita com cuidado. 
+  - Deve-se ter em mente que assumir que `\(V_{venda} = \lambda V_{oferta}\)` é 
+  apenas uma hipótese, que deve ser verificada.
+  
+--
 
 * A análise exploratória é fundamental para a percepção da realidade do mercado
-antes da modelagem
+antes da modelagem.
 
-* A modelagem deve levar em conta a hipótese feita para o fator oferta
+--
 
-* A má especificação do fator oferta pode levar a modelos tendenciosos, que 
-podem produzir más previsões de valores, especialmente nos extremos dos dados
+* A modelagem deve levar em conta a hipótese feita para o fator oferta.
+  - A má especificação do fator oferta pode levar a modelos tendenciosos, que 
+podem produzir más previsões de valores, especialmente nos extremos da amostra.
+
+--
+
+* A eventual obtenção do fator oferta previamente à modelagem é benéfica.
+  - Modelos ficam mais simples e interpretáveis.
+
+--
+  
+* Quando possível, deve ser investigada a possível existência de fatores 
+diferentes, de acordo com a tipologia, o padrão construtivo, etc.
+
+--
+
+* A transformação logarítimica da variável dependente permite
+uma estimação menos custosa do fator oferta.
+
+---
+# Conclusão
 
 * Quando da utilização exclusiva de dados de oferta, a aplicação do fator oferta
 antes ou após o ajuste do modelo de regressão deveria conduzir aos mesmos
 valores previstos, tanto para a estimativa central, quanto para os limites dos
 intervalos de confiança e predição. A norma deveria estabelecer este 
 procedimento explicitamente.
+
+---
+class: center, middle, inverse
+
+# OBRIGADO!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>

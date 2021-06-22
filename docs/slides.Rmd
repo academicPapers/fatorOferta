@@ -1881,7 +1881,7 @@ class: inverse, center, middle
 
 ```{r}
 library(readxl)
-atibaia <- read_excel('data/Atibaia.xlsx')
+atibaia <- read_excel('Atibaia.xlsx')
 atibaia <- within(atibaia, {
   VUoferta <- ValorOfertado/AreaConstruida
   VUvenda <- ValorVendido/AreaConstruida
@@ -1952,10 +1952,10 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 ```{r, echo = T}
 fitOferta <- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-                data = atibaia)
+                data = atibaia, subset = -60)
 
 fitVenda <- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-               data = atibaia)
+               data = atibaia, subset = -60)
 ```
 
 
@@ -1966,7 +1966,7 @@ fitVenda <- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
 
 ```{r}
 coeffs <- coef(fitOferta)
-Oferta <- augment(fitOferta, atibaia)
+Oferta <- augment(fitOferta, atibaia[-60, ])
 ```
 
 
@@ -1977,6 +1977,7 @@ p1 <- ggplot(Oferta, aes(x = log(AreaConstruida),
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  scale_y_continuous(limits = c(6.5, 9)) +
   labs(y = "Component + Partial Residuals")
 p2 <- ggplot(Oferta, aes(x = log(IndiceFiscal), 
                         y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
@@ -1984,6 +1985,7 @@ p2 <- ggplot(Oferta, aes(x = log(IndiceFiscal),
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  scale_y_continuous(limits = c(9.75, 11.25)) +
   labs(y = "Component + Partial Residuals")
 prow <- plot_grid(
   p1 + theme(legend.position="none"),
@@ -2008,7 +2010,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 ```{r}
 coeffs <- coef(fitVenda)
-Venda <- augment(fitVenda, atibaia)
+Venda <- augment(fitVenda, atibaia[-60,])
 ```
 
 
@@ -2019,6 +2021,7 @@ p1 <- ggplot(Venda, aes(x = log(AreaConstruida),
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+  scale_y_continuous(limits = c(6.5, 9)) +
   labs(y = "Component + Partial Residuals")
 p2 <- ggplot(Venda, aes(x = log(IndiceFiscal), 
                         y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
@@ -2026,6 +2029,7 @@ p2 <- ggplot(Venda, aes(x = log(IndiceFiscal),
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+  scale_y_continuous(limits = c(9.75, 11.25)) +
   labs(y = "Component + Partial Residuals")
 prow <- plot_grid(
   p1 + theme(legend.position="none"),
@@ -2046,13 +2050,15 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ---
 
 ```{r}
-plot(predictorEffects(fitOferta))
+plot(predictorEffects(fitOferta),
+     axes=list(y=list(transform=exp, lab="VUOferta")))
 ```
 
 ---
 
 ```{r}
-plot(predictorEffects(fitVenda))
+plot(predictorEffects(fitVenda), 
+     axes=list(y=list(transform=exp, lab="VUVenda")))
 ```
 
 ---
@@ -2064,6 +2070,9 @@ plot(predictorEffects(fitVenda))
 tab_model(fitOferta, fitVenda)
 ```
 
+--
+
+### E agora? Como estimar o fator oferta???
 
 ---
 # Estimação do fator oferta
@@ -2072,27 +2081,28 @@ tab_model(fitOferta, fitVenda)
 
 ```{r}
 linearHypothesis(fitOferta, c("log(IndiceFiscal) = 0.10", 
-                 "log(AreaConstruida) = -.375"))
+                 "log(AreaConstruida) = -.46"))
 ```
 ]
 
 .pull-right[
 ```{r}
 linearHypothesis(fitVenda, c("log(IndiceFiscal) = 0.10", 
-                 "log(AreaConstruida) = -.375"))
+                 "log(AreaConstruida) = -.46"))
 ```
 
 ]
 
+--
 
 ## Modelos restritos
 
 
 ```{r, echo = T}
-fitVenda <- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
-                 PC - 1, data = atibaia)
-fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(AreaConstruida)) +
-                 PC - 1, data = atibaia)
+fitVenda <- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+                 PC, data = atibaia, subset = -60)
+fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+                 PC, data = atibaia, subset = -60)
 ```
 
 ---
@@ -2101,20 +2111,37 @@ fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.375*log(
 .pull-left[
 
 ```{r}
-tab_model(fitVenda, fitOferta, show.ci = FALSE, show.p = FALSE, show.r2 = FALSE)
+tab_model(fitVenda, fitOferta, digits = 3,
+          show.ci = FALSE, show.p = FALSE)
+```
+
+* Padrão Fino:
+
+```{r, echo = T}
+exp(10.157 - 10.262)
 ```
 
 ]
 
 .pull-right[
 
+
+* Padrão Médio:
+
 ```{r, echo = T}
-exp(9.68-9.78)
-exp(9.34-9.40)
-exp(9.08-9.14)
-exp(9.33-9.41)
+exp((10.157 - .387) - (10.262 - .431))
 ```
 
+* Padrão Simples:
+
+```{r, echo = T}
+exp((10.157 - .725) - (10.262 - .773))
+```
+
+* Padrão Superior:
+```{r, echo = T}
+exp((10.157 - .346) - (10.262 - .376))
+```
 
 ]
 
@@ -2240,20 +2267,46 @@ class: inverse, center, middle
 ---
 # Conclusão
 
-* A modelagem e aplicação do Fator Oferta deve ser feita com cuidado. Deve-se
-ter em mente que assumir que $V_{venda} = \lambda V_{oferta}$ é apenas uma 
-hipótese que deve ser verificada
+* A estimação e aplicação do Fator Oferta deve ser feita com cuidado. 
+  - Deve-se ter em mente que assumir que $V_{venda} = \lambda V_{oferta}$ é 
+  apenas uma hipótese, que deve ser verificada.
+  
+--
 
 * A análise exploratória é fundamental para a percepção da realidade do mercado
-antes da modelagem
+antes da modelagem.
 
-* A modelagem deve levar em conta a hipótese feita para o fator oferta
+--
 
-* A má especificação do fator oferta pode levar a modelos tendenciosos, que 
-podem produzir más previsões de valores, especialmente nos extremos dos dados
+* A modelagem deve levar em conta a hipótese feita para o fator oferta.
+  - A má especificação do fator oferta pode levar a modelos tendenciosos, que 
+podem produzir más previsões de valores, especialmente nos extremos da amostra.
+
+--
+
+* A eventual obtenção do fator oferta previamente à modelagem é benéfica.
+  - Modelos ficam mais simples e interpretáveis.
+
+--
+  
+* Quando possível, deve ser investigada a possível existência de fatores 
+diferentes, de acordo com a tipologia, o padrão construtivo, etc.
+
+--
+
+* A transformação logarítimica da variável dependente permite
+uma estimação menos custosa do fator oferta.
+
+---
+# Conclusão
 
 * Quando da utilização exclusiva de dados de oferta, a aplicação do fator oferta
 antes ou após o ajuste do modelo de regressão deveria conduzir aos mesmos
 valores previstos, tanto para a estimativa central, quanto para os limites dos
 intervalos de confiança e predição. A norma deveria estabelecer este 
 procedimento explicitamente.
+
+---
+class: center, middle, inverse
+
+# OBRIGADO!
