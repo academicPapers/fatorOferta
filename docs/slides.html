@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 22 de junho de 2021
+### 23 de junho de 2021
 
 ---
 
@@ -418,7 +418,7 @@ class: inverse, center, middle
 # Aplicações
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 * **NBR 14.653-02**: 
 
@@ -462,7 +462,7 @@ class: inverse, center, middle
   consideração do fator oferta**.
   
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo de regressão na forma direta 
 
@@ -485,7 +485,7 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = area,
 ## Como estimar o fator oferta?
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ### Test t para diferença entre duas médias
 
@@ -553,7 +553,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 composição.
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica
 
@@ -566,7 +566,7 @@ composição.
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica: Minimização
 
@@ -592,7 +592,7 @@ R&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo de regressão na forma direta 
 
@@ -618,7 +618,7 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda),
 * Os dados de oferta possuem áreas maiores.
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ### Test t para diferença entre duas médias
 
@@ -681,7 +681,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica
 
@@ -693,7 +693,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 &lt;img src="images/unnamed-chunk-10-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Análise Exploratória
 
@@ -703,14 +703,14 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 &lt;/div&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma gráfica
 
 [App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Regressão Linear
 
@@ -758,7 +758,7 @@ R&gt; S(fit, brief = T)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo mal especificado
 
@@ -815,7 +815,7 @@ R&gt; S(fit1, brief = T)
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Diferenças honestas de Tukey
 
@@ -866,7 +866,7 @@ R&gt; TukeyHSD(fm1)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica: Minimização
 
@@ -897,7 +897,7 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -943,7 +943,7 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -970,7 +970,7 @@ R&gt; S(fithom, brief = T)
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Resumo
 
@@ -1060,7 +1060,7 @@ R&gt; S(fithom, brief = T)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Previsão de valores
 
@@ -1142,7 +1142,7 @@ R&gt; predict(fithom, newdata = new10000,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Dados lognormais
 
@@ -1181,7 +1181,7 @@ R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Dados lognormais: análise exploratória
 
@@ -1192,7 +1192,7 @@ R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 .pull-left[
 
@@ -1238,14 +1238,14 @@ R&gt; exp(-.157503)
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo bem especificado
 
 &lt;img src="images/unnamed-chunk-32-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo bem especificado
 
@@ -1256,7 +1256,7 @@ R&gt; exp(-.157503)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
@@ -1289,7 +1289,7 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
@@ -1342,7 +1342,7 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -1351,14 +1351,14 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
 &lt;img src="images/unnamed-chunk-37-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Diagnóstico modelo com dados homogeneizados
 
@@ -1368,7 +1368,7 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;/div&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Resumo dos modelos
 
@@ -1428,7 +1428,7 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 &lt;/table&gt;
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Previsão de valores
 
@@ -1489,7 +1489,7 @@ R&gt; exp(predict(fithom2, newdata = new5000,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Outras transformações
 
@@ -1507,7 +1507,7 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = area,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Outras transformações: análise exploratória
 
@@ -2443,9 +2443,8 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 ### E agora? Como estimar o fator oferta???
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
-.pull-left[
 
 
 ```
@@ -2462,26 +2461,6 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 ## 1     60 1.4331                           
 ## 2     58 1.3995  2  0.033616 0.6966 0.5024
 ```
-]
-
-.pull-right[
-
-```
-## Linear hypothesis test
-## 
-## Hypothesis:
-## log(IndiceFiscal) = 0.1
-## log(AreaConstruida) = - 0.46
-## 
-## Model 1: restricted model
-## Model 2: log(VUvenda) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
-## 
-##   Res.Df    RSS Df  Sum of Sq      F Pr(&gt;F)
-## 1     60 1.3235                            
-## 2     58 1.3234  2 0.00010981 0.0024 0.9976
-```
-
-]
 
 --
 
@@ -2490,9 +2469,9 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 
 
 ```r
-R&gt; fitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+R&gt; RfitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
                   PC, data = atibaia, subset = -60)
-R&gt; fitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+R&gt; RfitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
                   PC, data = atibaia, subset = -60)
 ```
 
@@ -2587,6 +2566,140 @@ R&gt; exp((10.157 - .725) - (10.262 - .773))
 
 ```r
 R&gt; exp((10.157 - .346) - (10.262 - .376))
+```
+
+```
+## [1] 0.9277435
+```
+
+]
+
+---
+# Estimação do Fator Oferta
+
+## Adoção dos coeficientes do modelo de oferta
+
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## log(IndiceFiscal) = 0.11
+## log(AreaConstruida) = - 0.39
+## 
+## Model 1: restricted model
+## Model 2: log(VUvenda) ~ log(IndiceFiscal) + log(AreaConstruida) + PC
+## 
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     60 1.3627                           
+## 2     58 1.3234  2  0.039341 0.8621 0.4276
+```
+
+--
+# Estimação do Fator Oferta
+
+## Modelos restritos
+
+
+
+```r
+R&gt; RfitVenda2 &lt;- lm(log(VUvenda) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
+                  PC, data = atibaia, subset = -60)
+R&gt; RfitOferta2 &lt;- lm(log(VUoferta) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
+                  PC, data = atibaia, subset = -60)
+```
+
+---
+# Estimação do Fator Oferta
+
+.pull-left[
+
+&lt;table style="border-collapse:collapse; border:none;"&gt;
+&lt;tr&gt;
+&lt;th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; "&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;Dependent variable&lt;/th&gt;
+&lt;th colspan="1" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; "&gt;Dependent variable&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; "&gt;Predictors&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  "&gt;Estimates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.707&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;9.812&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCMédio&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.341&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.384&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCSimples&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.602&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.649&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;PCSuperior&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.351&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.381&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;64&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="1"&gt;64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="1"&gt;0.531 / 0.507&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="1"&gt;0.532 / 0.508&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+* Padrão Fino:
+
+
+```r
+R&gt; exp(9.707 - 9.812)
+```
+
+```
+## [1] 0.9003245
+```
+
+]
+
+.pull-right[
+
+
+* Padrão Médio:
+
+
+```r
+R&gt; exp((9.707 - .341) - (9.812 - .384))
+```
+
+```
+## [1] 0.9398829
+```
+
+* Padrão Simples:
+
+
+```r
+R&gt; exp((9.707 - .602) - (9.812 - .649))
+```
+
+```
+## [1] 0.9436499
+```
+
+* Padrão Superior:
+
+```r
+R&gt; exp((9.707 - .351) - (9.812 - .381))
 ```
 
 ```

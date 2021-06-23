@@ -475,7 +475,7 @@ class: inverse, center, middle
 # Aplicações
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 * **NBR 14.653-02**: 
 
@@ -519,7 +519,7 @@ class: inverse, center, middle
   consideração do fator oferta**.
   
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo de regressão na forma direta 
 
@@ -541,7 +541,7 @@ dados <- data.frame(VU = vu, Area = area,
 ## Como estimar o fator oferta?
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ### Test t para diferença entre duas médias
 
@@ -579,7 +579,7 @@ t.test(VUhom ~ Fonte, dados,
 composição.
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica
 
@@ -613,7 +613,7 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica: Minimização
 
@@ -632,7 +632,7 @@ optimise(cv, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo de regressão na forma direta 
 
@@ -657,7 +657,7 @@ dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda),
 * Os dados de oferta possuem áreas maiores.
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ### Test t para diferença entre duas médias
 
@@ -690,7 +690,7 @@ t.test(VUhom ~ Fonte, dados,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica
 
@@ -723,7 +723,7 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Análise Exploratória
 
@@ -737,14 +737,14 @@ p1
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma gráfica
 
 [App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Regressão Linear
 
@@ -770,7 +770,7 @@ shapiro.test(residuals(fit))
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo mal especificado
 
@@ -808,7 +808,7 @@ shapiro.test(residuals(fit1))
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Diferenças honestas de Tukey
 
@@ -835,7 +835,7 @@ TukeyHSD(fm1)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Forma numérica: Minimização
 
@@ -859,7 +859,7 @@ optimise(THSD, c(0.5, 2), tol = 0.0001,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -898,7 +898,7 @@ p1
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -909,7 +909,7 @@ S(fithom, brief = T)
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Resumo
 
@@ -933,7 +933,7 @@ tab_model(fit, fit1, fithom)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Previsão de valores
 
@@ -979,7 +979,7 @@ predict(fithom, newdata = new10000,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Dados lognormais
 
@@ -1017,7 +1017,7 @@ dados <- data.frame(VU = exp(lvu), Area = area,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Dados lognormais: análise exploratória
 
@@ -1050,7 +1050,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 .pull-left[
 
@@ -1074,7 +1074,7 @@ exp(-.157503)
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo bem especificado
 
@@ -1085,7 +1085,7 @@ plot(predictorEffects(fit2, residuals=TRUE),
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Modelo bem especificado
 
@@ -1095,7 +1095,7 @@ plot(fit2)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
@@ -1121,7 +1121,7 @@ optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
@@ -1148,7 +1148,7 @@ sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do fator oferta
 
@@ -1178,7 +1178,7 @@ ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
 
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Aplicação prévia do Fator Oferta
 
@@ -1210,7 +1210,7 @@ plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Diagnóstico modelo com dados homogeneizados
 
@@ -1219,7 +1219,7 @@ plot(fithom2)
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Resumo dos modelos
 
@@ -1228,7 +1228,7 @@ tab_model(fit2, fithom2)
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Previsão de valores
 
@@ -1265,7 +1265,7 @@ exp(predict(fithom2, newdata = new5000,
 ]
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Outras transformações
 
@@ -1282,7 +1282,7 @@ dados <- data.frame(VU = vu, Area = area,
 ```
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
 ## Outras transformações: análise exploratória
 
@@ -1976,8 +1976,8 @@ p1 <- ggplot(Oferta, aes(x = log(AreaConstruida),
                         color = PC)) +
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
+  scale_y_continuous(limits = c(6.5, 10.2)) +
   geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
-  scale_y_continuous(limits = c(6.5, 9)) +
   labs(y = "Component + Partial Residuals")
 p2 <- ggplot(Oferta, aes(x = log(IndiceFiscal), 
                         y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
@@ -2021,7 +2021,7 @@ p1 <- ggplot(Venda, aes(x = log(AreaConstruida),
   stat_smooth(method = "lm", se = FALSE) +
   geom_point() +
   geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
-  scale_y_continuous(limits = c(6.5, 9)) +
+  scale_y_continuous(limits = c(6.5, 10.2)) +
   labs(y = "Component + Partial Residuals")
 p2 <- ggplot(Venda, aes(x = log(IndiceFiscal), 
                         y = .resid + coeffs[2]*log(IndiceFiscal) + coeffs[1], 
@@ -2075,23 +2075,13 @@ tab_model(fitOferta, fitVenda)
 ### E agora? Como estimar o fator oferta???
 
 ---
-# Estimação do fator oferta
+# Estimação do Fator Oferta
 
-.pull-left[
 
 ```{r}
 linearHypothesis(fitOferta, c("log(IndiceFiscal) = 0.10", 
                  "log(AreaConstruida) = -.46"))
 ```
-]
-
-.pull-right[
-```{r}
-linearHypothesis(fitVenda, c("log(IndiceFiscal) = 0.10", 
-                 "log(AreaConstruida) = -.46"))
-```
-
-]
 
 --
 
@@ -2099,9 +2089,9 @@ linearHypothesis(fitVenda, c("log(IndiceFiscal) = 0.10",
 
 
 ```{r, echo = T}
-fitVenda <- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+RfitVenda <- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
                  PC, data = atibaia, subset = -60)
-fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
+RfitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
                  PC, data = atibaia, subset = -60)
 ```
 
@@ -2111,7 +2101,7 @@ fitOferta <- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(A
 .pull-left[
 
 ```{r}
-tab_model(fitVenda, fitOferta, digits = 3,
+tab_model(RfitVenda, RfitOferta, digits = 3,
           show.ci = FALSE, show.p = FALSE)
 ```
 
@@ -2141,6 +2131,69 @@ exp((10.157 - .725) - (10.262 - .773))
 * Padrão Superior:
 ```{r, echo = T}
 exp((10.157 - .346) - (10.262 - .376))
+```
+
+]
+
+---
+# Estimação do Fator Oferta
+
+## Adoção dos coeficientes do modelo de oferta
+
+```{r}
+linearHypothesis(fitVenda, c("log(IndiceFiscal) = 0.11", 
+                 "log(AreaConstruida) = -.39"))
+```
+
+--
+# Estimação do Fator Oferta
+
+## Modelos restritos
+
+
+```{r, echo = T}
+RfitVenda2 <- lm(log(VUvenda) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
+                 PC, data = atibaia, subset = -60)
+RfitOferta2 <- lm(log(VUoferta) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
+                 PC, data = atibaia, subset = -60)
+```
+
+---
+# Estimação do Fator Oferta
+
+.pull-left[
+
+```{r}
+tab_model(RfitVenda2, RfitOferta2, digits = 3,
+          show.ci = FALSE, show.p = FALSE)
+```
+
+* Padrão Fino:
+
+```{r, echo = T}
+exp(9.707 - 9.812)
+```
+
+]
+
+.pull-right[
+
+
+* Padrão Médio:
+
+```{r, echo = T}
+exp((9.707 - .341) - (9.812 - .384))
+```
+
+* Padrão Simples:
+
+```{r, echo = T}
+exp((9.707 - .602) - (9.812 - .649))
+```
+
+* Padrão Superior:
+```{r, echo = T}
+exp((9.707 - .351) - (9.812 - .381))
 ```
 
 ]
