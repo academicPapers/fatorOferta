@@ -69,12 +69,6 @@ xaringanExtra::use_logo(
 xaringanExtra::use_search(show_icon = TRUE)
 ```
 
-```{r xaringan-extra-styles}
-xaringanExtra::use_extra_styles(
-  hover_code_line = TRUE,         #<<
-  mute_unhighlighted_code = TRUE  #<<
-)
-```
 
 ```{r xaringanExtra-clipboard, echo=FALSE}
 xaringanExtra::use_clipboard()
@@ -136,7 +130,7 @@ class: inverse, center, middle
 enquanto **valor de mercado é um preço de venda hipotético ou estimado** que 
 resultaria da consideração cuidadosa pelo comprador e vendedor de todos os dados, 
 com confiança nos dados que refletem as ações de compradores e vendedores 
-responsáveis e prudentes, sob condições de uma venda justa (Spinney, 2010).
+responsáveis e prudentes, sob condições de uma venda justa `r AutoCite(bib, 'spinney')`.
 
 --
 
@@ -369,21 +363,14 @@ class: inverse, center, middle
 ---
 # Estado da arte
 
-.bg-washed-green.b--dark-green.ba.bw2.br3.shadow-5.ph4.mt5[It would seem 
-therefore that valuation theory is faced with the simultaneity 
+* It would seem therefore that valuation theory is faced with the simultaneity 
 problem akin to that of quantum physics where, in this case, **market value 
 cannot exist simultaneously with the need for valuation**. Valuers are required 
 when transaction costs are high but at this point market value does not exist. 
 Conversely, valuers are not required when transaction costs are zero and market 
-value has emerged 
+value has emerged `r Citet(bib, 'mooya2009', after = ', p. 694-695')`.
 
-.tr[
-`r Citet(bib, 'mooya2009', after = ', p. 694-695')`
-]
-]
-
----
-# Estado da arte
+--
 
 * **Eles (os avaliadores) são produtores e vendedores de informação sobre os 
 mercados imobiliários**, realizando a importante função de unir compradores e 
@@ -467,7 +454,7 @@ cadastral!?
 
   - Um avaliador foi consultado a respeito do valor de mercado de uma 
 propriedade em terras de propriedade comunal, que não eram possíveis de ser
-negociadas até aquele momento. Não havia informação mercadológica disponível,       
+negociadas até aquele momento. Não havia informação mercadológica disponível, 
 portanto, para a avaliação dessa terra.
 
 --
@@ -566,7 +553,7 @@ class: inverse, center, middle
 ---
 # Estimação do Fator Oferta
 
-* `r Citet(bib, "NBR1465302")`: 
+* `r TextCite(bib, "NBR1465302")`: 
 
 --
 
@@ -592,7 +579,7 @@ class: inverse, center, middle
   
 --
 
-* **Norma IBAPE-SP/2011**:
+* `r TextCite(bib, 'ibapeSP')`:
 
 --
 
