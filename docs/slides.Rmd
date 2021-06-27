@@ -248,7 +248,7 @@ probabilidades de dados de oferta? Em que região?
 ---
 # Conceitos e Paradigmas
 
-## Onde se situa o valor de mercado na distribuição de dados de oferta?
+## Onde se situa o **VM** na distribuição de dados de oferta?
 
 --
 
@@ -285,7 +285,7 @@ p +
 ---
 # Conceitos e Paradigmas
 
-## Onde se situa o valor de mercado na distribuição de dados de oferta?
+## Onde se situa o **VM** na distribuição de dados de oferta?
 
 --
 
@@ -364,11 +364,12 @@ class: inverse, center, middle
 # Estado da arte
 
 * It would seem therefore that valuation theory is faced with the simultaneity 
-problem akin to that of quantum physics where, in this case, **market value 
-cannot exist simultaneously with the need for valuation**. Valuers are required 
-when transaction costs are high but at this point market value does not exist. 
-Conversely, valuers are not required when transaction costs are zero and market 
-value has emerged `r Citet(bib, 'mooya2009', after = ', p. 694-695')`.
+problem akin to that of quantum  
+physics where, in this case, **market value cannot exist simultaneously with the 
+need for valuation**. Valuers are required when transaction costs are high but 
+at this point market value does not exist. Conversely, valuers are not required 
+when transaction costs are zero and market value has emerged 
+`r Citet(bib, 'mooya2009', after = ', p. 694-695')`.
 
 --
 
@@ -403,8 +404,8 @@ efetivamente estabelecendo uma regra para o mercado em questão
 # Estado da arte
 
 * `r Citet(bib, 'erba2019', after = ', p.40')`: En el área catastral es 
-justamente la georreferenciación que permite estructurar bases de datos con la 
-ubicación, forma y dimensiones de cada parcela, dándole continuidad a la 
+justamente la georreferenciación que permite estructurar bases de datos  
+con la ubicación, forma y dimensiones de cada parcela, dándole continuidad a la 
 información territorial.
   
 --
@@ -488,8 +489,9 @@ no valor da avaliação prévia.
 ---
 # Estado da Arte: Estimação do fator oferta
 
-* Utilizado para homogeneizar os dados de oferta, $P_L$, com os dados de 
-transações, $P_R$.
+* Utilizado para homogeneizar os dados de oferta com os dados de transações,
+visando estimar o valor de  
+mercado.
 
 --
 
@@ -503,8 +505,8 @@ das características dos imóveis, com a hipótese que $P_R < P_L$
 
 --
 
-* `r Citet(bib, "haurin")` mostram que, em períodos de *boom*, no MI os preços de
-venda podem superar os preços de oferta.
+* `r Citet(bib, "haurin")` mostram que, em períodos de *boom*, no MI os preços 
+de venda podem superar os preços de oferta.
 
 --
 
@@ -597,8 +599,8 @@ class: inverse, center, middle
 # Estimação do Fator Oferta
 
 * `r Citet(bib, "lima2006")` mostrou como estimar os fatores cientificamente, 
-*i.e.* a partir de modelos de regressão linear, tanto para a forma aditiva como 
-para a forma multiplicativa de utilização dos fatores.
+*i.e.* a partir de modelos de regressão linear, tanto  
+para a forma aditiva como para a forma multiplicativa de utilização dos fatores.
 
 --
 
@@ -630,7 +632,7 @@ de regressão para os demais fatores*.
 * Argumento que pode-se estimar o Fator oferta ou Fator fonte para a forma mista
 através do seguinte modelo de regressão:
 
-$$VU \sim Fonte*(\beta_1X_1 + \beta_2X_2 +  \ldots + \beta_kX_k) + \varepsilon$$
+$$VU \sim Fonte*(\beta_1X_1 + \beta_2X_2 +  \ldots + \beta_kX_k + \varepsilon)$$
 
 --
 
@@ -671,7 +673,7 @@ dados <- data.frame(VU = vu, Area = area,
 
 * Antes da homogeneização:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=11}
 t.test(VU ~ Fonte, dados,
        alternative = "greater")
 ```
@@ -683,7 +685,7 @@ t.test(VU ~ Fonte, dados,
 
 * Após a homogeneização:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=11}
 dados <- within(dados, 
                 VUhom <- ifelse(Fonte == "Oferta", 
                                 .85*VU, VU))
@@ -695,8 +697,8 @@ t.test(VUhom ~ Fonte, dados,
 
 --
 
-* Somente funciona devido à amostra ser balanceada (entre dados de ofertas e de 
-transações).
+* **Somente funciona devido à amostra ser balanceada (entre dados de ofertas e de 
+transações)**.
 
 ---
 # Estimação do Fator Oferta
@@ -707,6 +709,8 @@ $$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F
 1,\,\text{se dado de oferta}\\ 
 0,\, \text{se dado de venda}
 \end{matrix}\right.$$
+
+--
 
 ```{r, fig.width=9, fig.height=4.5}
 fator <- seq(.5, 2, by = .01)
@@ -791,7 +795,7 @@ dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda),
 
 * Antes da homogeneização:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=11}
 t.test(VU ~ Fonte, dados,
        alternative = "greater")
 ```
@@ -803,7 +807,7 @@ t.test(VU ~ Fonte, dados,
 
 * Após a homogeneização:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=11}
 dados <- within(dados, 
                 VUhom <- ifelse(Fonte == "Oferta", 
                                 .85*VU, VU))
@@ -874,7 +878,7 @@ p1
 
 .pull-left[
 
-* Modelo mau especificado
+### Modelo mal especificado
 
 ```{r, echo = TRUE}
 fit <- lm(VU ~ Area + Fonte, data = dados)
@@ -914,7 +918,7 @@ ggplot(dados, aes(x = Area, y = VU)) +
 
 .pull-left[
 
-* Modelo bem especificado
+### Modelo bem especificado
 
 ```{r, echo = TRUE}
 fit1 <- lm(VU ~ Area*Fonte, data = dados)
@@ -938,7 +942,7 @@ shapiro.test(residuals(fit1))
 
 .pull-left[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=8}
 fm <- aov(VU ~ Area*Fonte, 
            data = dados)
 TukeyHSD(fm)
@@ -948,7 +952,7 @@ TukeyHSD(fm)
 
 .pull-right[
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, highlight.output=8}
 fm1 <- aov(VUhom ~ Area*Fonte, 
            data = dados)
 TukeyHSD(fm1)
@@ -1679,6 +1683,30 @@ dados$Fonte <- rbinom(200, 1, .5)
 dados$y <- (1 - .15*dados$Fonte)*dados$y
 dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ```
+
+```{r, echo=F, eval = F}
+library(MASS)
+##                X1       X2      Y
+sigma <- matrix(c(16  ,    15,  9,
+                  15  ,    25,  8,
+                  9,     8,    9),
+                ncol = 3, byrow = T)
+set.seed(1)
+dados <- mvrnorm(n=200,
+              mu=c(100, 50, 30),
+              Sigma=sigma)
+colnames(dados) <- c("X1", "X2", "y")
+dados <- as.data.frame(dados)
+# cor(dados)
+# cov(dados)
+dados <- dados[order(dados$y), ]
+fonte <- rbinom(150, 1, .5)
+fonte <- c(rep(1, 25), fonte, rep(0, 25))
+dados$Fonte <- fonte
+dados$y <- (1 - .15*dados$Fonte)*dados$y
+dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+```
+
 
 ---
 # Análise Exploratória

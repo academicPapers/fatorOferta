@@ -29,7 +29,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 26 de junho de 2021
+### 27 de junho de 2021
 
 ---
 
@@ -277,7 +277,7 @@ probabilidades de dados de oferta? Em que região?
 ---
 # Conceitos e Paradigmas
 
-## Onde se situa o valor de mercado na distribuição de dados de oferta?
+## Onde se situa o **VM** na distribuição de dados de oferta?
 
 --
 
@@ -291,7 +291,7 @@ de oferta!
 ---
 # Conceitos e Paradigmas
 
-## Onde se situa o valor de mercado na distribuição de dados de oferta?
+## Onde se situa o **VM** na distribuição de dados de oferta?
 
 --
 
@@ -347,11 +347,12 @@ class: inverse, center, middle
 # Estado da arte
 
 * It would seem therefore that valuation theory is faced with the simultaneity 
-problem akin to that of quantum physics where, in this case, **market value 
-cannot exist simultaneously with the need for valuation**. Valuers are required 
-when transaction costs are high but at this point market value does not exist. 
-Conversely, valuers are not required when transaction costs are zero and market 
-value has emerged [Mooya (2009, p. 694-695)](#bib-mooya2009).
+problem akin to that of quantum  
+physics where, in this case, **market value cannot exist simultaneously with the 
+need for valuation**. Valuers are required when transaction costs are high but 
+at this point market value does not exist. Conversely, valuers are not required 
+when transaction costs are zero and market value has emerged 
+[Mooya (2009, p. 694-695)](#bib-mooya2009).
 
 --
 
@@ -386,8 +387,8 @@ efetivamente estabelecendo uma regra para o mercado em questão
 # Estado da arte
 
 * &lt;a name=cite-erba2019&gt;&lt;/a&gt;[Erba (2019, p.40)](#bib-erba2019): En el área catastral es 
-justamente la georreferenciación que permite estructurar bases de datos con la 
-ubicación, forma y dimensiones de cada parcela, dándole continuidad a la 
+justamente la georreferenciación que permite estructurar bases de datos  
+con la ubicación, forma y dimensiones de cada parcela, dándole continuidad a la 
 información territorial.
   
 --
@@ -471,8 +472,9 @@ no valor da avaliação prévia.
 ---
 # Estado da Arte: Estimação do fator oferta
 
-* Utilizado para homogeneizar os dados de oferta, `\(P_L\)`, com os dados de 
-transações, `\(P_R\)`.
+* Utilizado para homogeneizar os dados de oferta com os dados de transações,
+visando estimar o valor de  
+mercado.
 
 --
 
@@ -486,8 +488,8 @@ das características dos imóveis, com a hipótese que `\(P_R &lt; P_L\)`
 
 --
 
-* &lt;a name=cite-haurin&gt;&lt;/a&gt;[Haurin, McGreal, Adair, Brown, and Webb (2013)](#bib-haurin) mostram que, em períodos de *boom*, no MI os preços de
-venda podem superar os preços de oferta.
+* &lt;a name=cite-haurin&gt;&lt;/a&gt;[Haurin, McGreal, Adair, Brown, and Webb (2013)](#bib-haurin) mostram que, em períodos de *boom*, no MI os preços 
+de venda podem superar os preços de oferta.
 
 --
 
@@ -580,8 +582,8 @@ class: inverse, center, middle
 # Estimação do Fator Oferta
 
 * &lt;a name=cite-lima2006&gt;&lt;/a&gt;[Lima (2006)](#bib-lima2006) mostrou como estimar os fatores cientificamente, 
-*i.e.* a partir de modelos de regressão linear, tanto para a forma aditiva como 
-para a forma multiplicativa de utilização dos fatores.
+*i.e.* a partir de modelos de regressão linear, tanto  
+para a forma aditiva como para a forma multiplicativa de utilização dos fatores.
 
 --
 
@@ -613,7 +615,7 @@ de regressão para os demais fatores*.
 * Argumento que pode-se estimar o Fator oferta ou Fator fonte para a forma mista
 através do seguinte modelo de regressão:
 
-`$$VU \sim Fonte*(\beta_1X_1 + \beta_2X_2 +  \ldots + \beta_kX_k) + \varepsilon$$`
+`$$VU \sim Fonte*(\beta_1X_1 + \beta_2X_2 +  \ldots + \beta_kX_k + \varepsilon)$$`
 
 --
 
@@ -672,7 +674,7 @@ R&gt; t.test(VU ~ Fonte, dados,
 ##  11.90665      Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-##             1733.516             1492.118
+*##             1733.516             1492.118
 ```
 
 ]
@@ -702,15 +704,15 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 ##  -229.5684       Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-##             1473.489             1492.118
+*##             1473.489             1492.118
 ```
 
 ]
 
 --
 
-* Somente funciona devido à amostra ser balanceada (entre dados de ofertas e de 
-transações).
+* **Somente funciona devido à amostra ser balanceada (entre dados de ofertas e de 
+transações)**.
 
 ---
 # Estimação do Fator Oferta
@@ -721,6 +723,8 @@ transações).
 1,\,\text{se dado de oferta}\\ 
 0,\, \text{se dado de venda}
 \end{matrix}\right.$$`
+
+--
 
 &lt;img src="images/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" /&gt;
 
@@ -809,7 +813,7 @@ R&gt; t.test(VU ~ Fonte, dados,
 ##  431.8508      Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-##             1939.868             1333.875
+*##             1939.868             1333.875
 ```
 
 ]
@@ -839,7 +843,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 ##  154.3427      Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-##             1648.888             1333.875
+*##             1648.888             1333.875
 ```
 
 ]
@@ -880,7 +884,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 
 .pull-left[
 
-* Modelo mau especificado
+### Modelo mal especificado
 
 
 ```r
@@ -938,7 +942,7 @@ R&gt; S(fit, brief = T)
 
 .pull-left[
 
-* Modelo bem especificado
+### Modelo bem especificado
 
 
 ```r
@@ -1000,7 +1004,7 @@ R&gt; TukeyHSD(fm)
 ## 
 ## $Fonte
 ##                   diff       lwr       upr p adj
-## Venda-Oferta -210.2986 -261.3499 -159.2472     0
+*## Venda-Oferta -210.2986 -261.3499 -159.2472     0
 ```
 
 ]
@@ -1022,7 +1026,7 @@ R&gt; TukeyHSD(fm1)
 ## 
 ## $Fonte
 ##                  diff       lwr      upr     p adj
-## Venda-Oferta 23.09297 -23.84794 70.03388 0.3312566
+*## Venda-Oferta 23.09297 -23.84794 70.03388 0.3312566
 ```
 
 ]
@@ -2041,10 +2045,13 @@ R&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
 R&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ```
 
+
+
+
 ---
 # Análise Exploratória
 
-&lt;img src="images/unnamed-chunk-62-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-63-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -2089,7 +2096,7 @@ R&gt; S(fitMult, brief = T)
 
 `$$p_i = r_i + \hat \beta_jX_i^{(j)}$$`
 
-&lt;img src="images/unnamed-chunk-65-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-66-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Modelo Correto
@@ -2123,7 +2130,7 @@ R&gt; S(fitMult2, brief = T)
 # Modelo Correto
 
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/unnamed-chunk-67-1.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;&lt;img src="images/unnamed-chunk-67-2.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;
+&lt;img src="images/unnamed-chunk-68-1.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;&lt;img src="images/unnamed-chunk-68-2.svg" alt="Regressão Múltiplo. Modelo Correto. Fator Oferta." width="50%" /&gt;
 &lt;p class="caption"&gt;Regressão Múltiplo. Modelo Correto. Fator Oferta.&lt;/p&gt;
 &lt;/div&gt;
 
@@ -2225,7 +2232,7 @@ R&gt; sd(dados$yhom)/mean(dados$yhom)
 
 
 
-&lt;img src="images/unnamed-chunk-73-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-74-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Previsão de valores
@@ -2314,7 +2321,7 @@ R&gt; predict(fithom4, newdata = new110_60,
 
 --
 
-&lt;img src="images/unnamed-chunk-80-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-81-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -2468,7 +2475,7 @@ class: inverse, center, middle
 
 ## Dados de Atibaia/SP &lt;a name=cite-mantovani2019&gt;&lt;/a&gt;([Mantovani, Cymrot, and Cappelano, ](#bib-mantovani2019))
 
-&lt;img src="images/unnamed-chunk-84-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-85-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Estudo de Caso
@@ -2476,7 +2483,7 @@ class: inverse, center, middle
 ## Análise Exploratória
 
 
-&lt;img src="images/unnamed-chunk-85-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-86-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Ajuste de modelos
@@ -2499,7 +2506,7 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 
 
 
-&lt;img src="images/unnamed-chunk-88-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/unnamed-chunk-89-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Resíduos Parciais
@@ -2509,15 +2516,15 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 
 
 
-&lt;img src="images/unnamed-chunk-90-1.svg" style="display: block; margin: auto;" /&gt;
-
----
-
 &lt;img src="images/unnamed-chunk-91-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 
 &lt;img src="images/unnamed-chunk-92-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="images/unnamed-chunk-93-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 # Estimação do Fator Oferta
@@ -3061,12 +3068,12 @@ class: scrollable-slide
 # Referências
 
 &lt;a name=bib-NBR1465302&gt;&lt;/a&gt;[ABNT](#cite-NBR1465302) (2011). _NBR
-14653-2. AvaliaÃƒÂ§ÃƒÂ£o de Bens - Parte 2: ImÃƒÂ³veis Urbanos_.
-AssociaÃ§Ã£o Brasileira de Normas TÃ©cnicas. Rio de Janeiro, p. 51.
+14653-2. Avaliacao de Bens - Parte 2: Imoveis Urbanos_. Associacao
+Brasileira de Normas Tecnicas. Rio de Janeiro, p. 51.
 
 &lt;a name=bib-NBR1465301&gt;&lt;/a&gt;[ABNT](#cite-NBR1465301) (2019). _NBR
-14653-1. AvaliaÃƒÂ§ÃƒÂ£o de Bens - Parte 1: Procedimentos Gerais_.
-AssociaÃ§Ã£o Brasileira de Normas TÃ©cnicas. Rio de Janeiro, p. 19.
+14653-1. Avaliacao de Bens - Parte 1: Procedimentos Gerais_. Associacao
+Brasileira de Normas Tecnicas. Rio de Janeiro, p. 19.
 
 &lt;a name=bib-chinloy&gt;&lt;/a&gt;[Chinloy, P. T.](#cite-chinloy) (1980). "An
 empirical model of the market for resale homes". In: _Journal of Urban
@@ -3074,9 +3081,8 @@ Economics_ 7.3, pp. 279-292. ISSN: 0094-1190. DOI:
 [https://doi.org/10.1016/0094-1190(80)90001-7](https://doi.org/https%3A%2F%2Fdoi.org%2F10.1016%2F0094-1190%2880%2990001-7).
 
 &lt;a name=bib-erba2019&gt;&lt;/a&gt;[Erba, D. A.](#cite-erba2019) (2019).
-"PolÃ­tica Tributaria vs. PolÃ­tica Catastral, nuevo juego de roles".
-In: _Revista de AdministraciÃ³n Tributaria_, pp. 37-50. ISSN:
-1684-9434.
+"Politica Tributaria vs. Politica Catastral, nuevo juego de roles". In:
+_Revista de Administracion Tributaria_, pp. 37-50. ISSN: 1684-9434.
 
 &lt;a name=bib-haurin&gt;&lt;/a&gt;[Haurin, D., S. McGreal, A. Adair, et
 al.](#cite-haurin) (2013). "List price and sales prices of residential
@@ -3091,17 +3097,16 @@ Model". In: _Journal of Applied Econometrics_ 7.2, pp. 115-129. ISSN:
 [http://www.jstor.org/stable/2285023](http://www.jstor.org/stable/2285023).
 
 &lt;a name=bib-ibapeSP&gt;&lt;/a&gt;[IBAPE/SP](#cite-ibapeSP) (2011). _Norma Para
-AvaliaÃ§Ã£o de ImÃ³veis Urbanos_. Instituto Brasileiro de AvaliaÃ§Ãµes
-e PerÃ­cias de Engenharia de SÃ£o Paulo. SÃ£o Paulo, p. 36.
+Avaliacao de Imoveis Urbanos_. Instituto Brasileiro de Avaliacoes e
+Pericias de Engenharia de Sao Paulo. Sao Paulo, p. 36.
 
 &lt;a name=bib-lima2006&gt;&lt;/a&gt;[Lima, G. P. d. A.](#cite-lima2006) (2006).
-"HomogeneizaÃ§Ã£o por Fatores na Forma Aditiva, Multiplicativa ou
-Mista?" In: _XIII COBREAP_.
+"Homogeneizacao por Fatores na Forma Aditiva, Multiplicativa ou Mista?"
+In: _XIII COBREAP_.
 
 &lt;a name=bib-mantovani2019&gt;&lt;/a&gt;[Mantovani, F. A., R. Cymrot, and L. H.
-Cappelano](#cite-mantovani2019) "Fator Oferta para imÃ³veis
-residenciais da cidade de Atibaia/SP em tempos de crise". In: _XX
-COBREAP_.
+Cappelano](#cite-mantovani2019) "Fator Oferta para imoveis residenciais
+da cidade de Atibaia/SP em tempos de crise". In: _XX COBREAP_.
 
 &lt;a name=bib-matloff2009&gt;&lt;/a&gt;[Matloff, N. S.](#cite-matloff2009) (2009).
 _From Algorithms to Z-Scores. Probabilistic and Statistical Modeling in
