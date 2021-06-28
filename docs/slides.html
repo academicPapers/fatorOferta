@@ -4,13 +4,13 @@
     <title>Fator Oferta</title>
     <meta charset="utf-8" />
     <meta name="author" content="Luiz Fernando Palin Droubi" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
     <script src="libs/xaringanExtra-progressBar/progress-bar.js"></script>
+    <script src="libs/xaringanExtra-logo/logo.js"></script>
     <script src="libs/mark.js/mark.min.js"></script>
     <link href="libs/xaringanExtra-search/search.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-search/search.js"></script>
@@ -29,7 +29,7 @@ class: center, middle, inverse, title-slide
 ## Contextualização, Conceitos e Paradigmas, Estado da Arte e Aplicações
 ### Luiz Fernando Palin Droubi
 ### Diretor Técnico da SOBREA
-### 27 de junho de 2021
+### 28 de junho de 2021
 
 ---
 
@@ -76,26 +76,6 @@ position: absolute;
 top:1em;right:1em;
 }
 </style>
-<script>(function () {
-  let tries = 0
-  function addLogo () {
-    if (typeof slideshow === 'undefined') {
-      tries += 1
-      if (tries < 10) {
-        setTimeout(addLogo, 100)
-      }
-    } else {
-      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
-        .forEach(function (slide) {
-          const logo = document.createElement('a')
-          logo.classList = 'xaringan-extra-logo'
-          logo.href = 'https://sobrea.org.br/'
-          slide.appendChild(logo)
-        })
-    }
-  }
-  document.addEventListener('DOMContentLoaded', addLogo)
-})()</script>
 </div>
 
 
@@ -633,13 +613,13 @@ interagindo com as outras variáveis explicativas na forma aditiva.
 
 
 ```r
-R&gt; set.seed(2)
-R&gt; area &lt;- runif(100, min = 250, max = 10000)
-R&gt; venda &lt;- rbinom(100, 1, .5)
-R&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
-R&gt; dados &lt;- data.frame(VU = vu, Area = area, 
-                  Fonte = factor(venda, 
-                                 labels = c("Oferta", "Venda")))
+&gt; set.seed(2)
+&gt; area &lt;- runif(100, min = 250, max = 10000)
+&gt; venda &lt;- rbinom(100, 1, .5)
+&gt; vu &lt;- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+&gt; dados &lt;- data.frame(VU = vu, Area = area, 
++                  Fonte = factor(venda, 
++                                 labels = c("Oferta", "Venda")))
 ```
 
 --
@@ -659,8 +639,8 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = area,
 
 
 ```r
-R&gt; t.test(VU ~ Fonte, dados,
-        alternative = "greater")
+&gt; t.test(VU ~ Fonte, dados,
++        alternative = "greater")
 ```
 
 ```
@@ -669,7 +649,7 @@ R&gt; t.test(VU ~ Fonte, dados,
 ## 
 ## data:  VU by Fonte
 ## t = 1.7467, df = 97.856, p-value = 0.04191
-## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
+## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
 ##  11.90665      Inf
 ## sample estimates:
@@ -686,11 +666,11 @@ R&gt; t.test(VU ~ Fonte, dados,
 
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 VUhom &lt;- ifelse(Fonte == "Oferta", 
-                                 .85*VU, VU))
-R&gt; t.test(VUhom ~ Fonte, dados,
-        alternative = "greater")
+&gt; dados &lt;- within(dados, 
++                 VUhom &lt;- ifelse(Fonte == "Oferta", 
++                                 .85*VU, VU))
+&gt; t.test(VUhom ~ Fonte, dados,
++        alternative = "greater")
 ```
 
 ```
@@ -699,7 +679,7 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 ## 
 ## data:  VUhom by Fonte
 ## t = -0.14668, df = 96.512, p-value = 0.5582
-## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
+## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
 ##  -229.5684       Inf
 ## sample estimates:
@@ -736,12 +716,12 @@ transações)**.
 
 
 ```r
-R&gt; cv &lt;- function(fator, vu, fonte){
-   vuhom &lt;- ifelse(fonte == "Venda", vu, fator*vu)
-   sd(vuhom)/mean(vuhom)
- }
-R&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
-          vu = dados$VU, fonte = dados$Fonte)
+&gt; cv &lt;- function(fator, vu, fonte){
++   vuhom &lt;- ifelse(fonte == "Venda", vu, fator*vu)
++   sd(vuhom)/mean(vuhom)
++ }
+&gt; optimise(cv, c(0.5, 2), tol = 0.0001, 
++          vu = dados$VU, fonte = dados$Fonte)
 ```
 
 --
@@ -760,7 +740,8 @@ R&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 
 ## Modelo de regressão na forma direta 
 
-* **Criação de dados desbalanceados entre oferta e venda**.
+* **Criação de dados de oferta e venda desbalanceados , com valores de oferta 
+maiores, em média.**.
 
 
 `$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$`
@@ -769,21 +750,17 @@ R&gt; optimise(cv, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R&gt; set.seed(1)
-R&gt; areavenda &lt;- runif(50, min = 1000, max = 10000)
-R&gt; areaoferta &lt;-  runif(50, min = 250, max = 8000)
-R&gt; venda &lt;- c(rep(0, 50), rep(1, 50))
-R&gt; vuvenda &lt;- .85*(3000 - .25*areavenda + rnorm(50, 0, 150))
-R&gt; vuoferta &lt;- 3000 - .25*areaoferta + rnorm(50, 0, 150)
-R&gt; vu &lt;- c(vuoferta, vuvenda)
-R&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
-                  Fonte = factor(venda, 
-                                 labels = c("Oferta", "Venda")))
+&gt; set.seed(1)
+&gt; areavenda &lt;- runif(35, min = 1000, max = 10000)
+&gt; areaoferta &lt;-  runif(65, min = 250, max = 8000)
+&gt; venda &lt;- c(rep(0, 65), rep(1, 35))
+&gt; vuvenda &lt;- .85*(3000 - .25*areavenda + rnorm(35, 0, 150))
+&gt; vuoferta &lt;- 3000 - .25*areaoferta + rnorm(65, 0, 150)
+&gt; vu &lt;- c(vuoferta, vuvenda)
+&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
++                  Fonte = factor(venda, 
++                                 labels = c("Oferta", "Venda")))
 ```
-
---
-
-* **Os dados de oferta possuem áreas maiores**.
 
 ---
 # Estimação do Fator Oferta
@@ -798,8 +775,8 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = c(areaoferta, areavenda),
 
 
 ```r
-R&gt; t.test(VU ~ Fonte, dados,
-        alternative = "greater")
+&gt; t.test(VU ~ Fonte, dados,
++        alternative = "greater")
 ```
 
 ```
@@ -807,13 +784,13 @@ R&gt; t.test(VU ~ Fonte, dados,
 ## 	Welch Two Sample t-test
 ## 
 ## data:  VU by Fonte
-## t = 5.7788, df = 97.49, p-value = 4.51e-08
-## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
+## t = 4.9112, df = 68.239, p-value = 2.971e-06
+## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
-##  431.8508      Inf
+##  359.3018      Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-*##             1939.868             1333.875
+*##             1915.728             1371.719
 ```
 
 ]
@@ -825,11 +802,11 @@ R&gt; t.test(VU ~ Fonte, dados,
 
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 VUhom &lt;- ifelse(Fonte == "Oferta", 
-                                 .85*VU, VU))
-R&gt; t.test(VUhom ~ Fonte, dados,
-        alternative = "greater")
+&gt; dados &lt;- within(dados, 
++                 VUhom &lt;- ifelse(Fonte == "Oferta", 
++                                 .85*VU, VU))
+&gt; t.test(VUhom ~ Fonte, dados,
++        alternative = "greater")
 ```
 
 ```
@@ -837,13 +814,13 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 ## 	Welch Two Sample t-test
 ## 
 ## data:  VUhom by Fonte
-## t = 3.256, df = 97.216, p-value = 0.0007781
-## alternative hypothesis: true difference in means between group Oferta and group Venda is greater than 0
+## t = 2.4342, df = 59.493, p-value = 0.008972
+## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
-##  154.3427      Inf
+##  80.48095      Inf
 ## sample estimates:
 ## mean in group Oferta  mean in group Venda 
-*##             1648.888             1333.875
+*##             1628.369             1371.719
 ```
 
 ]
@@ -888,24 +865,24 @@ R&gt; t.test(VUhom ~ Fonte, dados,
 
 
 ```r
-R&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
-R&gt; S(fit, brief = T)
+&gt; fit &lt;- lm(VU ~ Area + Fonte, data = dados)
+&gt; S(fit, brief = T)
 ```
 
 ```
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 2866.65178   33.23551  86.253  &lt; 2e-16 ***
-## Area          -0.22337    0.00637 -35.068  &lt; 2e-16 ***
-## FonteVenda  -238.70040   30.36403  -7.861 5.28e-12 ***
+## (Intercept)  2.892e+03  3.298e+01  87.699  &lt; 2e-16 ***
+## Area        -2.274e-01  6.484e-03 -35.067  &lt; 2e-16 ***
+## FonteVenda  -2.476e+02  3.105e+01  -7.975 3.04e-12 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard deviation: 142.5 on 97 degrees of freedom
-## Multiple R-squared: 0.9455
-## F-statistic: 840.9 on 2 and 97 DF,  p-value: &lt; 2.2e-16 
+## Multiple R-squared: 0.9415
+## F-statistic: 780.6 on 2 and 97 DF,  p-value: &lt; 2.2e-16 
 ##     AIC     BIC 
-## 1280.61 1291.03
+## 1280.63 1291.05
 ```
 
 ]
@@ -919,7 +896,7 @@ R&gt; S(fit, brief = T)
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  residuals(fit)
-## W = 0.97783, p-value = 0.08995
+## W = 0.97712, p-value = 0.0791
 ```
 
 ]
@@ -946,25 +923,25 @@ R&gt; S(fit, brief = T)
 
 
 ```r
-R&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
-R&gt; S(fit1, brief = T)
+&gt; fit1 &lt;- lm(VU ~ Area*Fonte, data = dados)
+&gt; S(fit1, brief = T)
 ```
 
 ```
 ## Coefficients:
 ##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)      3.004e+03  4.136e+01  72.625  &lt; 2e-16 ***
-## Area            -2.564e-01  8.952e-03 -28.637  &lt; 2e-16 ***
-## FonteVenda      -5.097e+02  6.267e+01  -8.133 1.49e-12 ***
-## Area:FonteVenda  5.615e-02  1.168e-02   4.808 5.64e-06 ***
+## (Intercept)      2.983e+03  3.921e+01  76.072  &lt; 2e-16 ***
+## Area            -2.486e-01  8.277e-03 -30.032  &lt; 2e-16 ***
+## FonteVenda      -4.778e+02  6.758e+01  -7.070 2.49e-10 ***
+## Area:FonteVenda  4.606e-02  1.220e-02   3.775 0.000277 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard deviation: 128.6 on 96 degrees of freedom
-## Multiple R-squared: 0.9561
-## F-statistic: 696.1 on 3 and 96 DF,  p-value: &lt; 2.2e-16 
+## Residual standard deviation: 133.7 on 96 degrees of freedom
+## Multiple R-squared: 0.9491
+## F-statistic: 596.2 on 3 and 96 DF,  p-value: &lt; 2.2e-16 
 ##     AIC     BIC 
-## 1261.04 1274.06
+## 1268.79 1281.81
 ```
 ]
 
@@ -977,7 +954,7 @@ R&gt; S(fit1, brief = T)
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  residuals(fit1)
-## W = 0.98033, p-value = 0.1411
+## W = 0.97981, p-value = 0.1284
 ```
 
 ]
@@ -991,9 +968,9 @@ R&gt; S(fit1, brief = T)
 
 
 ```r
-R&gt; fm &lt;- aov(VU ~ Area*Fonte, 
-            data = dados)
-R&gt; TukeyHSD(fm)
+&gt; fm &lt;- aov(VU ~ Area*Fonte, 
++            data = dados)
+&gt; TukeyHSD(fm, "Fonte")
 ```
 
 ```
@@ -1004,7 +981,7 @@ R&gt; TukeyHSD(fm)
 ## 
 ## $Fonte
 ##                   diff       lwr       upr p adj
-*## Venda-Oferta -210.2986 -261.3499 -159.2472     0
+*## Venda-Oferta -229.2696 -284.9006 -173.6386     0
 ```
 
 ]
@@ -1013,9 +990,9 @@ R&gt; TukeyHSD(fm)
 
 
 ```r
-R&gt; fm1 &lt;- aov(VUhom ~ Area*Fonte, 
-            data = dados)
-R&gt; TukeyHSD(fm1)
+&gt; fm1 &lt;- aov(VUhom ~ Area*Fonte, 
++            data = dados)
+&gt; TukeyHSD(fm1, "Fonte")
 ```
 
 ```
@@ -1026,7 +1003,7 @@ R&gt; TukeyHSD(fm1)
 ## 
 ## $Fonte
 ##                  diff       lwr      upr     p adj
-*## Venda-Oferta 23.09297 -23.84794 70.03388 0.3312566
+*## Venda-Oferta 12.49766 -37.58163 62.57695 0.6214727
 ```
 
 ]
@@ -1043,9 +1020,9 @@ R&gt; TukeyHSD(fm1)
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "VU", predictors = "Area",
-           factor = "Fonte", level = "Venda")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "VU", predictors = "Area",
++           factor = "Fonte", level = "Venda")
 ```
 
 --
@@ -1053,10 +1030,10 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 ```
 ## $minimum
-## [1] 0.864826
+## [1] 0.8577703
 ## 
 ## $objective
-## [1] 0.02449983
+## [1] 0.02634048
 ```
 
 ---
@@ -1068,23 +1045,23 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 VUhom &lt;- ifelse(Fonte == "Venda", 
-                                 VU, 0.865*VU))
+&gt; dados &lt;- within(dados, 
++                 VUhom &lt;- ifelse(Fonte == "Venda", 
++                                 VU, 0.85*VU))
 ```
 
 
 ```r
-R&gt; fm &lt;- aov(VUhom ~ Area*Fonte, dados)
-R&gt; summary(fm)
+&gt; fm &lt;- aov(VUhom ~ Area*Fonte, dados)
+&gt; summary(fm)
 ```
 
 ```
 ##             Df   Sum Sq  Mean Sq  F value Pr(&gt;F)    
-## Area         1 24844048 24844048 1747.413 &lt;2e-16 ***
-## Fonte        1        2        2    0.000 0.9912    
-## Area:Fonte   1    56237    56237    3.955 0.0496 *  
-## Residuals   96  1364891    14218                    
+## Area         1 22242166 22242166 1536.008 &lt;2e-16 ***
+## Fonte        1     3838     3838    0.265  0.608    
+## Area:Fonte   1     9245     9245    0.638  0.426    
+## Residuals   96  1390128    14481                    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -1092,12 +1069,12 @@ R&gt; summary(fm)
 
 
 ```r
-R&gt; # CV dados crus
-R&gt; sd(dados$VU)/mean(dados$VU)
+&gt; # CV dados crus
+&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
-## [1] 0.369026
+## [1] 0.3380495
 ```
 
 ]
@@ -1112,12 +1089,12 @@ R&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R&gt; # CV dados homogeneizados
-R&gt; sd(dados$VUhom)/mean(dados$VUhom)
+&gt; # CV dados homogeneizados
+&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
-## [1] 0.3420327
+## [1] 0.3176481
 ```
 
 ]
@@ -1130,23 +1107,23 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R&gt; fithom &lt;- lm(VUhom ~ Area, dados)
-R&gt; S(fithom, brief = T)
+&gt; fithom &lt;- lm(VUhom ~ Area, dados)
+&gt; S(fithom, brief = T)
 ```
 
 ```
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  2.546e+03  2.785e+01   91.39   &lt;2e-16 ***
-## Area        -2.091e-01  5.052e-03  -41.39   &lt;2e-16 ***
+## (Intercept)  2.519e+03  2.761e+01   91.25   &lt;2e-16 ***
+## Area        -2.065e-01  5.239e-03  -39.41   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard deviation: 120.4 on 98 degrees of freedom
-## Multiple R-squared: 0.9459
-## F-statistic:  1713 on 1 and 98 DF,  p-value: &lt; 2.2e-16 
+## Residual standard deviation: 119.7 on 98 degrees of freedom
+## Multiple R-squared: 0.9407
+## F-statistic:  1553 on 1 and 98 DF,  p-value: &lt; 2.2e-16 
 ##     AIC     BIC 
-## 1245.97 1253.78
+## 1244.70 1252.51
 ```
 
 ---
@@ -1177,23 +1154,23 @@ R&gt; S(fithom, brief = T)
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;(Intercept)&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2866.65&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2800.69&amp;nbsp;&amp;ndash;&amp;nbsp;2932.62&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2891.90&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2826.46&amp;nbsp;&amp;ndash;&amp;nbsp;2957.35&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;3003.57&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2921.47&amp;nbsp;&amp;ndash;&amp;nbsp;3085.66&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2982.87&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;2905.04&amp;nbsp;&amp;ndash;&amp;nbsp;3060.71&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;2545.53&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;2490.26&amp;nbsp;&amp;ndash;&amp;nbsp;2600.81&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;2519.19&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;2464.40&amp;nbsp;&amp;ndash;&amp;nbsp;2573.98&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Area&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.22&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.23&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.24&amp;nbsp;&amp;ndash;&amp;nbsp;-0.21&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.26&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.24&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.25&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;0.27&amp;nbsp;&amp;ndash;&amp;nbsp;-0.23&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&amp;#45;0.21&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&amp;#45;0.22&amp;nbsp;&amp;ndash;&amp;nbsp;-0.20&lt;/td&gt;
@@ -1201,11 +1178,11 @@ R&gt; S(fithom, brief = T)
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; "&gt;Fonte [Venda]&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;238.70&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;298.96&amp;nbsp;&amp;ndash;&amp;nbsp;-178.44&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;247.62&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;309.24&amp;nbsp;&amp;ndash;&amp;nbsp;-185.99&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;509.71&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;634.11&amp;nbsp;&amp;ndash;&amp;nbsp;-385.30&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;477.80&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&amp;#45;611.94&amp;nbsp;&amp;ndash;&amp;nbsp;-343.65&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
@@ -1216,8 +1193,8 @@ R&gt; S(fithom, brief = T)
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.06&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.03&amp;nbsp;&amp;ndash;&amp;nbsp;0.08&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.05&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "&gt;0.02&amp;nbsp;&amp;ndash;&amp;nbsp;0.07&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"&gt;&lt;strong&gt;&amp;lt;0.001&lt;/strong&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"&gt;&lt;/td&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"&gt;&lt;/td&gt;
@@ -1231,9 +1208,9 @@ R&gt; S(fithom, brief = T)
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / R&lt;sup&gt;2&lt;/sup&gt; adjusted&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.945 / 0.944&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.956 / 0.955&lt;/td&gt;
-&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.946 / 0.945&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.942 / 0.940&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.949 / 0.947&lt;/td&gt;
+&lt;td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3"&gt;0.941 / 0.940&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
@@ -1248,37 +1225,37 @@ R&gt; S(fithom, brief = T)
 
 
 ```r
-R&gt; new250 &lt;- 
-   data.frame(Area = 250, Fonte = "Venda")
-R&gt; predict(fit, newdata = new250,
-         interval = "confidence", level = .80)
+&gt; new250 &lt;- 
++   data.frame(Area = 250, Fonte = "Venda")
+&gt; predict(fit, newdata = new250,
++         interval = "confidence", level = .80)
 ```
 
 ```
 ##        fit      lwr      upr
-*## 1 2572.108 2519.648 2624.568
+*## 1 2587.441 2532.968 2641.913
 ```
 
 
 ```r
-R&gt; predict(fit1, newdata = new250,
-         interval = "confidence", level = .80)
+&gt; predict(fit1, newdata = new250,
++         interval = "confidence", level = .80)
 ```
 
 ```
 ##        fit      lwr      upr
-*## 1 2443.802 2385.259 2502.345
+*## 1 2454.448 2386.051 2522.846
 ```
 
 
 ```r
-R&gt; predict(fithom, newdata = new250,
-         interval = "confidence", level = .80)
+&gt; predict(fithom, newdata = new250,
++         interval = "confidence", level = .80)
 ```
 
 ```
-##       fit      lwr      upr
-*## 1 2493.25 2458.773 2527.726
+##        fit      lwr      upr
+*## 1 2467.566 2433.458 2501.673
 ```
 ]
 
@@ -1286,37 +1263,37 @@ R&gt; predict(fithom, newdata = new250,
 
 
 ```r
-R&gt; new10000 &lt;- 
-   data.frame(Area = 10000, Fonte = "Venda")
-R&gt; predict(fit, newdata = new10000,
-         interval = "confidence", level = .80)
+&gt; new10000 &lt;- 
++   data.frame(Area = 10000, Fonte = "Venda")
+&gt; predict(fit, newdata = new10000,
++         interval = "confidence", level = .80)
 ```
 
 ```
 ##        fit      lwr      upr
-*## 1 394.2191 350.9564 437.4818
+*## 1 370.4307 322.2269 418.6345
 ```
 
 
 ```r
-R&gt; predict(fit1, newdata = new10000,
-         interval = "confidence", level = .80)
+&gt; predict(fit1, newdata = new10000,
++         interval = "confidence", level = .80)
 ```
 
 ```
 ##        fit      lwr      upr
-*## 1 491.5866 444.6049 538.5684
+*## 1 479.9654 421.2549 538.6758
 ```
 
 
 ```r
-R&gt; predict(fithom, newdata = new10000,
-         interval = "confidence", level = .80)
+&gt; predict(fithom, newdata = new10000,
++         interval = "confidence", level = .80)
 ```
 
 ```
-##        fit     lwr      upr
-*## 1 454.2788 418.001 490.5567
+##        fit      lwr     upr
+*## 1 454.3476 415.6422 493.053
 ```
 
 ]
@@ -1352,12 +1329,12 @@ Portanto, se `\(V_{venda} = 0,85\cdot V_{oferta}\)`, na escala `\(\log\)`:
 
 
 ```r
-R&gt; set.seed(2)
-R&gt; area &lt;- runif(100, min = 250, max = 5000)
-R&gt; venda &lt;- rbinom(100, 1, .5)
-R&gt; lvu &lt;- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
-R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
-                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+&gt; set.seed(2)
+&gt; area &lt;- runif(100, min = 250, max = 5000)
+&gt; venda &lt;- rbinom(100, 1, .5)
+&gt; lvu &lt;- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
+&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, 
++                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
 ---
@@ -1380,9 +1357,9 @@ R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area,
 
 
 ```r
-R&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, 
-            data = dados)
-R&gt; S(fit2, brief = T)
+&gt; fit2 &lt;- lm(log(VU) ~ log(Area) + Fonte, 
++            data = dados)
+&gt; S(fit2, brief = T)
 ```
 
 ```
@@ -1408,8 +1385,8 @@ R&gt; S(fit2, brief = T)
 
 
 ```r
-R&gt; # Cálculo do Fator Oferta
-R&gt; exp(-.157503)
+&gt; # Cálculo do Fator Oferta
+&gt; exp(-.157503)
 ```
 
 ```
@@ -1443,9 +1420,9 @@ R&gt; exp(-.157503)
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "VU", predictors = "log(Area)",
-           factor = "Fonte", level = "Venda", transf = "log")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "VU", predictors = "log(Area)",
++           factor = "Fonte", level = "Venda", transf = "log")
 ```
 
 --
@@ -1468,11 +1445,11 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 .pull-left[
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 VUhom &lt;- ifelse(Fonte == "Venda", 
-                                 VU,  0.85*VU))
-R&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
-R&gt; S(fithom2, brief = T)
+&gt; dados &lt;- within(dados, 
++                 VUhom &lt;- ifelse(Fonte == "Venda", 
++                                 VU,  0.85*VU))
+&gt; fithom2 &lt;- lm(log(VUhom) ~ log(Area), dados)
+&gt; S(fithom2, brief = T)
 ```
 
 ```
@@ -1495,7 +1472,7 @@ R&gt; S(fithom2, brief = T)
 
 
 ```r
-R&gt; sd(dados$VU)/mean(dados$VU)
+&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
@@ -1504,7 +1481,7 @@ R&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R&gt; sd(dados$VUhom)/mean(dados$VUhom)
+&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
@@ -1608,10 +1585,10 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R&gt; new250 &lt;- 
-   data.frame(Area = 250, Fonte = "Venda")
-R&gt; exp(predict(fit2, newdata = new250,
-         interval = "confidence", level = .80))
+&gt; new250 &lt;- 
++   data.frame(Area = 250, Fonte = "Venda")
+&gt; exp(predict(fit2, newdata = new250,
++         interval = "confidence", level = .80))
 ```
 
 ```
@@ -1622,8 +1599,8 @@ R&gt; exp(predict(fit2, newdata = new250,
 
 
 ```r
-R&gt; exp(predict(fithom2, newdata = new250,
-         interval = "confidence", level = .80))
+&gt; exp(predict(fithom2, newdata = new250,
++         interval = "confidence", level = .80))
 ```
 
 ```
@@ -1636,10 +1613,10 @@ R&gt; exp(predict(fithom2, newdata = new250,
 
 
 ```r
-R&gt; new5000 &lt;- 
-   data.frame(Area = 5000, Fonte = "Venda")
-R&gt; exp(predict(fit2, newdata = new5000,
-         interval = "confidence", level = .80))
+&gt; new5000 &lt;- 
++   data.frame(Area = 5000, Fonte = "Venda")
+&gt; exp(predict(fit2, newdata = new5000,
++         interval = "confidence", level = .80))
 ```
 
 ```
@@ -1649,8 +1626,8 @@ R&gt; exp(predict(fit2, newdata = new5000,
 
 
 ```r
-R&gt; exp(predict(fithom2, newdata = new5000,
-         interval = "confidence", level = .80))
+&gt; exp(predict(fithom2, newdata = new5000,
++         interval = "confidence", level = .80))
 ```
 
 ```
@@ -1669,13 +1646,13 @@ R&gt; exp(predict(fithom2, newdata = new5000,
 
 
 ```r
-R&gt; set.seed(2)
-R&gt; area &lt;- runif(100, min = 250, max = 5000)
-R&gt; venda &lt;- rbinom(100, 1, .5)
-R&gt; sqrtvu &lt;- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
-R&gt; vu &lt;- (1-.15*venda)*sqrtvu^2
-R&gt; dados &lt;- data.frame(VU = vu, Area = area, 
-                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+&gt; set.seed(2)
+&gt; area &lt;- runif(100, min = 250, max = 5000)
+&gt; venda &lt;- rbinom(100, 1, .5)
+&gt; sqrtvu &lt;- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
+&gt; vu &lt;- (1-.15*venda)*sqrtvu^2
+&gt; dados &lt;- data.frame(VU = vu, Area = area, 
++                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
 ---
@@ -1690,8 +1667,8 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = area,
 
 
 ```r
-R&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
-R&gt; S(fit3, brief = T)
+&gt; fit3 &lt;- lm(sqrt(VU) ~ Area + Fonte, data = dados)
+&gt; S(fit3, brief = T)
 ```
 
 ```
@@ -1723,8 +1700,8 @@ R&gt; S(fit3, brief = T)
 
 
 ```r
-R&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
-R&gt; S(fit4, brief = T)
+&gt; fit4 &lt;- lm(sqrt(VU) ~ Area*Fonte, data = dados)
+&gt; S(fit4, brief = T)
 ```
 
 ```
@@ -1766,9 +1743,9 @@ R&gt; S(fit4, brief = T)
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "VU", predictors = "Area",
-           factor = "Fonte", level = "Venda", transf = "sqrt")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "VU", predictors = "Area",
++           factor = "Fonte", level = "Venda", transf = "sqrt")
 ```
 
 --
@@ -1790,11 +1767,11 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 VUhom &lt;- ifelse(Fonte == "Venda", 
-                                 VU, .85*VU))
-R&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
-R&gt; S(fithom3, brief = T)
+&gt; dados &lt;- within(dados, 
++                 VUhom &lt;- ifelse(Fonte == "Venda", 
++                                 VU, .85*VU))
+&gt; fithom3 &lt;- lm(sqrt(VUhom) ~ Area, dados)
+&gt; S(fithom3, brief = T)
 ```
 
 ```
@@ -1820,7 +1797,7 @@ R&gt; S(fithom3, brief = T)
 
 
 ```r
-R&gt; sd(dados$VU)/mean(dados$VU)
+&gt; sd(dados$VU)/mean(dados$VU)
 ```
 
 ```
@@ -1831,7 +1808,7 @@ R&gt; sd(dados$VU)/mean(dados$VU)
 
 
 ```r
-R&gt; sd(dados$VUhom)/mean(dados$VUhom)
+&gt; sd(dados$VUhom)/mean(dados$VUhom)
 ```
 
 ```
@@ -1948,10 +1925,10 @@ R&gt; sd(dados$VUhom)/mean(dados$VUhom)
 
 
 ```r
-R&gt; new250 &lt;- 
-   data.frame(Area = 250, Fonte = "Venda")
-R&gt; predict(fit3, newdata = new250,
-         interval = "confidence", level = .80)^2
+&gt; new250 &lt;- 
++   data.frame(Area = 250, Fonte = "Venda")
+&gt; predict(fit3, newdata = new250,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -1961,8 +1938,8 @@ R&gt; predict(fit3, newdata = new250,
 
 
 ```r
-R&gt; predict(fit4, newdata = new250,
-         interval = "confidence", level = .80)^2
+&gt; predict(fit4, newdata = new250,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -1972,8 +1949,8 @@ R&gt; predict(fit4, newdata = new250,
 
 
 ```r
-R&gt; predict(fithom3, newdata = new250,
-         interval = "confidence", level = .80)^2
+&gt; predict(fithom3, newdata = new250,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -1986,10 +1963,10 @@ R&gt; predict(fithom3, newdata = new250,
 
 
 ```r
-R&gt; new5000 &lt;- 
-   data.frame(Area = 5000, Fonte = "Venda")
-R&gt; predict(fit3, newdata = new5000,
-         interval = "confidence", level = .80)^2
+&gt; new5000 &lt;- 
++   data.frame(Area = 5000, Fonte = "Venda")
+&gt; predict(fit3, newdata = new5000,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -1999,8 +1976,8 @@ R&gt; predict(fit3, newdata = new5000,
 
 
 ```r
-R&gt; predict(fit4, newdata = new5000,
-         interval = "confidence", level = .80)^2
+&gt; predict(fit4, newdata = new5000,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -2010,8 +1987,8 @@ R&gt; predict(fit4, newdata = new5000,
 
 
 ```r
-R&gt; predict(fithom3, newdata = new5000,
-         interval = "confidence", level = .80)^2
+&gt; predict(fithom3, newdata = new5000,
++         interval = "confidence", level = .80)^2
 ```
 
 ```
@@ -2026,23 +2003,23 @@ R&gt; predict(fithom3, newdata = new5000,
 
 
 ```r
-R&gt; library(MASS)
-R&gt; ##                X1       X2      Y
-R&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
-                   15  ,    25,    8,
-                   10.2,     8,    9),
-                 ncol = 3, byrow = T)
-R&gt; set.seed(2)
-R&gt; dados &lt;- mvrnorm(n=200,
-               mu=c(100, 50, 30),
-               Sigma=sigma)
-R&gt; colnames(dados) &lt;- c("X1", "X2", "y")
-R&gt; dados &lt;- as.data.frame(dados)
-R&gt; # cor(dados)
-R&gt; # cov(dados)
-R&gt; dados$Fonte &lt;- rbinom(200, 1, .5)
-R&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
-R&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+&gt; library(MASS)
+&gt; ##                X1       X2      Y
+&gt; sigma &lt;- matrix(c(16  ,    15,  10.2,
++                   15  ,    25,    8,
++                   10.2,     8,    9),
++                 ncol = 3, byrow = T)
+&gt; set.seed(2)
+&gt; dados &lt;- mvrnorm(n=200,
++               mu=c(100, 50, 30),
++               Sigma=sigma)
+&gt; colnames(dados) &lt;- c("X1", "X2", "y")
+&gt; dados &lt;- as.data.frame(dados)
+&gt; # cor(dados)
+&gt; # cov(dados)
+&gt; dados$Fonte &lt;- rbinom(200, 1, .5)
+&gt; dados$y &lt;- (1 - .15*dados$Fonte)*dados$y
+&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 ```
 
 
@@ -2059,8 +2036,8 @@ R&gt; dados$Fonte &lt;- factor(dados$Fonte, labels = c("Oferta", "Venda"))
 
 
 ```r
-R&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
-R&gt; S(fitMult, brief = T)
+&gt; fitMult &lt;- lm(y ~ X1 + X2 + Fonte, dados)
+&gt; S(fitMult, brief = T)
 ```
 
 ```
@@ -2103,8 +2080,8 @@ R&gt; S(fitMult, brief = T)
 
 
 ```r
-R&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
-R&gt; S(fitMult2, brief = T)
+&gt; fitMult2 &lt;- lm(y ~ (X1 + X2)*Fonte, data = dados)
+&gt; S(fitMult2, brief = T)
 ```
 
 ```
@@ -2152,9 +2129,9 @@ R&gt; S(fitMult2, brief = T)
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "y", predictors = c("X1", "X2"),
-           factor = "Fonte", level = "Venda")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "y", predictors = c("X1", "X2"),
++           factor = "Fonte", level = "Venda")
 ```
 
 --
@@ -2175,11 +2152,11 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R&gt; dados &lt;- within(dados, 
-                 yhom &lt;- ifelse(Fonte == "Venda", 
-                                 y, .85*y))
-R&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
-R&gt; S(fithom4, brief = T)
+&gt; dados &lt;- within(dados, 
++                 yhom &lt;- ifelse(Fonte == "Venda", 
++                                 y, .85*y))
+&gt; fithom4 &lt;- lm(yhom ~ X1 + X2, dados)
+&gt; S(fithom4, brief = T)
 ```
 
 ```
@@ -2206,7 +2183,7 @@ R&gt; S(fithom4, brief = T)
 
 
 ```r
-R&gt; sd(dados$y)/mean(dados$y)
+&gt; sd(dados$y)/mean(dados$y)
 ```
 
 ```
@@ -2217,7 +2194,7 @@ R&gt; sd(dados$y)/mean(dados$y)
 
 
 ```r
-R&gt; sd(dados$yhom)/mean(dados$yhom)
+&gt; sd(dados$yhom)/mean(dados$yhom)
 ```
 
 ```
@@ -2241,10 +2218,10 @@ R&gt; sd(dados$yhom)/mean(dados$yhom)
 
 
 ```r
-R&gt; new90_40 &lt;- 
-   data.frame(X1 = 90, X2 = 40, Fonte = "Venda")
-R&gt; predict(fitMult, newdata = new90_40,
-         interval = "confidence", level = .80)
+&gt; new90_40 &lt;- 
++   data.frame(X1 = 90, X2 = 40, Fonte = "Venda")
+&gt; predict(fitMult, newdata = new90_40,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2254,8 +2231,8 @@ R&gt; predict(fitMult, newdata = new90_40,
 
 
 ```r
-R&gt; predict(fitMult2, newdata = new90_40,
-         interval = "confidence", level = .80)
+&gt; predict(fitMult2, newdata = new90_40,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2265,8 +2242,8 @@ R&gt; predict(fitMult2, newdata = new90_40,
 
 
 ```r
-R&gt; predict(fithom4, newdata = new90_40,
-         interval = "confidence", level = .80)
+&gt; predict(fithom4, newdata = new90_40,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2279,10 +2256,10 @@ R&gt; predict(fithom4, newdata = new90_40,
 
 
 ```r
-R&gt; new110_60 &lt;- 
-   data.frame(X1 = 110, X2 = 60, Fonte = "Venda")
-R&gt; predict(fitMult, newdata = new110_60,
-         interval = "confidence", level = .80)
+&gt; new110_60 &lt;- 
++   data.frame(X1 = 110, X2 = 60, Fonte = "Venda")
+&gt; predict(fitMult, newdata = new110_60,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2292,8 +2269,8 @@ R&gt; predict(fitMult, newdata = new110_60,
 
 
 ```r
-R&gt; predict(fitMult2, newdata = new110_60,
-         interval = "confidence", level = .80)
+&gt; predict(fitMult2, newdata = new110_60,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2303,8 +2280,8 @@ R&gt; predict(fitMult2, newdata = new110_60,
 
 
 ```r
-R&gt; predict(fithom4, newdata = new110_60,
-         interval = "confidence", level = .80)
+&gt; predict(fithom4, newdata = new110_60,
++         interval = "confidence", level = .80)
 ```
 
 ```
@@ -2329,21 +2306,21 @@ R&gt; predict(fithom4, newdata = new110_60,
 
 
 ```r
-R&gt; set.seed(1)
-R&gt; area &lt;- runif(200, min = 250, max = 5000)
-R&gt; distancia &lt;- runif(200, min = 10, max = 500)
-R&gt; venda &lt;- rbinom(200, 1, .5)
-R&gt; lvu &lt;- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
-R&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
-                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
+&gt; set.seed(1)
+&gt; area &lt;- runif(200, min = 250, max = 5000)
+&gt; distancia &lt;- runif(200, min = 10, max = 500)
+&gt; venda &lt;- rbinom(200, 1, .5)
+&gt; lvu &lt;- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
+&gt; dados &lt;- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
++                  Fonte = factor(venda, labels = c("Oferta", "Venda")))
 ```
 
 --
 
 
 ```r
-R&gt; fitComplete &lt;- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
-R&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
+&gt; fitComplete &lt;- lm(log(VU) ~ log(Area) + log(Distancia) + Fonte, dados)
+&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 ```
 
 ---
@@ -2428,9 +2405,9 @@ R&gt; fitOVB &lt;- lm(log(VU) ~ log(Area) + Fonte, dados)
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "VU", predictors = "log(Area)",
-           factor = "Fonte", level = "Venda", transf = "log")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "VU", predictors = "log(Area)",
++           factor = "Fonte", level = "Venda", transf = "log")
 ```
 
 --
@@ -2448,9 +2425,9 @@ R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001,
 
 
 ```r
-R&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
-          data = dados, response = "VU", predictors = c("log(Area)", "log(Distancia)"),
-           factor = "Fonte", level = "Venda", transf = "log")
+&gt; optimise(THSD, c(0.5, 2), tol = 0.0001, 
++          data = dados, response = "VU", predictors = c("log(Area)", "log(Distancia)"),
++           factor = "Fonte", level = "Venda", transf = "log")
 ```
 
 
@@ -2490,11 +2467,11 @@ class: inverse, center, middle
 
 
 ```r
-R&gt; fitOferta &lt;- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-                 data = atibaia, subset = -60)
-R&gt; 
-R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
-                data = atibaia, subset = -60)
+&gt; fitOferta &lt;- lm(log(VUoferta)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
++                 data = atibaia, subset = -60)
+&gt; 
+&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + PC,
++                data = atibaia, subset = -60)
 ```
 
 
@@ -2644,10 +2621,10 @@ R&gt; fitVenda &lt;- lm(log(VUvenda)~ log(IndiceFiscal) + log(AreaConstruida) + 
 
 
 ```r
-R&gt; RfitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
-                  PC, data = atibaia, subset = -60)
-R&gt; RfitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
-                  PC, data = atibaia, subset = -60)
+&gt; RfitVenda &lt;- lm(log(VUvenda) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
++                  PC, data = atibaia, subset = -60)
+&gt; RfitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(-.46*log(AreaConstruida)) +
++                  PC, data = atibaia, subset = -60)
 ```
 
 ---
@@ -2703,7 +2680,7 @@ R&gt; RfitOferta &lt;- lm(log(VUoferta) ~ offset(.1*log(IndiceFiscal)) + offset(
 
 
 ```r
-R&gt; exp(10.157 - 10.262)
+&gt; exp(10.157 - 10.262)
 ```
 
 ```
@@ -2719,7 +2696,7 @@ R&gt; exp(10.157 - 10.262)
 
 
 ```r
-R&gt; exp((10.157 - .387) - (10.262 - .431))
+&gt; exp((10.157 - .387) - (10.262 - .431))
 ```
 
 ```
@@ -2730,7 +2707,7 @@ R&gt; exp((10.157 - .387) - (10.262 - .431))
 
 
 ```r
-R&gt; exp((10.157 - .725) - (10.262 - .773))
+&gt; exp((10.157 - .725) - (10.262 - .773))
 ```
 
 ```
@@ -2740,7 +2717,7 @@ R&gt; exp((10.157 - .725) - (10.262 - .773))
 * Padrão Superior:
 
 ```r
-R&gt; exp((10.157 - .346) - (10.262 - .376))
+&gt; exp((10.157 - .346) - (10.262 - .376))
 ```
 
 ```
@@ -2778,10 +2755,10 @@ R&gt; exp((10.157 - .346) - (10.262 - .376))
 
 
 ```r
-R&gt; RfitVenda2 &lt;- lm(log(VUvenda) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
-                  PC, data = atibaia, subset = -60)
-R&gt; RfitOferta2 &lt;- lm(log(VUoferta) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
-                  PC, data = atibaia, subset = -60)
+&gt; RfitVenda2 &lt;- lm(log(VUvenda) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
++                  PC, data = atibaia, subset = -60)
+&gt; RfitOferta2 &lt;- lm(log(VUoferta) ~ offset(.11*log(IndiceFiscal)) + offset(-.39*log(AreaConstruida)) +
++                  PC, data = atibaia, subset = -60)
 ```
 
 ---
@@ -2837,7 +2814,7 @@ R&gt; RfitOferta2 &lt;- lm(log(VUoferta) ~ offset(.11*log(IndiceFiscal)) + offse
 
 
 ```r
-R&gt; exp(9.707 - 9.812)
+&gt; exp(9.707 - 9.812)
 ```
 
 ```
@@ -2853,7 +2830,7 @@ R&gt; exp(9.707 - 9.812)
 
 
 ```r
-R&gt; exp((9.707 - .341) - (9.812 - .384))
+&gt; exp((9.707 - .341) - (9.812 - .384))
 ```
 
 ```
@@ -2864,7 +2841,7 @@ R&gt; exp((9.707 - .341) - (9.812 - .384))
 
 
 ```r
-R&gt; exp((9.707 - .602) - (9.812 - .649))
+&gt; exp((9.707 - .602) - (9.812 - .649))
 ```
 
 ```
@@ -2874,7 +2851,7 @@ R&gt; exp((9.707 - .602) - (9.812 - .649))
 * Padrão Superior:
 
 ```r
-R&gt; exp((9.707 - .351) - (9.812 - .381))
+&gt; exp((9.707 - .351) - (9.812 - .381))
 ```
 
 ```
@@ -2956,9 +2933,9 @@ class: inverse, center, middle
 
 
 ```r
-R&gt; set.seed(2)
-R&gt; area &lt;- runif(100, min = 250, max = 10000); vu &lt;- 3000 - .25*area + rnorm(100, 0, 2000)
-R&gt; dados &lt;- data.frame(VU = vu, Area = area)
+&gt; set.seed(2)
+&gt; area &lt;- runif(100, min = 250, max = 10000); vu &lt;- 3000 - .25*area + rnorm(100, 0, 2000)
+&gt; dados &lt;- data.frame(VU = vu, Area = area)
 ```
 
 --
@@ -2970,12 +2947,12 @@ R&gt; dados &lt;- data.frame(VU = vu, Area = area)
 
 
 ```r
-R&gt; dados$VUvenda &lt;- .9*dados$VU
-R&gt; fit &lt;- lm(VUvenda ~ Area, data = dados)
-R&gt; p &lt;- predict(fit, 
-         newdata = data.frame(Area = 5000),
-         interval = "confidence", level = .80)
-R&gt; p
+&gt; dados$VUvenda &lt;- .9*dados$VU
+&gt; fit &lt;- lm(VUvenda ~ Area, data = dados)
+&gt; p &lt;- predict(fit, 
++         newdata = data.frame(Area = 5000),
++         interval = "confidence", level = .80)
+&gt; p
 ```
 
 ```
@@ -2991,11 +2968,11 @@ R&gt; p
 
 
 ```r
-R&gt; fit1 &lt;- lm(VU ~ Area, data = dados)
-R&gt; p1 &lt;- predict(fit1, 
-             newdata = data.frame(Area = 5000),
-             interval = "confidence", level = .80)
-R&gt; p1
+&gt; fit1 &lt;- lm(VU ~ Area, data = dados)
+&gt; p1 &lt;- predict(fit1, 
++             newdata = data.frame(Area = 5000),
++             interval = "confidence", level = .80)
+&gt; p1
 ```
 
 ```
@@ -3004,7 +2981,7 @@ R&gt; p1
 ```
 
 ```r
-R&gt; .9*p1
+&gt; .9*p1
 ```
 
 ```
@@ -3179,20 +3156,30 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  // Replace <script> tags in slides area to make them executable
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container script'
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
-    var scriptAttrs = scripts[i].attributes;
-    for (var j = 0; j < scriptAttrs.length; j++) {
-      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
-    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {

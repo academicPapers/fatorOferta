@@ -760,7 +760,8 @@ optimise(cv, c(0.5, 2), tol = 0.0001,
 
 ## Modelo de regressão na forma direta 
 
-* **Criação de dados desbalanceados entre oferta e venda**.
+* **Criação de dados de oferta e venda desbalanceados , com valores de oferta 
+maiores, em média.**.
 
 
 $$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
@@ -769,20 +770,16 @@ $$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
 
 ```{r, echo = TRUE}
 set.seed(1)
-areavenda <- runif(50, min = 1000, max = 10000)
-areaoferta <-  runif(50, min = 250, max = 8000)
-venda <- c(rep(0, 50), rep(1, 50))
-vuvenda <- .85*(3000 - .25*areavenda + rnorm(50, 0, 150))
-vuoferta <- 3000 - .25*areaoferta + rnorm(50, 0, 150)
+areavenda <- runif(35, min = 1000, max = 10000)
+areaoferta <-  runif(65, min = 250, max = 8000)
+venda <- c(rep(0, 65), rep(1, 35))
+vuvenda <- .85*(3000 - .25*areavenda + rnorm(35, 0, 150))
+vuoferta <- 3000 - .25*areaoferta + rnorm(65, 0, 150)
 vu <- c(vuoferta, vuvenda)
 dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
                  Fonte = factor(venda, 
                                 labels = c("Oferta", "Venda")))
 ```
-
---
-
-* **Os dados de oferta possuem áreas maiores**.
 
 ---
 # Estimação do Fator Oferta
@@ -945,7 +942,7 @@ shapiro.test(residuals(fit1))
 ```{r, echo = TRUE, highlight.output=8}
 fm <- aov(VU ~ Area*Fonte, 
            data = dados)
-TukeyHSD(fm)
+TukeyHSD(fm, "Fonte")
 ```
 
 ]
@@ -955,7 +952,7 @@ TukeyHSD(fm)
 ```{r, echo = TRUE, highlight.output=8}
 fm1 <- aov(VUhom ~ Area*Fonte, 
            data = dados)
-TukeyHSD(fm1)
+TukeyHSD(fm1, "Fonte")
 ```
 
 ]
@@ -1026,7 +1023,7 @@ optimise(THSD, c(0.5, 2), tol = 0.0001,
 ```{r, echo = TRUE}
 dados <- within(dados, 
                 VUhom <- ifelse(Fonte == "Venda", 
-                                VU, 0.865*VU))
+                                VU, 0.85*VU))
 ```
 
 ```{r, echo = TRUE}
