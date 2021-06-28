@@ -1,0 +1,512 @@
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+venda <- rbinom(100, 1, .5)
+vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+dados <- data.frame(VU = vu, Area = area,
+Fonte = factor(venda,
+labels = c("Oferta", "Venda")))
+dados
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Area*Fonte, data = dados)
+a <- TukeyHSD(fm)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+fator = "Fonte"
+valor = "VU"
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fatorOFerta <- .85
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fatorOFerta
+fatorOferta <- .85
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Area*Fonte, data = dados)
+a <- TukeyHSD(fm)
+fm <- aov(VUhom ~ Area + Fonte, data = dados)
+a <- TukeyHSD(fm)
+fm <- aov(VUhom ~ Area + Fonte, data = dados)
+a <- TukeyHSD(fm)
+head(dados)
+summary(dados)
+a <- TukeyHSD(fm)
+fm <- summary(aov(VUhom ~ Area + Fonte, data = dados))
+a <- TukeyHSD(fm)
+fm <- aov(VUhom ~ Area + Fonte, data = dados)
+a <- TukeyHSD(fm)
+knitr::opts_chunk$set(cache=FALSE, echo = FALSE, warning = FALSE,
+message = FALSE, prompt = T,
+fig.align = "center", fig.height = 4.5,
+fig.path = "images/", dev = "svg")
+options(htmltools.dir.version = FALSE)
+library(sjPlot)
+library(ggplot2)
+library(ggExtra)
+library(cowplot)
+theme_set(theme_cowplot())
+library(ggvis)
+library(stargazer)
+library(effects)
+library(lmtest)
+library(mosaic)
+library(car)
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Area + Fonte, data = dados)
+a <- TukeyHSD(fm)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+set.seed(2)
+area <- runif(100, min = 250, max = 10000)
+venda <- rbinom(100, 1, .5)
+vu <- (1-.15*venda)*(3000 - .25*area + rnorm(100, 0, 150))
+dados <- data.frame(VU = vu, Area = area,
+Fonte = factor(venda,
+labels = c("Oferta", "Venda")))
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Area + Fonte, data = dados)
+a <- TukeyHSD(fm)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+dados
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+a <- TukeyHSD(fm)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+-a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+-a[[fator]][, "p val"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+summary(fm1 <- aov(breaks ~ wool + tension, data = warpbreaks))
+TukeyHSD(fm1, "tension", ordered = TRUE)
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte + Area, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+-a[[fator]][, "p adj"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte*Area, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+-a[[fator]][, "p adj"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+lvu <- 7.5 - .25*log(area) -.1625*venda + rnorm(100, mean = 0, sd = .05)
+dados <- data.frame(VU = exp(lvu), Area = area,
+Fonte = factor(venda, labels = c("Oferta", "Venda")))
+dados
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+a[[fator]][, "diff"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+-a[[fator]][, "p adj"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+a[[fator]][, "p adj"]
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+set.seed(2)
+area <- runif(100, min = 250, max = 5000)
+venda <- rbinom(100, 1, .5)
+sqrtvu <- 70 - .01*area + rnorm(100, mean = 0, sd = 2)
+vu <- (1-.15*venda)*sqrtvu^2
+dados <- data.frame(VU = vu, Area = area,
+Fonte = factor(venda, labels = c("Oferta", "Venda")))
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(sqrt(VUhom) ~ Area*Fonte, data = dados)
+a <- TukeyHSD(fm, "Fonte")
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+library(MASS)
+##                X1       X2      Y
+sigma <- matrix(c(16  ,    15,  10.2,
+15  ,    25,    8,
+10.2,     8,    9),
+ncol = 3, byrow = T)
+set.seed(2)
+dados <- mvrnorm(n=200,
+mu=c(100, 50, 30),
+Sigma=sigma)
+colnames(dados) <- c("X1", "X2", "y")
+dados <- as.data.frame(dados)
+# cor(dados)
+# cov(dados)
+dados$Fonte <- rbinom(200, 1, .5)
+dados$y <- (1 - .15*dados$Fonte)*dados$y
+dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte*(X1 + X2), data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte*(X1 + X2), data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "y", fator = "Fonte")
+set.seed(1)
+area <- runif(200, min = 250, max = 5000)
+distancia <- runif(200, min = 10, max = 500)
+venda <- rbinom(200, 1, .5)
+lvu <- 7.5 - .25*log(area) -.25*log(distancia) - .1625*venda + rnorm(200, mean = 0, sd = .05)
+dados <- data.frame(VU = exp(lvu), Area = area, Distancia = distancia,
+Fonte = factor(venda, labels = c("Oferta", "Venda")))
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "y", fator = "Fonte")
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(log(VUhom) ~ log(Area) + Fonte, data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "VU", fator = "Fonte")
+library(MASS)
+##                X1       X2      Y
+sigma <- matrix(c(16  ,    15,  10.2,
+15  ,    25,    8,
+10.2,     8,    9),
+ncol = 3, byrow = T)
+set.seed(2)
+dados <- mvrnorm(n=200,
+mu=c(100, 50, 30),
+Sigma=sigma)
+colnames(dados) <- c("X1", "X2", "y")
+dados <- as.data.frame(dados)
+# cor(dados)
+# cov(dados)
+dados$Fonte <- rbinom(200, 1, .5)
+dados$y <- (1 - .15*dados$Fonte)*dados$y
+dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+dados
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte*(X1 + X2), data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "y", fator = "Fonte")
+head(dados)
+library(MASS)
+##                X1       X2      Y
+sigma <- matrix(c(16  ,    15,  10.2,
+15  ,    25,    8,
+10.2,     8,    9),
+ncol = 3, byrow = T)
+set.seed(2)
+dados <- mvrnorm(n=200,
+mu=c(100, 50, 30),
+Sigma=sigma)
+colnames(dados) <- c("X1", "X2", "y")
+dados <- as.data.frame(dados)
+# cor(dados)
+# cov(dados)
+dados$Fonte <- rbinom(200, 1, .5)
+dados$y <- (1 - .15*dados$Fonte)*dados$y
+dados$Fonte <- factor(dados$Fonte, labels = c("Oferta", "Venda"))
+p1 <- ggplot(dados, aes(y = y, x = X1, color = Fonte)) +
+geom_point()
+p2 <-  ggplot(dados, aes(y = y, x = X2, color = Fonte)) +
+geom_point()
+prow <- plot_grid(
+p1 + theme(legend.position="none"),
+p2 + theme(legend.position="none"),
+align = 'vh',
+labels = c("A", "B"),
+hjust = -1,
+nrow = 1
+)
+legend <- get_legend(
+p1 +
+guides(color = guide_legend(nrow = 1)) +
+theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+fitMult <- lm(y ~ X1 + X2 + Fonte, dados)
+S(fitMult, brief = T)
+plot(fitMult)
+library(broom)
+coeffs <- coef(fitMult)
+dados <- augment(fitMult, dados)
+p1 <- ggplot(dados, aes(x = X1, y = .resid + coeffs[2]*X1 + coeffs[1],
+color = Fonte)) +
+stat_smooth(method = "lm", se = FALSE) +
+geom_point() +
+geom_abline(intercept = coeffs[1], slope = coeffs[2]) +
+labs(y = "Component + Partial Residuals")
+p2 <- ggplot(dados, aes(x = X2, y = .resid + coeffs[3]*X2 + coeffs[1],
+color = Fonte)) +
+stat_smooth(method = "lm", se = FALSE) +
+geom_point() +
+geom_abline(intercept = coeffs[1], slope = coeffs[3]) +
+labs(y = "Component + Partial Residuals")
+prow <- plot_grid(
+p1 + theme(legend.position="none"),
+p2 + theme(legend.position="none"),
+align = 'vh',
+labels = c("A", "B"),
+hjust = -1,
+nrow = 1
+)
+legend <- get_legend(
+p1 +
+guides(color = guide_legend(nrow = 1)) +
+theme(legend.position = "bottom")
+)
+plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
+fitMult2 <- lm(y ~ (X1 + X2)*Fonte, data = dados)
+S(fitMult2, brief = T)
+plot(predictorEffect("X1", fitMult2),
+lines=list(multiline=TRUE))
+plot(predictorEffect("X2", fitMult2),
+lines=list(multiline=TRUE))
+plot(fitMult2)
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor],
+fatorOferta*dados[, valor])
+fm <- aov(VUhom ~ Fonte*(X1 + X2), data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "y", fator = "Fonte")
+haed(dados)
+head(dados)
+THSD <- function(fatorOferta, data, valor = "VU", fator = "Fonte"){
+dados <- data
+dados$VUhom <- ifelse(dados[, fator] == "Venda",
+dados[, valor, drop=T],
+fatorOferta*dados[, valor, drop = T])
+fm <- aov(VUhom ~ Fonte*(X1 + X2), data = dados)
+a <- TukeyHSD(fm, fator)
+abs(a[[fator]][, "diff"])
+}
+optimise(THSD, c(0.5, 2), tol = 0.0001,
+data = dados, valor = "y", fator = "Fonte")
+fm1 <- aov(VU ~ Area*Fonte,
+data = dados)
+set.seed(1)
+areavenda <- runif(50, min = 1000, max = 10000)
+areaoferta <-  runif(50, min = 250, max = 8000)
+venda <- c(rep(0, 50), rep(1, 50))
+vuvenda <- .85*(3000 - .25*areavenda + rnorm(50, 0, 150))
+vuoferta <- 3000 - .25*areaoferta + rnorm(50, 0, 150)
+vu <- c(vuoferta, vuvenda)
+dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda),
+Fonte = factor(venda,
+labels = c("Oferta", "Venda")))
+fm1 <- aov(VU ~ Area*Fonte,
+data = dados)
+TukeyHSD(fm1)
+fm1 <- aov(VUhom ~ Area*Fonte,
+data = dados)
+fator <- seq(.5, 2, by = .01)
+cv <- vector(length = length(fator))
+for (i in seq_along(fator)){
+df <- dados
+df <- within(df,
+VUhom <- ifelse(Fonte == "Venda",
+VU, fator[i]*VU))
+cv[i] <- with(df, sd(VUhom)/mean(VUhom))
+}
+plotdata <- data.frame(CV = cv, fatorOferta = fator)
+ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
+geom_line(color = "blue", size = 1.5) +
+scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
+geom_vline(xintercept = 1, color = "grey", lty = 3, size = .7) +
+geom_vline(xintercept = .85, color = "grey", lty = 3, size = .7) +
+geom_hline(yintercept = sd(dados$VU)/mean(dados$VU),
+color = "grey", lty = 3, size = .7) +
+geom_hline(yintercept = sd(dados$VUhom)/mean(dados$VUhom),
+color = "grey", lty = 3, size = .7) +
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+fm1 <- aov(VUhom ~ Area*Fonte,
+data = dados)
+?epudate
+??epudate
+x1 <- -4:4
+x2 <- c(-2,1,-1,2,0,2,-1,1,-2)
+x3 <- 3*x1 - 2*x2
+x4 <- x2 - x1 + 4
+y <- 1 + x1 + x2 + x3 + x4 + c(-.5,.5,.5,-.5,0,.5,-.5,-.5,.5)
+mod1234 <- lm(y ~ x1 + x2 + x3 + x4)
+mod4321 <- eupdate(lm(y ~ x4 + x3 + x2 + x1))
+library(estimability)
+mod1234 <- lm(y ~ x1 + x2 + x3 + x4)
+mod4321 <- eupdate(lm(y ~ x4 + x3 + x2 + x1))
+mod4321$nonest
+summary(mod1234)
+summary(mod4321)
+# test data:
+testset <- data.frame(
+x1 = c(3, 6, 6, 0, 0, 1),
+x2 = c(1, 2, 2, 0, 0, 2),
+x3 = c(7, 14, 14, 0, 0, 3),
+x4 = c(2, 4, 0, 4, 0, 4))
+# Look at predictions when we don't check estimability
+suppressWarnings( # Disable the warning from stats::predict.lm
+rbind(p1234 = predict(mod1234, newdata = testset),
+p4321 = predict(mod4321, newdata = testset)))
+rbind(p1234 = epredict(mod1234, newdata = testset),
+p4321 = epredict(mod4321, newdata = testset))
+mod134 <- eupdate(mod1234, . ~ . - x2, subset = -c(3, 7))
+mod134$nonest
+epredict(mod4321, newdata = testset, type = "estimability",
+nbasis = nonest.basis(mod1234)[c(1,5:2), ])
+example(nonest.basis)
+devtools::install_github("gadenbuie/xaringanExtra")

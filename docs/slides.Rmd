@@ -761,7 +761,7 @@ optimise(cv, c(0.5, 2), tol = 0.0001,
 ## Modelo de regressão na forma direta 
 
 * **Criação de dados de oferta e venda desbalanceados , com valores de oferta 
-maiores, em média.**.
+maiores, em média**.
 
 
 $$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
@@ -780,6 +780,16 @@ dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda),
                  Fonte = factor(venda, 
                                 labels = c("Oferta", "Venda")))
 ```
+
+
+--
+
+* 35% de dados de transações, 65% de dados de oferta
+
+--
+
+* dados de oferta com VU mais altos (menores áreas) do que os dados de venda, 
+em média.
 
 ---
 # Estimação do Fator Oferta
@@ -826,15 +836,15 @@ $$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F
 
 ```{r, fig.width=9, fig.height=4.5}
 fator <- seq(.5, 2, by = .01)
-cv <- vector(length = length(fator))
+CV <- vector(length = length(fator))
 for (i in seq_along(fator)){
   df <- dados
   df <- within(df, 
                 VUhom <- ifelse(Fonte == "Venda", 
                                 VU, fator[i]*VU))
-  cv[i] <- with(df, sd(VUhom)/mean(VUhom))
+  CV[i] <- with(df, sd(VUhom)/mean(VUhom))
 }
-plotdata <- data.frame(CV = cv, fatorOferta = fator)
+plotdata <- data.frame(CV = CV, fatorOferta = fator)
 ggplot(plotdata, aes(x = fatorOferta, y = CV)) +
   geom_line(color = "blue", size = 1.5) +
   scale_x_continuous(breaks = seq(.5, 2.0, by = .05)) +
@@ -866,7 +876,7 @@ p1
 
 ## Forma gráfica
 
-[App Fator Oferta](http://104.248.57.29/shiny/fatorOferta/)
+[App Fator Oferta](https://droubi.shinyapps.io/fatorOferta/)
 
 ---
 # Estimação do Fator Oferta
@@ -1142,6 +1152,92 @@ predict(fithom, newdata = new10000,
 ---
 # Estimação do Fator Oferta
 
+## Modelo de regressão na forma direta 
+
+* **Criação de dados de oferta e venda desbalanceados , com valores de oferta 
+_menores_, em média**.
+
+
+$$VU = (1 - 0,15.Fonte)(3000 - 0,25.Area + \varepsilon)$$
+
+--
+
+```{r, echo = TRUE}
+set.seed(1)
+areavenda <- runif(35, min = 250, max = 8000)
+areaoferta <-  runif(65, min = 1000, max = 10000)
+venda <- c(rep(0, 65), rep(1, 35))
+vuvenda <- .85*(3000 - .25*areavenda + rnorm(35, 0, 150))
+vuoferta <- 3000 - .25*areaoferta + rnorm(65, 0, 150)
+vu <- c(vuoferta, vuvenda)
+dados <- data.frame(VU = vu, Area = c(areaoferta, areavenda), 
+                 Fonte = factor(venda, 
+                                labels = c("Oferta", "Venda")))
+```
+
+
+--
+
+* 35% de dados de transações, 65% de dados de oferta
+
+--
+
+* dados de oferta com VU mais baixos (maiores áreas) do que os dados de venda, 
+em média.
+
+---
+# Estimação do Fator Oferta
+
+[App Fator Oferta](https://droubi.shinyapps.io/fatorOferta2/)
+
+--
+
+CONCLUSÃO: 
+
+* A Recomendação B.6 da NBR 14.653-02 `r Citep(bib, 'NBR1465302')` pode não ser 
+válida, ao menos para o fator oferta!
+
+  - Para a utilização deste tratamento é recomendável que seja evitado o uso de 
+  fatores que, aplicados isoladamente em relação ao avaliando ou ao paradigma, 
+  heterogeneizem os valores originais. Essa recomendação só é válida com a 
+  confirmação do efeito de heterogeneização, após a aplicação conjunta dos 
+  fatores. 
+
+* O item 10.6.5 da Norma do IBAPE/SP `r Citep(bib, 'ibapeSP')` pode não ser 
+válido, ao menos par o fator oferta!
+
+  - Os fatores complementares, citados nesta norma, podem ser investigados, e 
+podem ser utilizados, desde que seja devidamente validada sua condição isolada 
+de fator homogeneizante, que deve ser mantida na verificação simultânea com os
+demais.
+
+--
+
+* O critério da homogeneização dos dados $CV_{hom} < CV{original}$ precisa
+ser melhor estudado.
+
+
+
+
+---
+# Estimação do Fator Oferta
+
+```{r, echo = TRUE}
+optimise(cv, c(0.5, 2), tol = 0.0001, 
+         vu = dados$VU, fonte = dados$Fonte)
+```
+
+--
+
+```{r, echo = TRUE}
+optimise(THSD, c(0.5, 2), tol = 0.0001, 
+         data = dados, response = "VU", predictors = "Area",
+          factor = "Fonte", level = "Venda")
+```
+
+---
+# Estimação do Fator Oferta
+
 ## Dados lognormais
 
 --
@@ -1209,6 +1305,10 @@ prow <- plot_grid(
 plot_grid(prow, legend, ncol = 1, rel_heights = c(1, .1))
 ```
 
+---
+# Estimação do Fator Oferta
+
+[App Fator Oferta Log](https://droubi.shinyapps.io/fatorOfertaLog/)
 
 ---
 # Estimação do Fator Oferta
@@ -1959,7 +2059,7 @@ predict(fithom4, newdata = new110_60,
 ---
 # Fator oferta minimiza o CV na RLM?
 
-[App Fator Oferta 2](http://104.248.57.29/shiny/fatorOferta2/)
+[App Fator Oferta Mult](https://droubi.shinyapps.io/fatorOfertaMult/)
 
 --
 
