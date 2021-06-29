@@ -2493,7 +2493,7 @@ class: inverse, center, middle
 ---
 # Efeitos do Fator Oferta sobre IC e IP
 
-$$\mathbb{E}[c \cdot VU] = c\mathbb{E}[VU]$$
+*  `r Citet(bib, 'matloff2009', after = ', p. 47')`: $\mathbb{E}[c \cdot VU] = c\mathbb{E}[VU]$
 
 --
 
@@ -2501,7 +2501,7 @@ $$\mathbb{E}[VU_{venda}] = \mathbb{E}[c\cdot VU_{oferta}] = c \mathbb{E}[VU_{ofe
 
 --
 
-$$\mathbb{V}[c \cdot VU] = c^2\mathbb{V}[VU]$$
+* `r Citet(bib, 'matloff2009', after = ', p. 54')`: $\mathbb{V}[c \cdot VU] = c^2\mathbb{V}[VU]$ 
 
 --
 
@@ -2509,40 +2509,76 @@ $$\mathbb{V}[VU_{venda}] = \mathbb{V}[c\cdot VU_{oferta}] = c^2 \mathbb{V}[VU_{o
 
 --
 
-* Intervalos de Confiança `r AutoCite(bib, 'matloff2009')`:
+* Intervalos de Confiança `r AutoCite(bib, 'matloff2009', after = ", p. 272")`:
+$IC_\alpha = \hat\theta \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat \theta)$
 
-$$IC_\alpha = \hat\theta \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat \theta)$$
 --
 
-* $s.e.(\hat \theta) = \frac{s}{\sqrt{n}} \, , \text{onde} \, s\, \text{é o desvio-padrão amostral}$
+* `r Citet(bib, 'matloff2009', after = ", p. 272")`:
 
-* $\mathbb{\hat V}(\hat \theta) = \frac{s^2}{n}$
+  - $\mathbb{\hat V}(\hat \theta) = \frac{s^2}{n} \, , \text{onde} \, s^2 = \frac{1}{n}\sum_{i=1}^n(\theta_i-\hat \theta)^2$
 
-* $s.e.(\hat \theta) = \sqrt{\mathbb{\hat V}(\hat \theta)}$
+  - $s.e.(\hat \theta) = \sqrt{\mathbb{\hat V}(\hat \theta)}$
+
+  - $s.e.(\hat \theta) = \frac{s}{\sqrt{n}}$
+  
+--
+
+* Na regressão linear o estimador é $\beta$. Utilizamos este estimador para 
+encontrar $\hat Y = X\hat\beta$. Qual o IC para $\hat Y$?
 
 ---
 # Efeitos do Fator Oferta sobre IC e IP
 
-* $s.e.(\hat{VU}_{venda}) = s.e.(c \hat{VU}_{oferta}) = \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})}$
+
+* Na regressão linear `r Citep(bib, 'matloff2009', after = ", p. 401")`:
+
+  - $\widehat{Cov}(\hat\beta) = s^2(X'X)^{-1}$
+  
+--
+
+* Portanto:
+
+`\begin{align}
+IC_{\hat \beta} &= \hat\beta \pm t_{n-p}^{\alpha/2} s.e.(\hat \beta)\\
+            &= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{\widehat{Cov}(\hat\beta)}\\
+            &= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{s^2(X'X)^{-1}}\\
+            &= \hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{(X'X)^{-1}}
+\end{align}`            
 
 --
 
-* $s.e.(\hat{VU}_{venda}) = \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})}$
+$$IC_{\hat y_0} = x_0'\hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{x_0'(X'X)^{-1}x_0}$$
+--
+
+* Ou seja:
+
+$$IC_{\hat y_0} = x_0'\hat\beta \pm t_{n-p}^{\alpha/2}\cdot x_0 \times s.e.(\hat\beta)$$  
+
+---
+# Efeitos do Fator Oferta sobre IC e IP
+
+`\begin{align} s.e.(\hat{VU}_{venda}) &= s.e.(c \hat{VU}_{oferta}) \\
+                                      &= \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})} \\
+                                      &= \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})} \\  
+                                      &= c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} \\
+\end{align}`
 
 --
 
-* $s.e.(\hat{VU}_{venda}) = c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} = c\cdot s.e.(\hat{VU}_{oferta})$
+* $s.e.(\hat{VU}_{venda}) = c\cdot s.e.(\hat{VU}_{oferta})$
 
 --
 
-* O IC dos valores de venda, portanto, pode ser escrito assim:
+* O IC dos valores de venda, portanto, pode ser escrito em termos dos valores
+de venda:
 
-$$IC_{VU_{venda}} = \hat{VU}_{venda} \pm Z_{1 - \frac{\alpha}{2}} s.e.(\hat{VU}_{venda})$$
+$$IC_{VU_{venda}} = \hat{VU}_{venda} \pm t_{n-p}^{\alpha/2}\cdot s.e.(\hat{VU}_{venda})$$
 
 --
-* Ou assim:
+* Ou em termos dos valores de oferta:
 
-$$IC_{VU_{venda}} = c \cdot \hat{VU}_{oferta} \pm Z_{1 - \frac{\alpha}{2}} \cdot c \cdot s.e.(\hat{VU}_{oferta})$$
+$$IC_{VU_{venda}} = c \cdot \hat{VU}_{oferta} \pm t_{n-p}^{\alpha/2} \cdot c \cdot s.e.(\hat{VU}_{oferta})$$
 
 --
 
@@ -2639,10 +2675,10 @@ uma estimação menos custosa do fator oferta.
 # Conclusão
 
 * Quando da utilização exclusiva de dados de oferta, a aplicação do fator oferta
-antes ou após o ajuste do modelo de regressão deveria conduzir aos mesmos
-valores previstos, tanto para a estimativa central, quanto para os limites dos
-intervalos de confiança e predição. A norma deveria estabelecer este 
-procedimento explicitamente.
+antes ou após o ajuste do modelo  
+de regressão deveria conduzir aos mesmos valores previstos, tanto para a 
+estimativa central, quanto para os limites dos intervalos de confiança e 
+predição. A norma deveria estabelecer este procedimento explicitamente.
 
 ---
 class: scrollable-slide
