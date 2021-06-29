@@ -2537,18 +2537,34 @@ encontrar $\hat Y = X\hat\beta$. Qual o IC para $\hat Y$?
   
 --
 
+
+* `r Citet(bib, 'matloff2017', after = ', p. 102')`: $\mathbb{V}(a'U) = a'Cov(U)a$
+  
+--
+
 * Portanto:
+
+.pull-left[
 
 `\begin{align}
 IC_{\hat \beta} &= \hat\beta \pm t_{n-p}^{\alpha/2} s.e.(\hat \beta)\\
             &= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{\widehat{Cov}(\hat\beta)}\\
             &= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{s^2(X'X)^{-1}}\\
             &= \hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{(X'X)^{-1}}
-\end{align}`            
+\end{align}`    
 
---
+]
 
-$$IC_{\hat y_0} = x_0'\hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{x_0'(X'X)^{-1}x_0}$$
+.pull-right[
+
+`\begin{align}
+IC_{\hat y_0} &= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{\mathbb{\hat V}(x_0'\hat\beta)}\\
+              &= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{x_0'\widehat{Cov}(\hat\beta)x_0}\\
+              &= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{x_0'(X'X)^{-1}x_0}
+\end{align}`
+
+]
+        
 --
 
 * Ou seja:
@@ -2558,10 +2574,11 @@ $$IC_{\hat y_0} = x_0'\hat\beta \pm t_{n-p}^{\alpha/2}\cdot x_0 \times s.e.(\hat
 ---
 # Efeitos do Fator Oferta sobre IC e IP
 
-`\begin{align} s.e.(\hat{VU}_{venda}) &= s.e.(c \hat{VU}_{oferta}) \\
-                                      &= \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})} \\
-                                      &= \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})} \\  
-                                      &= c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} \\
+`\begin{align} 
+s.e.(\hat{VU}_{venda}) &= s.e.(c \hat{VU}_{oferta}) \\
+                       &= \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})} \\
+                       &= \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})}\\  
+                       &= c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} 
 \end{align}`
 
 --

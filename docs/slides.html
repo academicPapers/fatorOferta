@@ -3051,18 +3051,34 @@ encontrar `\(\hat Y = X\hat\beta\)`. Qual o IC para `\(\hat Y\)`?
   
 --
 
+
+* &lt;a name=cite-matloff2017&gt;&lt;/a&gt;[Matloff (2017, p. 102)](#bib-matloff2017): `\(\mathbb{V}(a'U) = a'Cov(U)a\)`
+  
+--
+
 * Portanto:
+
+.pull-left[
 
 `\begin{align}
 IC_{\hat \beta} &amp;= \hat\beta \pm t_{n-p}^{\alpha/2} s.e.(\hat \beta)\\
             &amp;= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{\widehat{Cov}(\hat\beta)}\\
             &amp;= \hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{s^2(X'X)^{-1}}\\
             &amp;= \hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{(X'X)^{-1}}
-\end{align}`            
+\end{align}`    
 
---
+]
 
-`$$IC_{\hat y_0} = x_0'\hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{x_0'(X'X)^{-1}x_0}$$`
+.pull-right[
+
+`\begin{align}
+IC_{\hat y_0} &amp;= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{\mathbb{\hat V}(x_0'\hat\beta)}\\
+              &amp;= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} \sqrt{x_0'\widehat{Cov}(\hat\beta)x_0}\\
+              &amp;= x_0'\hat\beta \pm t_{n-p}^{\alpha/2} s \sqrt{x_0'(X'X)^{-1}x_0}
+\end{align}`
+
+]
+        
 --
 
 * Ou seja:
@@ -3072,10 +3088,11 @@ IC_{\hat \beta} &amp;= \hat\beta \pm t_{n-p}^{\alpha/2} s.e.(\hat \beta)\\
 ---
 # Efeitos do Fator Oferta sobre IC e IP
 
-`\begin{align} s.e.(\hat{VU}_{venda}) &amp;= s.e.(c \hat{VU}_{oferta}) \\
-                                      &amp;= \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})} \\
-                                      &amp;= \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})} \\  
-                                      &amp;= c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} \\
+`\begin{align} 
+s.e.(\hat{VU}_{venda}) &amp;= s.e.(c \hat{VU}_{oferta}) \\
+                       &amp;= \sqrt{\mathbb{\hat V}(c \hat{VU}_{oferta})} \\
+                       &amp;= \sqrt{c^2\mathbb{\hat V} (\hat{VU}_{oferta})}\\  
+                       &amp;= c\sqrt{\mathbb{\hat V} (\hat{VU}_{oferta})} 
 \end{align}`
 
 --
@@ -3258,6 +3275,10 @@ In: _XIII COBREAP_.
 &lt;a name=bib-mantovani2019&gt;&lt;/a&gt;[Mantovani, F. A., R. Cymrot, and L. H.
 Cappelano](#cite-mantovani2019) "Fator Oferta para imoveis residenciais
 da cidade de Atibaia/SP em tempos de crise". In: _XX COBREAP_.
+
+&lt;a name=bib-matloff2017&gt;&lt;/a&gt;[Matloff, N.](#cite-matloff2017) (2017).
+_Statistical Regression and Classification. From Linear Models to
+Machine Learning_. Boca Raton, Florida: Chapman &amp; Hall.
 
 &lt;a name=bib-matloff2009&gt;&lt;/a&gt;[Matloff, N. S.](#cite-matloff2009) (2009).
 _From Algorithms to Z-Scores. Probabilistic and Statistical Modeling in
