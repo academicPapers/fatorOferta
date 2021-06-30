@@ -516,8 +516,17 @@ novas estratégias de venda é facultado ao proprietário ofertar o seu imóvel 
 um valor mais baixo que o de mercado, criando assim condições para um maior 
 número de ofertas (leilão).
 
+* `r Citet(bib, "fipezap")` mostra descontos médios sempre positivos para o 
+mercado brasileiro.
+
 ---
 background-image: url(./images/1-s2.0-S1051137713000041-gr1.jpg)
+background-size: contain
+
+# Fator oferta vs. Tempo
+
+---
+background-image: url(./images/FIPEZAP.png)
 background-size: contain
 
 # Fator oferta vs. Tempo
