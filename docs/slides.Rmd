@@ -35,6 +35,7 @@ library(effects)
 library(lmtest)
 library(mosaic)
 library(car)
+library(plotly)
 ```
 
 ```{r, load_refs, include=FALSE, cache=FALSE}
@@ -72,6 +73,10 @@ xaringanExtra::use_search(show_icon = TRUE)
 
 ```{r xaringanExtra-clipboard, echo=FALSE}
 xaringanExtra::use_clipboard()
+```
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
 ```
 
 ---
@@ -886,6 +891,20 @@ p1
 ## Forma gráfica
 
 [App Fator Oferta](https://droubi.shinyapps.io/fatorOferta/)
+
+--
+
+```{r}
+dados$Venda <- ifelse(dados$Fonte == "Oferta", T, F) 
+p <- dados %>%
+  mutate(across(VU, list(~ifelse(Venda, .85*VU, .)),
+                .names="{.col}_hom")) %>%
+  ggplot(aes(x = Area, y = VU_hom, color = Fonte)) +
+  geom_point() + 
+  stat_smooth(method = "lm", se = FALSE)
+ggplotly(p)
+```
+
 
 ---
 # Estimação do Fator Oferta
