@@ -515,11 +515,13 @@ de venda podem superar os preços de oferta.
 
 --
 
-* Novas estratégias de venda podem afetar o valor do fator oferta. Enquanto nas
-estratégias convencionais o valor reservado é menor do que o valor ofertado, nas
-novas estratégias de venda é facultado ao proprietário ofertar o seu imóvel a 
-um valor mais baixo que o de mercado, criando assim condições para um maior 
-número de ofertas (leilão).
+* `r Citet(bib, "gribbin2019")`: Novas estratégias de venda podem afetar o valor
+do fator oferta. Enquanto nas estratégias convencionais o valor reservado é
+menor do que o valor ofertado, nas novas estratégias de venda é facultado ao
+proprietário ofertar o seu imóvel a um valor mais baixo que o de mercado,
+criando assim condições para um maior número de ofertas (leilão).
+
+--
 
 * `r Citet(bib, "fipezap")` mostra descontos médios sempre positivos para o 
 mercado brasileiro.
