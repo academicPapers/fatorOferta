@@ -276,7 +276,7 @@ p <- gf_dist("norm", mean = 100, sd = 10, kind = "density", resolution = 50,
           fill = "blue", alpha = 0.5, geom = "area")
 p + 
   annotate("text", label = "Compradores", 
-           x = 80, y = .03, 
+           x = 75, y = .03, 
            size = 4, color = "red") + 
   annotate("text", label = "Vendedores", 
            x = 170, y = .03,
@@ -284,12 +284,12 @@ p +
   annotate("text", label = "Fator Oferta",
            x = 137.5, y = .045,
            size = 4, color = "black") +
-  geom_vline(xintercept = 125) +
-  geom_vline(xintercept = 150) +
+  geom_vline(xintercept = 125, lty = 2) +
+  geom_vline(xintercept = 150, lty = 2) +
   geom_segment(x = 125, xend = 150, y = .0425, yend = .0425,
-               arrow = arrow(length=unit(0.30,"cm"), 
-                             ends="both", type = "closed"))+
-  scale_y_continuous(expand = c(0.015, 0)) +
+               arrow = arrow(length=unit(0.2,"cm"), 
+                           ends="both", type = "open"))+
+  scale_y_continuous(limits = c(0, .0475), expand = c(0.015, 0)) +
   scale_x_continuous(limits = c(60, 200))
 ```
 ]
@@ -308,7 +308,7 @@ p <- gf_dist("norm", mean = 140, sd = 10, kind = "density", resolution = 50,
           fill = "blue", alpha = 0.5, geom = "area")
 p + 
   annotate("text", label = "Compradores", 
-           x = 120, y = .03, 
+           x = 115, y = .03, 
            size = 4, color = "red") + 
   annotate("text", label = "Vendedores", 
            x = 170, y = .03,
@@ -316,12 +316,12 @@ p +
   annotate("text", label = "Fator Oferta",
            x = 165, y = .0425,
            size = 4, color = "black") +
-  geom_vline(xintercept = 145) +
-  geom_vline(xintercept = 150) +
+  geom_vline(xintercept = 145, lty = 2) +
+  geom_vline(xintercept = 150, lty = 2) +
   geom_segment(x = 145, xend = 150, y = .0425, yend = .0425,
-               arrow = arrow(length=unit(0.30,"cm"), 
-                             ends="both", type = "closed")) +
-  scale_y_continuous(expand = c(0.015, 0)) +
+               arrow = arrow(length=unit(0.2,"cm"), 
+                             ends="both", type = "open")) +
+  scale_y_continuous(limits = c(0, .045), expand = c(0.015, 0)) +
   scale_x_continuous(limits = c(60, 200))
 ```
 
