@@ -734,7 +734,9 @@ transações)**.
 p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
   geom_point() + 
   stat_smooth(method = "lm", se = FALSE) +
-  scale_y_continuous(limits = c(0, 3100))
+  scale_y_continuous(limits = c(0, 3100)) +
+  theme(legend.position = "bottom")
+p1 <- ggMarginal(p1, type="boxplot", margins = "y", groupColour = T)
 p1
 ```
 
@@ -758,7 +760,9 @@ dados <- dados %>%
 p2 <- ggplot(dados, aes(x = Area, y = VU_hom, color = Fonte)) +
   geom_point() + 
   stat_smooth(method = "lm", se = FALSE) +
-  scale_y_continuous(limits = c(0, 3100))
+  scale_y_continuous(limits = c(0, 3100)) +
+  theme(legend.position = "bottom")
+p2 <- ggMarginal(p2, type="boxplot", margins = "y", groupColour = T)
 p2
 ```
 
