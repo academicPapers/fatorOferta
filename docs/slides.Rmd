@@ -79,6 +79,10 @@ xaringanExtra::use_clipboard()
 xaringanExtra::use_scribble()
 ```
 
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
 ---
 # Contextualização
 
@@ -257,12 +261,13 @@ probabilidades de dados de oferta? Em que região?
 
 --
 
-* **Hipótese:** Em um mercado desaquecido, as negociações se concretizam com 
-grandes descontos em relação aos preços anunciados! O valor de mercado se 
-encontra distante da região central da distribuição de probabilidades de dados 
-de oferta!
+.panelset[
+.panel[.panel-name[Mercado Desaquecido]
 
-```{r}
+* **Hipótese:** o valor de mercado se encontra na região da cauda esquerda da 
+distribuição de dados de oferta!
+
+```{r, fig.height=4}
 p <- gf_dist("norm", mean = 100, sd = 10, kind = "density", resolution = 50,
         color = "red", size = 2, 
          fill = "red", alpha = 0.5, geom = "area") %>%
@@ -284,21 +289,17 @@ p +
   geom_segment(x = 125, xend = 150, y = .0425, yend = .0425,
                arrow = arrow(length=unit(0.30,"cm"), 
                              ends="both", type = "closed"))+
-  scale_y_continuous(expand = c(0.015, 0))
+  scale_y_continuous(expand = c(0.015, 0)) +
+  scale_x_continuous(limits = c(60, 200))
 ```
+]
 
----
-# Conceitos e Paradigmas
+.panel[.panel-name[Mercado Aquecido]
 
-## Onde se situa o **VM** na distribuição de dados de oferta?
+* **Hipótese:** o valor de mercado se situa próximo ao centro da distribuição 
+dos dados de oferta.
 
---
-
-* **Hipótese:** Em um mercado aquecido, o valor de mercado se situa próximo ao 
-centro da distribuição dos dados de oferta. As negociações se dão com pouco 
-desconto, ou ainda, em valores acima dos preços anunciados!
-
-```{r}
+```{r, fig.height=4}
 p <- gf_dist("norm", mean = 140, sd = 10, kind = "density", resolution = 50,
         color = "red", size = 2, 
          fill = "red", alpha = 0.5, geom = "area") %>%
@@ -313,15 +314,20 @@ p +
            x = 170, y = .03,
            size = 4, color = "blue") +
   annotate("text", label = "Fator Oferta",
-           x = 156, y = .0425,
+           x = 165, y = .0425,
            size = 4, color = "black") +
   geom_vline(xintercept = 145) +
   geom_vline(xintercept = 150) +
   geom_segment(x = 145, xend = 150, y = .0425, yend = .0425,
                arrow = arrow(length=unit(0.30,"cm"), 
                              ends="both", type = "closed")) +
-  scale_y_continuous(expand = c(0.015, 0))
+  scale_y_continuous(expand = c(0.015, 0)) +
+  scale_x_continuous(limits = c(60, 200))
 ```
+
+]
+]
+
 
 ---
 # Conceitos e Paradigmas
@@ -719,6 +725,50 @@ transações)**.
 ---
 # Estimação do Fator Oferta
 
+## Forma gráfica
+
+.panelset[
+.panel[.panel-name[Antes]
+
+```{r}
+p1 <- ggplot(dados, aes(x = Area, y = VU, color = Fonte)) +
+  geom_point() + 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(0, 3100))
+p1
+```
+
+
+]
+
+.panel[.panel-name[Depois]
+
+```{r}
+dados$Venda <- ifelse(dados$Fonte == "Oferta", T, F) 
+# dados <- dados %>%
+#   mutate(across(VU, list(~ifelse(Venda, .85*VU, .)),
+#                 .names="{.col}_hom")) %>%
+#   ggplot(aes(x = Area, y = VU_hom, color = Fonte)) +
+#   geom_point() + 
+#   stat_smooth(method = "lm", se = FALSE)
+# ggplotly(p)
+dados <- dados %>%
+  mutate(across(VU, list(~ifelse(Venda, .85*VU, .)),
+                .names="{.col}_hom"))
+p2 <- ggplot(dados, aes(x = Area, y = VU_hom, color = Fonte)) +
+  geom_point() + 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(0, 3100))
+p2
+```
+
+]
+]
+
+
+---
+# Estimação do Fator Oferta
+
 ## Forma numérica: minimização do CV
 
 $$F_{oferta} = 1-\arg\min_{c \in \mathbb{R}_+} \left ( \frac{\sigma[(1- c\cdot F) VU]}{\mu[(1- c\cdot F) VU)]}\right ), \text{com } \, F = \left\{\begin{matrix}
@@ -893,19 +943,6 @@ p1
 ## Forma gráfica
 
 [App Fator Oferta](https://droubi.shinyapps.io/fatorOferta/)
-
---
-
-```{r}
-dados$Venda <- ifelse(dados$Fonte == "Oferta", T, F) 
-p <- dados %>%
-  mutate(across(VU, list(~ifelse(Venda, .85*VU, .)),
-                .names="{.col}_hom")) %>%
-  ggplot(aes(x = Area, y = VU_hom, color = Fonte)) +
-  geom_point() + 
-  stat_smooth(method = "lm", se = FALSE)
-ggplotly(p)
-```
 
 
 ---
